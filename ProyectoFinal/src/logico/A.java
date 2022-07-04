@@ -1,18 +1,18 @@
 package logico;
 
 public class A {
-	int num;
+	private int num;
 
 	public A(int num) {
 		super();
 		this.num = num;
 	}
 
-	public int getN1() {
+	public int getNum() {
 		return num;
 	}
 
-	public void setN1(int n1) {
+	public void setNum(int num) {
 		this.num = num;
 	}
 	
