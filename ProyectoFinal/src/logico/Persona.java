@@ -4,14 +4,16 @@ public class Persona {
 	//Atributos
 	protected String cedula;
 	protected String nombre;
+	protected String apellido;
 	protected String direccion;
 	protected String telefono;
 	
 	//Constructor
-	public Persona(String cedula, String nombre, String direccion, String telefono) {
+	public Persona(String cedula, String nombre, String direccion, String telefono, String apellido) {
 		super();
 		this.cedula = cedula;
 		this.nombre = nombre;
+		this.apellido = apellido;
 		this.direccion = direccion;
 		this.telefono = telefono;
 	}
@@ -23,6 +25,14 @@ public class Persona {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
 	}
 
 	public String getDireccion() {

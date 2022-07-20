@@ -8,8 +8,8 @@ public class Cliente extends Persona {
 	private ArrayList<Factura> misFacturas = new ArrayList<Factura>();
 	
 	//Constructor
-	public Cliente(String cedula, String nombre, String direccion, String telefono) {
-		super(cedula, nombre, direccion, telefono);
+	public Cliente(String cedula, String nombre, String direccion, String telefono, String apellido) {
+		super(cedula, nombre, direccion, telefono, apellido);
 	}
 	
 	//Getters y Setters
