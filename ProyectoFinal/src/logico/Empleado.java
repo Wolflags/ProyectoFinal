@@ -1,5 +1,7 @@
 package logico;
 
+import java.util.Date;
+
 public class Empleado extends Persona {
 	//Atributos
 	private String usuario;
@@ -14,8 +16,8 @@ public class Empleado extends Persona {
 	//Constructor
 	public Empleado(String cedula, String nombre, String direccion, String telefono, String usuario,
 			String password, float salario, int cantHijos, char estadoCivil, int annosExperiencia,
-			String tipoEmpleado, String puestoTrabajo, String apellido) {
-		super(cedula, nombre, direccion, telefono, apellido);
+			String tipoEmpleado, String puestoTrabajo, String apellido, Date fechaNacimiento) {
+		super(cedula, nombre, direccion, telefono, apellido, fechaNacimiento);
 		this.usuario = usuario;
 		this.password = password;
 		this.salario = salario;

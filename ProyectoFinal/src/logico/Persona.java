@@ -1,5 +1,7 @@
 package logico;
 
+import java.util.Date;
+
 public class Persona {
 	//Atributos
 	protected String cedula;
@@ -7,15 +9,17 @@ public class Persona {
 	protected String apellido;
 	protected String direccion;
 	protected String telefono;
+	protected Date fechaNacimiento;
 	
 	//Constructor
-	public Persona(String cedula, String nombre, String direccion, String telefono, String apellido) {
+	public Persona(String cedula, String nombre, String direccion, String telefono, String apellido, Date fechaNacimiento) {
 		super();
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.direccion = direccion;
 		this.telefono = telefono;
+		this.fechaNacimiento = fechaNacimiento;
 	}
 	
 	//Getters y Setters
@@ -53,6 +57,10 @@ public class Persona {
 
 	public String getCedula() {
 		return cedula;
+	}
+
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
 	}
 	
 }

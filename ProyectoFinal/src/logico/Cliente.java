@@ -1,6 +1,7 @@
 package logico;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Cliente extends Persona {
 	//Atributos
@@ -8,8 +9,8 @@ public class Cliente extends Persona {
 	private ArrayList<Factura> misFacturas = new ArrayList<Factura>();
 	
 	//Constructor
-	public Cliente(String cedula, String nombre, String direccion, String telefono, String apellido) {
-		super(cedula, nombre, direccion, telefono, apellido);
+	public Cliente(String cedula, String nombre, String direccion, String telefono, String apellido, Date fechaNacimiento) {
+		super(cedula, nombre, direccion, telefono, apellido, fechaNacimiento);
 	}
 	
 	//Getters y Setters

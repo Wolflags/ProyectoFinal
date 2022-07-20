@@ -18,6 +18,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import java.awt.Color;
+import javax.swing.JRadioButton;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class RegEmpAdmin extends JDialog {
 
@@ -29,6 +32,17 @@ public class RegEmpAdmin extends JDialog {
 	private JTextField txtDireccion;
 	private JTextField txtTelefono;
 	private JTextField txtPuestoTrabajo;
+	private JSpinner spnDia;
+	private JComboBox cbxMes;
+	private JSpinner spnYear;
+	private JSpinner spnExpLaboral;
+	private JSpinner spnCantHijos;
+	private JComboBox cbxEstCivil;
+	private JSpinner spnSalario;
+	private JRadioButton rbAdministrador;
+	private JRadioButton rbEmpleado;
+	private JTextField txtUsuario;
+	private JTextField txtContraseña;
 
 	/**
 	 * Launch the application.
@@ -48,7 +62,7 @@ public class RegEmpAdmin extends JDialog {
 	 */
 	public RegEmpAdmin() {
 		setTitle("Registrar Empleado");
-		setBounds(100, 100, 451, 531);
+		setBounds(100, 100, 451, 694);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -65,6 +79,13 @@ public class RegEmpAdmin extends JDialog {
 		panel_Personales.add(lblNewLabel);
 		
 		txtCedula = new JTextField();
+		txtCedula.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				txtNombre.setText(txtCedula.getText());
+			}
+		});
+		
 		txtCedula.setBounds(12, 50, 170, 22);
 		panel_Personales.add(txtCedula);
 		txtCedula.setColumns(10);
@@ -91,17 +112,17 @@ public class RegEmpAdmin extends JDialog {
 		lblFechaDeNacimiento.setBounds(214, 25, 125, 16);
 		panel_Personales.add(lblFechaDeNacimiento);
 		
-		JComboBox cbxMes = new JComboBox();
+		cbxMes = new JComboBox();
 		cbxMes.setModel(new DefaultComboBoxModel(new String[] {"Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"}));
 		cbxMes.setBounds(267, 50, 50, 22);
 		panel_Personales.add(cbxMes);
 		
-		JSpinner spnDia = new JSpinner();
+		spnDia = new JSpinner();
 		spnDia.setModel(new SpinnerNumberModel(1, 1, 31, 1));
 		spnDia.setBounds(214, 50, 41, 22);
 		panel_Personales.add(spnDia);
 		
-		JSpinner spnYear = new JSpinner();
+		spnYear = new JSpinner();
 		spnYear.setModel(new SpinnerNumberModel(2022, 1900, 2022, 1));
 		spnYear.setBounds(329, 50, 56, 22);
 		panel_Personales.add(spnYear);
@@ -119,7 +140,7 @@ public class RegEmpAdmin extends JDialog {
 		lblAosDeExperiencia.setBounds(277, 155, 107, 16);
 		panel_Personales.add(lblAosDeExperiencia);
 		
-		JSpinner spnExpLaboral = new JSpinner();
+		spnExpLaboral = new JSpinner();
 		spnExpLaboral.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		spnExpLaboral.setBounds(277, 180, 107, 22);
 		panel_Personales.add(spnExpLaboral);
@@ -141,18 +162,18 @@ public class RegEmpAdmin extends JDialog {
 		txtTelefono.setBounds(12, 245, 170, 22);
 		panel_Personales.add(txtTelefono);
 		
-		JSpinner spnCantHijos = new JSpinner();
+		spnCantHijos = new JSpinner();
 		spnCantHijos.setBounds(314, 245, 70, 22);
 		panel_Personales.add(spnCantHijos);
 		
-		JComboBox cbxEstCivil = new JComboBox();
+		cbxEstCivil = new JComboBox();
 		cbxEstCivil.setModel(new DefaultComboBoxModel(new String[] {"Soltero/a", "Casado/a", "Divorciado/a"}));
 		cbxEstCivil.setBounds(198, 245, 98, 22);
 		panel_Personales.add(cbxEstCivil);
 		
 		JPanel panel_Laborales = new JPanel();
 		panel_Laborales.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Datos Laborales", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_Laborales.setBounds(12, 318, 409, 112);
+		panel_Laborales.setBounds(12, 318, 409, 95);
 		contentPanel.add(panel_Laborales);
 		panel_Laborales.setLayout(null);
 		
@@ -160,19 +181,59 @@ public class RegEmpAdmin extends JDialog {
 		lblSalarioMensual.setBounds(12, 25, 96, 16);
 		panel_Laborales.add(lblSalarioMensual);
 		
-		JSpinner spnSalario = new JSpinner();
+		spnSalario = new JSpinner();
 		spnSalario.setModel(new SpinnerNumberModel(new Float(0), new Float(0), null, new Float(1)));
 		spnSalario.setBounds(12, 50, 170, 22);
 		panel_Laborales.add(spnSalario);
 		
 		JLabel lblPuestoDeTrabajo = new JLabel("Puesto De Trabajo:");
-		lblPuestoDeTrabajo.setBounds(211, 25, 111, 16);
+		lblPuestoDeTrabajo.setBounds(214, 25, 111, 16);
 		panel_Laborales.add(lblPuestoDeTrabajo);
 		
 		txtPuestoTrabajo = new JTextField();
 		txtPuestoTrabajo.setColumns(10);
-		txtPuestoTrabajo.setBounds(211, 50, 170, 22);
+		txtPuestoTrabajo.setBounds(214, 50, 170, 22);
 		panel_Laborales.add(txtPuestoTrabajo);
+		
+		JPanel panel_Tipo = new JPanel();
+		panel_Tipo.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Tipo", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_Tipo.setBounds(12, 426, 409, 69);
+		contentPanel.add(panel_Tipo);
+		panel_Tipo.setLayout(null);
+		
+		rbAdministrador = new JRadioButton("Administrador\r\n");
+		rbAdministrador.setSelected(true);
+		rbAdministrador.setBounds(51, 24, 127, 25);
+		panel_Tipo.add(rbAdministrador);
+		
+		rbEmpleado = new JRadioButton("Empleado");
+		rbEmpleado.setBounds(229, 24, 127, 25);
+		panel_Tipo.add(rbEmpleado);
+		
+		JPanel panel_Plataforma = new JPanel();
+		panel_Plataforma.setBorder(new TitledBorder(null, "Datos De Plataforma", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_Plataforma.setBounds(12, 508, 409, 91);
+		contentPanel.add(panel_Plataforma);
+		panel_Plataforma.setLayout(null);
+		
+		JLabel lblNombreDeUsuario = new JLabel("Nombre De Usuario:");
+		lblNombreDeUsuario.setBounds(12, 25, 116, 16);
+		panel_Plataforma.add(lblNombreDeUsuario);
+		
+		txtUsuario = new JTextField();
+		txtUsuario.setEditable(false);
+		txtUsuario.setColumns(10);
+		txtUsuario.setBounds(12, 50, 170, 22);
+		panel_Plataforma.add(txtUsuario);
+		
+		JLabel lblContrasea = new JLabel("Contrase\u00F1a:");
+		lblContrasea.setBounds(214, 25, 116, 16);
+		panel_Plataforma.add(lblContrasea);
+		
+		txtContraseña = new JTextField();
+		txtContraseña.setColumns(10);
+		txtContraseña.setBounds(214, 50, 170, 22);
+		panel_Plataforma.add(txtContraseña);
 		spnModel = new SpinnerNumberModel(1, 1, 30, 1);
 		{
 			JPanel buttonPane = new JPanel();
