@@ -5,6 +5,7 @@ public class Servicio {
 	protected String descripcion;
 	protected int duracion;
 	protected boolean autocobro;
+	
 	public Servicio(String nombre, String descripcion, int duracion, boolean autocobro) {
 		super();
 		this.nombre = nombre;
@@ -29,6 +30,12 @@ public class Servicio {
 	}
 	public void setDuracion(int duracion) {
 		this.duracion = duracion;
+	}
+	public boolean isAutocobro() {
+		return autocobro;
+	}
+	public void setAutocobro(boolean autocobro) {
+		this.autocobro = autocobro;
 	}
 	
 	

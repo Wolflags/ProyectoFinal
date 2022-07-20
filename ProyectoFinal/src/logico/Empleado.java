@@ -12,6 +12,7 @@ public class Empleado extends Persona {
 	private int annosExperiencia;
 	private String tipoEmpleado;
 	private String puestoTrabajo;
+	private boolean estado;
 
 	//Constructor
 	public Empleado(String cedula, String nombre, String direccion, String telefono, String usuario,
@@ -26,6 +27,7 @@ public class Empleado extends Persona {
 		this.annosExperiencia = annosExperiencia;
 		this.tipoEmpleado = tipoEmpleado;
 		this.puestoTrabajo = puestoTrabajo;
+		this.setEstado(true);
 	}
 	
 	//Getters y Setters
@@ -91,6 +93,14 @@ public class Empleado extends Persona {
 
 	public void setPuestoTrabajo(String puestoTrabajo) {
 		this.puestoTrabajo = puestoTrabajo;
+	}
+
+	public boolean isEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
 	}
 	
 	
