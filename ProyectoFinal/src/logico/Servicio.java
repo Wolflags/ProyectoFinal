@@ -4,11 +4,13 @@ public class Servicio {
 	protected String nombre;
 	protected String descripcion;
 	protected int duracion;
-	public Servicio(String nombre, String descripcion, int duracion) {
+	protected boolean autocobro;
+	public Servicio(String nombre, String descripcion, int duracion, boolean autocobro) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.duracion = duracion;
+		this.autocobro = autocobro;
 	}
 	public String getNombre() {
 		return nombre;
