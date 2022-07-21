@@ -7,7 +7,7 @@ public class Empleado extends Persona {
 	private String password;
 	private float salario;
 	private int cantHijos;
-	private char estadoCivil;
+	private String estadoCivil;
 	private int annosExperiencia;
 	private String tipoEmpleado;
 	private String puestoTrabajo;
@@ -15,7 +15,7 @@ public class Empleado extends Persona {
 
 	//Constructor
 	public Empleado(String cedula, String nombre, String direccion, String telefono,
-			String password, float salario, int cantHijos, char estadoCivil, int annosExperiencia,
+			String password, float salario, int cantHijos, String estadoCivil, int annosExperiencia,
 			String tipoEmpleado, String puestoTrabajo, String apellido, Date fechaNacimiento) {
 		super(cedula, nombre, direccion, telefono, apellido, fechaNacimiento);
 		this.password = password;
@@ -53,11 +53,11 @@ public class Empleado extends Persona {
 		this.cantHijos = cantHijos;
 	}
 
-	public char getEstadoCivil() {
+	public String getEstadoCivil() {
 		return estadoCivil;
 	}
 
-	public void setEstadoCivil(char estadoCivil) {
+	public void setEstadoCivil(String estadoCivil) {
 		this.estadoCivil = estadoCivil;
 	}
 

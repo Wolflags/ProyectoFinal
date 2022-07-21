@@ -15,17 +15,29 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import java.awt.Color;
 import javax.swing.JRadioButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.Date;
+
+import javax.swing.event.ChangeListener;
+
+import logico.Altice;
+import logico.Empleado;
+import logico.Persona;
+
+import javax.swing.event.ChangeEvent;
 
 public class RegEmpAdmin extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private static SpinnerNumberModel spnModel;
+	private static SpinnerNumberModel spnDiaModel;
+	@SuppressWarnings("deprecation")
+	private Date fechaActual = new Date(2022-1900, 6, 21);
 	private JTextField txtCedula;
 	private JTextField txtNombre;
 	private JTextField txtApellido;
@@ -60,6 +72,7 @@ public class RegEmpAdmin extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
+	@SuppressWarnings("deprecation")
 	public RegEmpAdmin() {
 		setTitle("Registrar Empleado");
 		setBounds(100, 100, 451, 694);
@@ -82,8 +95,8 @@ public class RegEmpAdmin extends JDialog {
 		txtCedula = new JTextField();
 		txtCedula.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e) {
-				txtNombre.setText(txtCedula.getText());
+			public void keyReleased(KeyEvent e) {
+				txtUsuario.setText(txtCedula.getText());
 			}
 		});
 		
@@ -114,16 +127,65 @@ public class RegEmpAdmin extends JDialog {
 		panel_Personales.add(lblFechaDeNacimiento);
 		
 		cbxMes = new JComboBox();
+		cbxMes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Meses de 30
+				if (cbxMes.getSelectedIndex() == 3 || cbxMes.getSelectedIndex() == 5 || cbxMes.getSelectedIndex() == 8 || cbxMes.getSelectedIndex() == 10) {
+					if (Integer.parseInt(spnDia.getValue().toString()) > 30)
+						spnDia.setValue(30);
+					spnDiaModel.setMaximum(30);
+				}
+				//Meses de 31
+				else if (cbxMes.getSelectedIndex() == 0 || cbxMes.getSelectedIndex() == 2 || cbxMes.getSelectedIndex() == 4 || cbxMes.getSelectedIndex() == 6 || cbxMes.getSelectedIndex() == 7 || cbxMes.getSelectedIndex() == 9 || cbxMes.getSelectedIndex() == 11) {
+					if (Integer.parseInt(spnDia.getValue().toString()) > 31)
+						spnDia.setValue(31);
+					spnDiaModel.setMaximum(31);
+				}
+				//Febrero
+				else if (cbxMes.getSelectedIndex() == 1) {
+					//Bisiesto
+					if ((Integer.parseInt(spnYear.getValue().toString()) % 4 == 0) && ((Integer.parseInt(spnYear.getValue().toString()) % 100 != 0) || (Integer.parseInt(spnYear.getValue().toString()) % 400 == 0))) {
+						if (Integer.parseInt(spnDia.getValue().toString()) > 29)
+							spnDia.setValue(29);
+						spnDiaModel.setMaximum(29);
+					}else {//No bisiesto
+						if (Integer.parseInt(spnDia.getValue().toString()) > 28)
+							spnDia.setValue(28);
+						spnDiaModel.setMaximum(28);
+					}
+				}
+				
+			}
+		});
 		cbxMes.setModel(new DefaultComboBoxModel(new String[] {"Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"}));
 		cbxMes.setBounds(267, 50, 50, 22);
 		panel_Personales.add(cbxMes);
 		
 		spnDia = new JSpinner();
-		spnDia.setModel(new SpinnerNumberModel(1, 1, 31, 1));
+		spnDiaModel = new SpinnerNumberModel(1 ,1 ,31 ,1);
+		spnDia.setModel(spnDiaModel);
 		spnDia.setBounds(214, 50, 41, 22);
+		spnDia.setValue(fechaActual.getDate());
 		panel_Personales.add(spnDia);
 		
 		spnYear = new JSpinner();
+		spnYear.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				//Febrero
+				if (cbxMes.getSelectedIndex() == 1) {
+					//Bisiesto
+					if ((Integer.parseInt(spnYear.getValue().toString()) % 4 == 0) && ((Integer.parseInt(spnYear.getValue().toString()) % 100 != 0) || (Integer.parseInt(spnYear.getValue().toString()) % 400 == 0))) {
+						if (Integer.parseInt(spnDia.getValue().toString()) > 29)
+							spnDia.setValue(29);
+						spnDiaModel.setMaximum(29);
+					}else {//No bisiesto
+						if (Integer.parseInt(spnDia.getValue().toString()) > 28)
+							spnDia.setValue(28);
+						spnDiaModel.setMaximum(28);
+					}
+				}
+			}
+		});
 		spnYear.setModel(new SpinnerNumberModel(2022, 1900, 2022, 1));
 		spnYear.setBounds(329, 50, 56, 22);
 		panel_Personales.add(spnYear);
@@ -249,13 +311,42 @@ public class RegEmpAdmin extends JDialog {
 		txtContraseña.setColumns(10);
 		txtContraseña.setBounds(214, 50, 170, 22);
 		panel_Plataforma.add(txtContraseña);
-		spnModel = new SpinnerNumberModel(1, 1, 30, 1);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton btnRegistrar = new JButton("Registrar");
+				btnRegistrar.addActionListener(new ActionListener() {
+					@SuppressWarnings("deprecation")
+					public void actionPerformed(ActionEvent e) {
+						if (validarDatos()) {
+							if(rbAdministrador.isSelected()) {
+								Date fecNac = new Date(1, 1, 1);
+								fecNac.setDate(Integer.parseInt(spnDia.getValue().toString()));
+								fecNac.setMonth(cbxMes.getSelectedIndex());
+								fecNac.setYear(Integer.parseInt(spnYear.getValue().toString())-1900);
+								Persona empleado = new Empleado(txtCedula.getText(), txtNombre.getText(), txtDireccion.getText(), txtTelefono.getText(), txtContraseña.getText(), Float.parseFloat(spnSalario.getValue().toString()), 
+										Integer.parseInt(spnCantHijos.getValue().toString()), cbxEstCivil.getSelectedItem().toString(), Integer.parseInt(spnExpLaboral.getValue().toString()), 
+										"Administrador", txtPuestoTrabajo.toString(), txtApellido.toString(), fecNac);
+								Altice.getInstance().insertarPersona(empleado);
+								clean();
+								JOptionPane.showMessageDialog(null, "Registro existoso.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+							}else {
+								Date fecNac = new Date(1, 1, 1);
+								fecNac.setDate(Integer.parseInt(spnDia.getValue().toString()));
+								fecNac.setMonth(cbxMes.getSelectedIndex());
+								fecNac.setYear(Integer.parseInt(spnYear.getValue().toString())-1900);
+								Persona empleado = new Empleado(txtCedula.getText(), txtNombre.getText(), txtDireccion.getText(), txtTelefono.getText(), txtContraseña.getText(), Float.parseFloat(spnSalario.getValue().toString()), 
+										Integer.parseInt(spnCantHijos.getValue().toString()), cbxEstCivil.getSelectedItem().toString(), Integer.parseInt(spnExpLaboral.getValue().toString()), 
+										"Empleado", txtPuestoTrabajo.toString(), txtApellido.toString(), fecNac);
+								Altice.getInstance().insertarPersona(empleado);
+								clean();
+								JOptionPane.showMessageDialog(null, "Registro existoso.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+							}
+						}
+					}
+				});
 				btnRegistrar.setActionCommand("OK");
 				buttonPane.add(btnRegistrar);
 				getRootPane().setDefaultButton(btnRegistrar);
@@ -271,5 +362,50 @@ public class RegEmpAdmin extends JDialog {
 				buttonPane.add(btnCancelar);
 			}
 		}
+		cbxMes.setSelectedIndex(fechaActual.getMonth());
+	}
+	
+	private boolean validarDatos() {
+		if (txtCedula.getText().equalsIgnoreCase("") || txtNombre.getText().equalsIgnoreCase("") || txtApellido.getText().equalsIgnoreCase("") || txtDireccion.getText().equalsIgnoreCase("") || txtTelefono.getText().equalsIgnoreCase("") || txtContraseña.getText().equalsIgnoreCase("") || txtPuestoTrabajo.getText().equalsIgnoreCase("")) {
+			JOptionPane.showMessageDialog(null, "Debe rellenar todos los espacios en blanco.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		
+		if (Altice.getInstance().buscarEmpleadoByCedula(txtCedula.getText()) != null) {
+			JOptionPane.showMessageDialog(null, "¡Cédula ya existente!", "Advertencia", JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		
+		if (Altice.getInstance().buscarDireccionExistente(txtDireccion.getText())) {
+			JOptionPane.showMessageDialog(null, "¡Dirección ya existente!", "Advertencia", JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+
+		if (Altice.getInstance().buscarTelefonoExistente(txtTelefono.getText())) {
+			JOptionPane.showMessageDialog(null, "¡Teléfono ya existente!", "Advertencia", JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+
+		
+		return true;
+	}
+	private void clean() {
+		txtCedula.setText("");
+		txtNombre.setText("");
+		txtApellido.setText("");
+		cbxMes.setSelectedIndex(fechaActual.getMonth());
+		spnDia.setValue(fechaActual.getDate());
+		spnYear.setValue(fechaActual.getYear() + 1900);
+		txtDireccion.setText("");
+		txtTelefono.setText("");
+		spnExpLaboral.setValue(0);
+		spnCantHijos.setValue(0);
+		cbxEstCivil.setSelectedIndex(0);
+		spnSalario.setValue(0.0);
+		txtPuestoTrabajo.setText("");
+		rbAdministrador.setSelected(true);
+		rbEmpleado.setSelected(false);
+		txtUsuario.setText("");
+		txtContraseña.setText("");
 	}
 }

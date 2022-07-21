@@ -16,9 +16,9 @@ public class Altice {
 		personas = new ArrayList<Persona>();
 		planes = new ArrayList<Plan>();
 		facturas = new ArrayList<Factura>();
-		Date nacimiento = new Date(63, 8, 20);
+		Date nacimiento = new Date();
 		Empleado mainAdmin = new Empleado("admin", "Patrick", "Woerden", "123-456-7890", "1234", 
-				(float)60000.0, 2, 'C', 10, "Admin", "Oficina 01", "Drahi", nacimiento);
+				(float)60000.0, 2, "Casado", 10, "Admin", "Oficina 01", "Drahi", nacimiento);
 		personas.add(mainAdmin);
 		
 	}
@@ -99,6 +99,29 @@ public class Altice {
 		if(aux != null) {
 			aux.setEstado(false);
 		}
+	}
+
+	public boolean buscarDireccionExistente(String direccion) {
+		boolean busqueda = false;
+		int i = 0;
+		while (i < personas.size() && !busqueda) {
+			if (personas.get(i).getDireccion().equalsIgnoreCase(direccion))
+				busqueda = true;
+			i++;
+		}
+		return busqueda;
+	}
+
+	public boolean buscarTelefonoExistente(String telefono) {
+		boolean busqueda = false;
+		int i = 0;
+		while (i < personas.size() && !busqueda) {
+			if (personas.get(i).getTelefono().equalsIgnoreCase(telefono))
+				busqueda = true;
+			i++;
+		}
+		return busqueda;
+
 	}
 	
 }
