@@ -94,6 +94,12 @@ public class ListadoClientes extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnVerCliente = new JButton("Ver cliente");
+				btnVerCliente.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						PerfilCliente perCliente = new PerfilCliente(selected);
+						perCliente.setVisible(true);
+					}
+				});
 				btnVerCliente.setEnabled(false);
 				btnVerCliente.setActionCommand("OK");
 				buttonPane.add(btnVerCliente);
