@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Inicio extends JFrame {
 
@@ -59,26 +61,20 @@ public class Inicio extends JFrame {
 		JPanel panelIniciarSesion = new JPanel();
 		panelIniciarSesion.setBorder(new LineBorder(new Color(128, 128, 128), 3, true));
 		panelIniciarSesion.setBackground(Color.LIGHT_GRAY);
-		panelIniciarSesion.setBounds(503, 355, 353, 282);
+		panelIniciarSesion.setBounds(525, 355, 310, 282);
 		contentPane.add(panelIniciarSesion);
 		panelIniciarSesion.setLayout(null);
 		
-		JButton btnInicioAdmin = new JButton("Iniciar sesi\u00F3n como administrador");
-		btnInicioAdmin.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgAdmin64px.png")));
-		btnInicioAdmin.setBackground(Color.WHITE);
-		btnInicioAdmin.setBounds(10, 27, 333, 70);
-		panelIniciarSesion.add(btnInicioAdmin);
-		
-		JButton btnInicioCajero = new JButton("              Iniciar sesi\u00F3n como cajero");
-		btnInicioCajero.setBackground(Color.WHITE);
-		btnInicioCajero.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgCajero64px.png")));
-		btnInicioCajero.setBounds(10, 108, 333, 70);
-		panelIniciarSesion.add(btnInicioCajero);
-		
-		JButton btnInicioCliente = new JButton("            Iniciar sesi\u00F3n como cliente");
-		btnInicioCliente.setBackground(Color.WHITE);
-		btnInicioCliente.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgCliente64px.png")));
-		btnInicioCliente.setBounds(10, 187, 333, 70);
-		panelIniciarSesion.add(btnInicioCliente);
+		JButton btnInicioSesion = new JButton("         Iniciar sesi\u00F3n");
+		btnInicioSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				InicioSesion iniSesion = new InicioSesion();
+				iniSesion.setVisible(true);
+			}
+		});
+		btnInicioSesion.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgInicioSesion64px.png")));
+		btnInicioSesion.setBackground(Color.WHITE);
+		btnInicioSesion.setBounds(28, 27, 253, 70);
+		panelIniciarSesion.add(btnInicioSesion);
 	}
 }
