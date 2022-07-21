@@ -104,6 +104,7 @@ public class Login extends JFrame {
 						auxEmpleado = Altice.getInstance().buscarEmpleadoByCedula(txtUsuario.getText().toString());
 						JOptionPane.showMessageDialog(null, "Inicio de sesión satisfactorio", "Información", JOptionPane.INFORMATION_MESSAGE);
 						Inicio inicio = new Inicio(auxEmpleado);
+						dispose();
 						inicio.setVisible(true);
 					}
 					else {
