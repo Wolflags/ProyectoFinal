@@ -90,5 +90,15 @@ public class Altice {
 		return validar;
 	}
 	
-
+	public void insertarPersona(Persona persona) {
+		personas.add(persona);
+	}
+	
+	public void cancelarEmpleado(String cedula) {
+		Empleado aux = buscarEmpleadoByCedula(cedula);
+		if(aux != null) {
+			aux.setEstado(false);
+		}
+	}
+	
 }
