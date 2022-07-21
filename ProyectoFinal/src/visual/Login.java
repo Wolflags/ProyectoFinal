@@ -9,8 +9,13 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
+
+import logico.Altice;
+import logico.Empleado;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -24,7 +29,8 @@ public class Login extends JFrame {
 	private JPanel contentPane;
 	private Dimension dim;
 	private JTextField txtUsuario;
-	private JPasswordField passwordField;
+	private Empleado auxEmpleado = null;
+	private JTextField txtPassword;
 
 	/**
 	 * Launch the application.
@@ -84,10 +90,6 @@ public class Login extends JFrame {
 		lblPassword.setBounds(55, 122, 79, 14);
 		panelIniciarSesion.add(lblPassword);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(55, 147, 200, 20);
-		panelIniciarSesion.add(passwordField);
-		
 		JLabel lblIniciarSesion = new JLabel("Iniciar sesi\u00F3n");
 		lblIniciarSesion.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblIniciarSesion.setHorizontalAlignment(SwingConstants.CENTER);
@@ -95,8 +97,31 @@ public class Login extends JFrame {
 		panelIniciarSesion.add(lblIniciarSesion);
 		
 		JButton btnIniciarSesion = new JButton("Iniciar sesi\u00F3n");
+		btnIniciarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!txtUsuario.getText().equalsIgnoreCase("")) {
+					if(Altice.getInstance().validarClave(txtUsuario.getText().toString(), txtPassword.getText().toString())) {
+						auxEmpleado = Altice.getInstance().buscarEmpleadoByCedula(txtUsuario.getText().toString());
+						JOptionPane.showMessageDialog(null, "Inicio de sesión satisfactorio", "Información", JOptionPane.INFORMATION_MESSAGE);
+						Inicio inicio = new Inicio(auxEmpleado);
+						inicio.setVisible(true);
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecto", "Advertencia", JOptionPane.WARNING_MESSAGE);
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Debe llenar todos los campos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
 		btnIniciarSesion.setBackground(Color.WHITE);
 		btnIniciarSesion.setBounds(97, 188, 116, 23);
 		panelIniciarSesion.add(btnIniciarSesion);
+		
+		txtPassword = new JTextField();
+		txtPassword.setBounds(55, 147, 200, 20);
+		panelIniciarSesion.add(txtPassword);
+		txtPassword.setColumns(10);
 	}
 }

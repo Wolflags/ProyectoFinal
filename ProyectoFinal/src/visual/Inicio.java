@@ -1,80 +1,64 @@
 package visual;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.EventQueue;
+import java.awt.FlowLayout;
 
-import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import logico.Empleado;
+import java.awt.Toolkit;
 import java.awt.Color;
 import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import javax.swing.border.LineBorder;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 
-public class Inicio extends JFrame {
+public class Inicio extends JDialog {
 
-	private JPanel contentPane;
-	private Dimension dim;
+	private final JPanel contentPanel = new JPanel();
+	private Empleado auxEmpleado = null;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Inicio frame = new Inicio();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public Inicio() {
-		setTitle("Altice");
+	public Inicio(Empleado empleado) {
+		setModal(true);
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		dim = getToolkit().getScreenSize();
-		setSize(dim.width, dim.height-40);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Inicio.class.getResource("/media/imgLogoPequeno.jpg")));
+		setTitle("Altice - Inicio");
+		auxEmpleado = empleado;
+		setBounds(100, 100, 770, 389);
 		setLocationRelativeTo(null);
-		contentPane = new JPanel();
-		contentPane.setBackground(Color.BLACK);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		JLabel lblImagenLogoGrande = new JLabel("");
-		lblImagenLogoGrande.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgLogoGrande.jpg")));
-		lblImagenLogoGrande.setBounds(280, 32, 800, 312);
-		contentPane.add(lblImagenLogoGrande);
-		
-		JPanel panelIniciarSesion = new JPanel();
-		panelIniciarSesion.setBorder(new LineBorder(new Color(128, 128, 128), 3, true));
-		panelIniciarSesion.setBackground(Color.LIGHT_GRAY);
-		panelIniciarSesion.setBounds(525, 355, 310, 282);
-		contentPane.add(panelIniciarSesion);
-		panelIniciarSesion.setLayout(null);
-		
-		JButton btnInicioSesion = new JButton("         Iniciar sesi\u00F3n");
-		btnInicioSesion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				InicioSesion iniSesion = new InicioSesion();
-				iniSesion.setVisible(true);
+		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(Color.DARK_GRAY);
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		contentPanel.setLayout(null);
+		{
+			JPanel panelClientes = new JPanel();
+			panelClientes.setBackground(Color.LIGHT_GRAY);
+			panelClientes.setBounds(244, 50, 265, 250);
+			contentPanel.add(panelClientes);
+			panelClientes.setLayout(null);
+			{
+				JLabel lblPlanes = new JLabel("PLANES");
+				lblPlanes.setFont(new Font("Tahoma", Font.BOLD, 14));
+				lblPlanes.setHorizontalAlignment(SwingConstants.CENTER);
+				lblPlanes.setBounds(78, 11, 109, 32);
+				panelClientes.add(lblPlanes);
 			}
-		});
-		btnInicioSesion.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgInicioSesion64px.png")));
-		btnInicioSesion.setBackground(Color.WHITE);
-		btnInicioSesion.setBounds(28, 27, 253, 70);
-		panelIniciarSesion.add(btnInicioSesion);
+			{
+				JButton btnRegistrarPlan = new JButton("Registrar plan");
+				btnRegistrarPlan.setBackground(Color.WHITE);
+				btnRegistrarPlan.setBounds(30, 54, 205, 45);
+				panelClientes.add(btnRegistrarPlan);
+			}
+			{
+				JButton btnVerPlanes = new JButton("Ver planes");
+				btnVerPlanes.setBackground(Color.WHITE);
+				btnVerPlanes.setBounds(30, 110, 205, 45);
+				panelClientes.add(btnVerPlanes);
+			}
+		}
 	}
+
 }

@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class Empleado extends Persona {
 	//Atributos
-	private String usuario;
 	private String password;
 	private float salario;
 	private int cantHijos;
@@ -15,11 +14,10 @@ public class Empleado extends Persona {
 	private boolean estado;
 
 	//Constructor
-	public Empleado(String cedula, String nombre, String direccion, String telefono, String usuario,
+	public Empleado(String cedula, String nombre, String direccion, String telefono,
 			String password, float salario, int cantHijos, char estadoCivil, int annosExperiencia,
 			String tipoEmpleado, String puestoTrabajo, String apellido, Date fechaNacimiento) {
 		super(cedula, nombre, direccion, telefono, apellido, fechaNacimiento);
-		this.usuario = usuario;
 		this.password = password;
 		this.salario = salario;
 		this.cantHijos = cantHijos;
@@ -31,14 +29,6 @@ public class Empleado extends Persona {
 	}
 	
 	//Getters y Setters
-	public String getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
-
 	public String getPassword() {
 		return password;
 	}
