@@ -5,7 +5,7 @@ public class Internet extends Servicio {
 	private int cantMB;
 	private String tipo;
 	public Internet(String nombre, String descripcion, int duracion, boolean autocobro, int velocidad, int cantMB, String tipo) {
-		super(nombre, descripcion, duracion, autocobro);
+		super(descripcion, duracion, autocobro);
 		this.velocidad = velocidad;
 		this.cantMB = cantMB;
 		this.tipo = tipo;

@@ -1,23 +1,16 @@
 package logico;
 
-public class Servicio {
-	protected String nombre;
+public abstract class Servicio {
+	
 	protected String descripcion;
 	protected int duracion;
 	protected boolean autocobro;
 	
-	public Servicio(String nombre, String descripcion, int duracion, boolean autocobro) {
+	public Servicio(String descripcion, int duracion, boolean autocobro) {
 		super();
-		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.duracion = duracion;
 		this.autocobro = autocobro;
-	}
-	public String getNombre() {
-		return nombre;
-	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
 	}
 	public String getDescripcion() {
 		return descripcion;
