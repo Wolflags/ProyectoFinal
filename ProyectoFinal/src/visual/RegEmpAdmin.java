@@ -204,10 +204,24 @@ public class RegEmpAdmin extends JDialog {
 		
 		rbAdministrador = new JRadioButton("Administrador\r\n");
 		rbAdministrador.setSelected(true);
+		rbAdministrador.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(rbAdministrador.isSelected()) {
+					rbEmpleado.setSelected(false);
+				}
+			}
+		});
 		rbAdministrador.setBounds(51, 24, 127, 25);
 		panel_Tipo.add(rbAdministrador);
 		
 		rbEmpleado = new JRadioButton("Empleado");
+		rbEmpleado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(rbEmpleado.isSelected()) {
+					rbAdministrador.setSelected(false);
+				}
+			}
+		});
 		rbEmpleado.setBounds(229, 24, 127, 25);
 		panel_Tipo.add(rbEmpleado);
 		
@@ -248,6 +262,11 @@ public class RegEmpAdmin extends JDialog {
 			}
 			{
 				JButton btnCancelar = new JButton("Cancelar");
+				btnCancelar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				btnCancelar.setActionCommand("Cancel");
 				buttonPane.add(btnCancelar);
 			}

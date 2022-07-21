@@ -47,7 +47,7 @@ public class Inicio extends JFrame {
 		{
 			JPanel panelPlanes = new JPanel();
 			panelPlanes.setBackground(Color.LIGHT_GRAY);
-			panelPlanes.setBounds(547, 250, 265, 250);
+			panelPlanes.setBounds(547, 250, 265, 183);
 			contentPanel.add(panelPlanes);
 			panelPlanes.setLayout(null);
 			{
@@ -74,7 +74,7 @@ public class Inicio extends JFrame {
 			JPanel panelPersonal = new JPanel();
 			panelPersonal.setLayout(null);
 			panelPersonal.setBackground(Color.LIGHT_GRAY);
-			panelPersonal.setBounds(139, 250, 265, 250);
+			panelPersonal.setBounds(139, 250, 265, 183);
 			contentPanel.add(panelPersonal);
 			{
 				JLabel lblPersonal = new JLabel("PERSONAL");
@@ -106,7 +106,7 @@ public class Inicio extends JFrame {
 			JPanel panelClientes = new JPanel();
 			panelClientes.setLayout(null);
 			panelClientes.setBackground(Color.LIGHT_GRAY);
-			panelClientes.setBounds(953, 250, 265, 250);
+			panelClientes.setBounds(953, 250, 265, 183);
 			contentPanel.add(panelClientes);
 			{
 				JLabel lblClientes = new JLabel("CLIENTES");
@@ -117,6 +117,12 @@ public class Inicio extends JFrame {
 			}
 			{
 				JButton btnListadoClientes = new JButton("Listado de clientes");
+				btnListadoClientes.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ListadoClientes listClientes = new ListadoClientes();
+						listClientes.setVisible(true);
+					}
+				});
 				btnListadoClientes.setBackground(Color.WHITE);
 				btnListadoClientes.setBounds(30, 54, 205, 45);
 				panelClientes.add(btnListadoClientes);
@@ -126,7 +132,7 @@ public class Inicio extends JFrame {
 			JLabel lblImagenLogo = new JLabel("");
 			lblImagenLogo.setVerticalAlignment(SwingConstants.TOP);
 			lblImagenLogo.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgLogoTransparente.png")));
-			lblImagenLogo.setBounds(41, 24, 375, 209);
+			lblImagenLogo.setBounds(41, 30, 375, 209);
 			contentPanel.add(lblImagenLogo);
 		}
 		{
@@ -147,6 +153,31 @@ public class Inicio extends JFrame {
 			}
 			lblBienvenida.setBounds(328, 47, 600, 34);
 			contentPanel.add(lblBienvenida);
+		}
+		{
+			JPanel panel = new JPanel();
+			panel.setLayout(null);
+			panel.setBackground(Color.LIGHT_GRAY);
+			panel.setBounds(139, 457, 265, 183);
+			contentPanel.add(panel);
+			{
+				JLabel lblFacturacion = new JLabel("FACTURACI\u00D3N");
+				lblFacturacion.setHorizontalAlignment(SwingConstants.CENTER);
+				lblFacturacion.setFont(new Font("Tahoma", Font.BOLD, 14));
+				lblFacturacion.setBounds(62, 11, 140, 32);
+				panel.add(lblFacturacion);
+			}
+			{
+				JButton btnListadoFacturas = new JButton("Listado de facturas");
+				btnListadoFacturas.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+					}
+				});
+				btnListadoFacturas.setBackground(Color.WHITE);
+				btnListadoFacturas.setBounds(30, 54, 205, 45);
+				panel.add(btnListadoFacturas);
+			}
 		}
 	}
 
