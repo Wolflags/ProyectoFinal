@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JSpinner;
@@ -22,9 +23,13 @@ import java.awt.Color;
 import javax.swing.JRadioButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Date;
+import java.text.ParseException;
 
 import javax.swing.event.ChangeListener;
+import javax.swing.text.MaskFormatter;
 
 import logico.Altice;
 import logico.Empleado;
@@ -38,11 +43,11 @@ public class RegEmpAdmin extends JDialog {
 	private static SpinnerNumberModel spnDiaModel;
 	@SuppressWarnings("deprecation")
 	private Date fechaActual = new Date(2022-1900, 6, 21);
-	private JTextField txtCedula;
+	private JFormattedTextField txtCedula;
 	private JTextField txtNombre;
 	private JTextField txtApellido;
 	private JTextField txtDireccion;
-	private JTextField txtTelefono;
+	private JFormattedTextField txtTelefono;
 	private JTextField txtPuestoTrabajo;
 	private JSpinner spnDia;
 	private JComboBox cbxMes;
@@ -91,8 +96,16 @@ public class RegEmpAdmin extends JDialog {
 		JLabel lblNewLabel = new JLabel("C\u00E9dula:");
 		lblNewLabel.setBounds(12, 25, 56, 16);
 		panel_Personales.add(lblNewLabel);
+		MaskFormatter formatterced = null;
 		
-		txtCedula = new JTextField();
+		try {
+			formatterced = new MaskFormatter("###-#######-#");
+		} catch (ParseException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		txtCedula = new JFormattedTextField(formatterced);
 		txtCedula.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -213,25 +226,32 @@ public class RegEmpAdmin extends JDialog {
 		panel_Personales.add(lblTelfono);
 		
 		JLabel lblEstadoCivil = new JLabel("Estado Civil:");
-		lblEstadoCivil.setBounds(198, 220, 70, 16);
+		lblEstadoCivil.setBounds(164, 220, 70, 16);
 		panel_Personales.add(lblEstadoCivil);
 		
 		JLabel lblCantHijos = new JLabel("Cant. Hijos:");
 		lblCantHijos.setBounds(314, 220, 70, 16);
 		panel_Personales.add(lblCantHijos);
-		
-		txtTelefono = new JTextField();
+		MaskFormatter formatter = null;
+		try {
+			formatter = new MaskFormatter("(###) ###-####");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        txtTelefono = new JFormattedTextField(formatter);
 		txtTelefono.setColumns(10);
-		txtTelefono.setBounds(12, 245, 170, 22);
+		txtTelefono.setBounds(12, 245, 125, 22);
 		panel_Personales.add(txtTelefono);
 		
 		spnCantHijos = new JSpinner();
+		spnCantHijos.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		spnCantHijos.setBounds(314, 245, 70, 22);
 		panel_Personales.add(spnCantHijos);
 		
 		cbxEstCivil = new JComboBox();
 		cbxEstCivil.setModel(new DefaultComboBoxModel(new String[] {"Soltero/a", "Casado/a", "Divorciado/a"}));
-		cbxEstCivil.setBounds(198, 245, 98, 22);
+		cbxEstCivil.setBounds(164, 245, 132, 22);
 		panel_Personales.add(cbxEstCivil);
 		
 		JPanel panel_Laborales = new JPanel();

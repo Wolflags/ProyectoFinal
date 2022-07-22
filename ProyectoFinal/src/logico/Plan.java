@@ -6,6 +6,7 @@ import java.util.Date;
 public class Plan {
 	private String idplan;
 	private String nombre;
+	private String numero;
 	private ArrayList<Servicio> misServicios;
 	private float precio;
 	public Plan(String idplan, ArrayList<Servicio> misServicios, float precio) {
@@ -28,6 +29,12 @@ public class Plan {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	public String getNumero() {
+		return numero;
+	}
+	public void setNumero(String numero) {
+		this.numero = numero;
 	}
 	
 
