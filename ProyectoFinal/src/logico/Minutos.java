@@ -3,8 +3,8 @@ package logico;
 public class Minutos extends Servicio {
 	private int cantMins;
 	private String tipo;
-	public Minutos(String nombre, String descripcion, int duracion, boolean autocobro, int cantMins, String tipo) {
-		super(descripcion, duracion, autocobro);
+	public Minutos(String codigo, String descripcion, int duracion, boolean autocobro, int cantMins, String tipo) {
+		super(codigo, descripcion, duracion, autocobro);
 		this.cantMins = cantMins;
 		this.tipo = tipo;
 	}

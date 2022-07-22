@@ -7,6 +7,7 @@ public class Altice {
 	//Atributos
 	private ArrayList<Persona> personas;
 	private ArrayList<Plan> planes;
+	private ArrayList<Servicio> servicios;
 	private ArrayList<Factura> facturas;
 	private static Altice alti = null;
 	
@@ -15,6 +16,7 @@ public class Altice {
 		super();
 		personas = new ArrayList<Persona>();
 		planes = new ArrayList<Plan>();
+		setServicios(new ArrayList<Servicio>());
 		facturas = new ArrayList<Factura>();
 		Date nacimiento = new Date();
 		Empleado mainAdmin = new Empleado("admin", "Patrick", "Woerden", "123-456-7890", "1234", 
@@ -122,6 +124,14 @@ public class Altice {
 		}
 		return busqueda;
 
+	}
+
+	public ArrayList<Servicio> getServicios() {
+		return servicios;
+	}
+
+	public void setServicios(ArrayList<Servicio> servicios) {
+		this.servicios = servicios;
 	}
 	
 }

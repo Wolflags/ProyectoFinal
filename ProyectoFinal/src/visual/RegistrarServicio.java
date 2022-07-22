@@ -8,6 +8,13 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+
+import logico.Altice;
+import logico.Internet;
+import logico.Minutos;
+import logico.Servicio;
+import logico.Television;
+
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 import java.awt.Color;
@@ -26,7 +33,7 @@ import javax.swing.DefaultComboBoxModel;
 public class RegistrarServicio extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textField;
+	private JTextField txtCodigo;
 	private JPanel panel_minutos;
 	private JPanel panel_internet;
 	private JPanel panel_tv;
@@ -34,6 +41,14 @@ public class RegistrarServicio extends JDialog {
 	private JRadioButton rdbMinutos;
 	private JRadioButton rdbTelevision;
 	private JSpinner spn_diasVigencia;
+	private JSpinner spn_velocidad;
+	private JComboBox cmbTipoMinutos;
+	private JSpinner spn_cantMin;
+	private JComboBox cmbTipoTv;
+	private JSpinner spn_cantCanales;
+	private JComboBox cmbTipoFac;
+	private JTextArea txtDescripcion;
+	private boolean autocobro = true;
 
 	/**
 	 * Launch the application.
@@ -72,11 +87,11 @@ public class RegistrarServicio extends JDialog {
 			lblNewLabel.setBounds(21, 24, 56, 14);
 			panel.add(lblNewLabel);
 			
-			textField = new JTextField();
-			textField.setEditable(false);
-			textField.setBounds(21, 44, 116, 20);
-			panel.add(textField);
-			textField.setColumns(10);
+			txtCodigo = new JTextField();
+			txtCodigo.setEditable(false);
+			txtCodigo.setBounds(21, 44, 116, 20);
+			panel.add(txtCodigo);
+			txtCodigo.setColumns(10);
 			
 			JLabel lblNewLabel_2 = new JLabel("Descripci\u00F3n:");
 			lblNewLabel_2.setBounds(10, 75, 80, 14);
@@ -86,15 +101,33 @@ public class RegistrarServicio extends JDialog {
 			scrollPane.setBounds(10, 94, 426, 86);
 			panel.add(scrollPane);
 			
-			JTextArea textArea = new JTextArea();
-			scrollPane.setViewportView(textArea);
+			txtDescripcion = new JTextArea();
+			scrollPane.setViewportView(txtDescripcion);
 			
 			JLabel lblNewLabel_3 = new JLabel("Tipo de facturaci\u00F3n:");
 			lblNewLabel_3.setBounds(158, 24, 134, 14);
 			panel.add(lblNewLabel_3);
 			
 			spn_diasVigencia = new JSpinner();
-			spn_diasVigencia.setModel(new SpinnerNumberModel(new Integer(30), new Integer(1), null, new Integer(1)));
+			spn_diasVigencia.setModel(new SpinnerNumberModel(30, 30, 30, 1));
+			cmbTipoFac = new JComboBox();
+			cmbTipoFac.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+						if(cmbTipoFac.getSelectedIndex()==0) {
+						spn_diasVigencia.setModel(new SpinnerNumberModel(30, 30, 30, 1));
+						}else if(cmbTipoFac.getSelectedIndex()==1) {
+						spn_diasVigencia.setModel(new SpinnerNumberModel(365, 365, 365, 1));
+						}else {
+						spn_diasVigencia.setModel(new SpinnerNumberModel(1, 1, null, 1));
+						}
+				}
+			});
+			cmbTipoFac.setEditable(true);
+			cmbTipoFac.setModel(new DefaultComboBoxModel(new String[] {"Mensual", "Anual", "Agotable"}));
+			cmbTipoFac.setBounds(158, 44, 134, 20);
+			panel.add(cmbTipoFac);
+			
+			
 			spn_diasVigencia.setBounds(313, 44, 109, 20);
 			panel.add(spn_diasVigencia);
 			
@@ -102,10 +135,7 @@ public class RegistrarServicio extends JDialog {
 			lblNewLabel_4.setBounds(313, 24, 109, 14);
 			panel.add(lblNewLabel_4);
 			
-			JComboBox comboBox = new JComboBox();
-			comboBox.setModel(new DefaultComboBoxModel(new String[] {"Mensual", "Anual", "Agotable"}));
-			comboBox.setBounds(158, 44, 134, 20);
-			panel.add(comboBox);
+			
 		}
 		
 		JPanel panel = new JPanel();
@@ -174,18 +204,18 @@ public class RegistrarServicio extends JDialog {
 		lblNewLabel_10.setBounds(54, 11, 126, 14);
 		panel_tv.add(lblNewLabel_10);
 		
-		JSpinner spinner_3 = new JSpinner();
-		spinner_3.setBounds(54, 29, 141, 20);
-		panel_tv.add(spinner_3);
+		spn_cantCanales = new JSpinner();
+		spn_cantCanales.setBounds(54, 29, 141, 20);
+		panel_tv.add(spn_cantCanales);
 		
 		JLabel label = new JLabel("Tipo:");
 		label.setBounds(249, 11, 46, 14);
 		panel_tv.add(label);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Televisi\u00F3n por Fibra", "Televisi\u00F3n Satelital"}));
-		comboBox_2.setBounds(249, 29, 141, 20);
-		panel_tv.add(comboBox_2);
+		cmbTipoTv = new JComboBox();
+		cmbTipoTv.setModel(new DefaultComboBoxModel(new String[] {"Televisi\u00F3n por Fibra", "Televisi\u00F3n Satelital"}));
+		cmbTipoTv.setBounds(249, 29, 141, 20);
+		panel_tv.add(cmbTipoTv);
 		
 		panel_minutos = new JPanel();
 		panel_minutos.setVisible(false);
@@ -198,18 +228,18 @@ public class RegistrarServicio extends JDialog {
 		lblNewLabel_8.setBounds(54, 11, 126, 14);
 		panel_minutos.add(lblNewLabel_8);
 		
-		JSpinner spinner_2 = new JSpinner();
-		spinner_2.setBounds(54, 29, 141, 20);
-		panel_minutos.add(spinner_2);
+		spn_cantMin = new JSpinner();
+		spn_cantMin.setBounds(54, 29, 141, 20);
+		panel_minutos.add(spn_cantMin);
 		
 		JLabel lblNewLabel_9 = new JLabel("Tipo:");
 		lblNewLabel_9.setBounds(249, 11, 46, 14);
 		panel_minutos.add(lblNewLabel_9);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Minutos M\u00F3vil", "Minutos del Hogar"}));
-		comboBox_1.setBounds(249, 29, 141, 20);
-		panel_minutos.add(comboBox_1);
+		cmbTipoMinutos = new JComboBox();
+		cmbTipoMinutos.setModel(new DefaultComboBoxModel(new String[] {"Minutos M\u00F3vil", "Minutos del Hogar"}));
+		cmbTipoMinutos.setBounds(249, 29, 141, 20);
+		panel_minutos.add(cmbTipoMinutos);
 		
 		panel_internet = new JPanel();
 		panel_internet.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -221,26 +251,26 @@ public class RegistrarServicio extends JDialog {
 		lblNewLabel_5.setBounds(17, 11, 110, 14);
 		panel_internet.add(lblNewLabel_5);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setBounds(17, 29, 125, 20);
-		panel_internet.add(spinner);
+		spn_velocidad = new JSpinner();
+		spn_velocidad.setBounds(17, 29, 125, 20);
+		panel_internet.add(spn_velocidad);
 		
 		JLabel lblNewLabel_6 = new JLabel("Cantidad (Mb):");
 		lblNewLabel_6.setBounds(159, 11, 92, 14);
 		panel_internet.add(lblNewLabel_6);
 		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setBounds(159, 29, 125, 20);
-		panel_internet.add(spinner_1);
+		JSpinner spn_cantMb = new JSpinner();
+		spn_cantMb.setBounds(159, 29, 125, 20);
+		panel_internet.add(spn_cantMb);
 		
 		JLabel lblNewLabel_7 = new JLabel("Tipo:");
 		lblNewLabel_7.setBounds(301, 11, 92, 14);
 		panel_internet.add(lblNewLabel_7);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Internet M\u00F3vil", "Internet del Hogar"}));
-		comboBox.setBounds(301, 29, 125, 20);
-		panel_internet.add(comboBox);
+		JComboBox cmbTipoInternet = new JComboBox();
+		cmbTipoInternet.setModel(new DefaultComboBoxModel(new String[] {"Internet M\u00F3vil", "Internet del Hogar"}));
+		cmbTipoInternet.setBounds(301, 29, 125, 20);
+		panel_internet.add(cmbTipoInternet);
 		
 		
 		
@@ -252,6 +282,24 @@ public class RegistrarServicio extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Registrar");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						Servicio auxServicio = null;
+						if(cmbTipoFac.getSelectedIndex()==2) {
+							autocobro=false;
+						}
+						if(rdbInternet.isSelected()) {
+							auxServicio = new Internet(txtCodigo.getText(), txtDescripcion.getText(), Integer.parseInt(spn_diasVigencia.getValue().toString()), autocobro, Integer.parseInt(spn_velocidad.getValue().toString()), Integer.parseInt(spn_cantMb.getValue().toString()), cmbTipoInternet.getSelectedItem().toString());
+						}else if(rdbMinutos.isSelected()) {
+							auxServicio = new Minutos(txtCodigo.getText(), txtDescripcion.getText(), Integer.parseInt(spn_diasVigencia.getValue().toString()), autocobro, Integer.parseInt(spn_cantMin.getValue().toString()),cmbTipoMinutos.getSelectedItem().toString());
+						}else if(rdbTelevision.isSelected()) {
+							auxServicio = new Television(txtCodigo.getText(), txtDescripcion.getText(), Integer.parseInt(spn_diasVigencia.getValue().toString()), autocobro, Integer.parseInt(spn_cantCanales.getValue().toString()),cmbTipoTv.getSelectedItem().toString());
+						}
+						if(auxServicio!=null){
+						Altice.getInstance().getServicios().add(auxServicio);
+						}
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
@@ -271,8 +319,7 @@ public class RegistrarServicio extends JDialog {
 	}
 
 	private void cargar() {
-		// TODO Auto-generated method stub
-		spn_diasVigencia.setEnabled(false);
+		txtCodigo.setText("S-"+Servicio.genIdServicio);
 		
 	}
 }

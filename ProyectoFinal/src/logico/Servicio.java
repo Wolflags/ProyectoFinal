@@ -2,15 +2,20 @@ package logico;
 
 public abstract class Servicio {
 	
+	protected String codigo;
 	protected String descripcion;
 	protected int duracion;
 	protected boolean autocobro;
+	public static int genIdServicio = 1;
 	
-	public Servicio(String descripcion, int duracion, boolean autocobro) {
+	public Servicio(String codigo, String descripcion, int duracion, boolean autocobro) {
 		super();
 		this.descripcion = descripcion;
 		this.duracion = duracion;
 		this.autocobro = autocobro;
+	}
+	public String getCodigo() {
+		return codigo;
 	}
 	public String getDescripcion() {
 		return descripcion;

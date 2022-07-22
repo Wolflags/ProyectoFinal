@@ -51,6 +51,7 @@ public class RegistrarPlan extends JDialog {
 		setBounds(100, 100, 450, 430);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(Color.WHITE);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
@@ -138,8 +139,8 @@ public class RegistrarPlan extends JDialog {
 		panel_1.add(txtNoSeleccionado_2);
 		txtNoSeleccionado_2.setColumns(10);
 		
-		JLabel lblNewLabel_5 = new JLabel("Precio:");
-		lblNewLabel_5.setBounds(81, 193, 62, 14);
+		JLabel lblNewLabel_5 = new JLabel("Precio del plan:");
+		lblNewLabel_5.setBounds(40, 193, 103, 14);
 		panel_1.add(lblNewLabel_5);
 		
 		textField_2 = new JTextField();
