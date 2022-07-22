@@ -133,5 +133,14 @@ public class Altice {
 	public void setServicios(ArrayList<Servicio> servicios) {
 		this.servicios = servicios;
 	}
+
+	public ArrayList<Persona> buscarTodosEmpleadoByNombre(String nombre) {
+		ArrayList<Persona> empleados = new ArrayList<Persona>();
+		for (Persona empleado : personas) {
+			if (empleado instanceof Empleado && empleado.getNombre().equalsIgnoreCase(nombre)) 
+				empleados.add(empleado);
+		}
+		return empleados;
+	}
 	
 }
