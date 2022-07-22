@@ -179,6 +179,32 @@ public class Inicio extends JFrame {
 				panel.add(btnListadoFacturas);
 			}
 		}
+		{
+			JPanel panel = new JPanel();
+			panel.setLayout(null);
+			panel.setBackground(Color.LIGHT_GRAY);
+			panel.setBounds(547, 457, 265, 183);
+			contentPanel.add(panel);
+			{
+				JLabel lblServicios = new JLabel("SERVICIOS");
+				lblServicios.setHorizontalAlignment(SwingConstants.CENTER);
+				lblServicios.setFont(new Font("Tahoma", Font.BOLD, 14));
+				lblServicios.setBounds(78, 11, 109, 32);
+				panel.add(lblServicios);
+			}
+			{
+				JButton btnNuevoServicio = new JButton("Nuevo servicio");
+				btnNuevoServicio.setBackground(Color.WHITE);
+				btnNuevoServicio.setBounds(30, 54, 205, 45);
+				panel.add(btnNuevoServicio);
+			}
+			{
+				JButton btnListadoDeServicios = new JButton("Listado de servicios");
+				btnListadoDeServicios.setBackground(Color.WHITE);
+				btnListadoDeServicios.setBounds(30, 110, 205, 45);
+				panel.add(btnListadoDeServicios);
+			}
+		}
 	}
 
 }
