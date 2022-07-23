@@ -289,7 +289,7 @@ public class RegistrarServicio extends JDialog {
 							autocobro=false;
 						}
 						if(rdbInternet.isSelected()) {
-							auxServicio = new Internet(txtCodigo.getText(), txtDescripcion.getText(), Integer.parseInt(spn_diasVigencia.getValue().toString()), autocobro, Integer.parseInt(spn_velocidad.getValue().toString()), Integer.parseInt(spn_cantMb.getValue().toString()), cmbTipoInternet.getSelectedItem().toString());
+							auxServicio = new Internet(txtCodigo.getText(), txtDescripcion.getText(), Integer.parseInt(spn_diasVigencia.getValue().toString()), autocobro, Integer.parseInt(spn_velocidad.getValue().toString()), Integer.parseInt(spn_cantMb.getValue().toString()), cmbTipoInternet.getSelectedItem().toString());							
 						}else if(rdbMinutos.isSelected()) {
 							auxServicio = new Minutos(txtCodigo.getText(), txtDescripcion.getText(), Integer.parseInt(spn_diasVigencia.getValue().toString()), autocobro, Integer.parseInt(spn_cantMin.getValue().toString()),cmbTipoMinutos.getSelectedItem().toString());
 						}else if(rdbTelevision.isSelected()) {
@@ -297,6 +297,8 @@ public class RegistrarServicio extends JDialog {
 						}
 						if(auxServicio!=null){
 						Altice.getInstance().getServicios().add(auxServicio);
+						Servicio.genIdServicio++;
+						dispose();
 						}
 					}
 				});

@@ -61,6 +61,22 @@ public class Altice {
 		return aux;
 	}
 	
+	public Servicio buscarServicioByCod(String codServ) {
+		Servicio auxServ = null;
+		int i = 0;
+		boolean encontrado = false;
+		while(i < servicios.size() && !encontrado) {
+			
+				if(servicios.get(i).getCodigo().equalsIgnoreCase(codServ)) {
+					auxServ = servicios.get(i);
+					encontrado = true;
+				}
+			
+			i++;
+		}
+		return auxServ;
+	}
+	
 	public Empleado buscarEmpleadoByCedula(String cedula) {
 		Empleado aux = null;
 		int i = 0;

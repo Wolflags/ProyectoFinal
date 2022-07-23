@@ -200,12 +200,27 @@ public class Inicio extends JFrame {
 			}
 			{
 				JButton btnNuevoServicio = new JButton("Nuevo servicio");
+				btnNuevoServicio.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						RegistrarServicio regServ = new RegistrarServicio();
+						regServ.setVisible(true);
+						regServ.setModal(true);
+					}
+				});
 				btnNuevoServicio.setBackground(Color.WHITE);
 				btnNuevoServicio.setBounds(30, 54, 205, 45);
 				panelServicios.add(btnNuevoServicio);
 			}
 			{
 				JButton btnListadoDeServicios = new JButton("Listado de servicios");
+				btnListadoDeServicios.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ListadoServicios lisServ = new ListadoServicios();
+						lisServ.setVisible(true);
+						lisServ.setModal(true);
+					}
+				});
+				
 				btnListadoDeServicios.setBackground(Color.WHITE);
 				btnListadoDeServicios.setBounds(30, 110, 205, 45);
 				panelServicios.add(btnListadoDeServicios);

@@ -19,6 +19,7 @@ import logico.Cliente;
 import logico.Internet;
 import logico.Minutos;
 import logico.Servicio;
+import logico.Television;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -30,6 +31,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ListadoServicios extends JDialog {
 
@@ -39,9 +42,24 @@ public class ListadoServicios extends JDialog {
 	private static DefaultTableModel model;
 	private static Object[] row;
 	private JTextField textField;
-	private JTextField txtS;
-	private JTextField txtNoSeleccionado;
+	private JTextField txtCodigo;
+	private JTextField txtTipoServ;
 	private String ini="";
+	private JButton btnEditarServ;
+	private Servicio selected = null;
+	private JComboBox cmbTipoFac;
+	private JSpinner spn_DiasVigencia;
+	private JTextArea txtDescripcion;
+	private JSpinner spnVelInter;
+	private JSpinner spnCantInter;
+	private JComboBox cmbTipoInter;
+	private JSpinner spnCantMinutos;
+	private JComboBox cmbTipoMinutos;
+	private JSpinner spnCantCanales;
+	private JComboBox cmbTipoTv;
+	private JPanel panelTelevision;
+	private JPanel panelMinutos;
+	private JPanel panelInternet;
 
 	/**
 	 * Launch the application.
@@ -82,8 +100,22 @@ public class ListadoServicios extends JDialog {
 			panel.add(scrollPane);
 			
 			table = new JTable();
+			table.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					int index = table.getSelectedRow();
+					if(index>=0) {
+					btnEditarServ.setEnabled(true);
+					String codServ = table.getValueAt(index, 0).toString();
+					selected=Altice.getInstance().buscarServicioByCod(codServ);
+					cargarServSel();
+					}
+				}
+
+				
+			});
 			model = new DefaultTableModel();
-			String[] headers = {"Código","Tipo de facturación","Dias Vigencia"};
+			String[] headers = {"Código","Tipo de servicio","Tipo de facturación","Dias Vigencia"};
 			model.setColumnIdentifiers(headers);
 			table.setModel(model);
 			scrollPane.setViewportView(table);
@@ -140,30 +172,30 @@ public class ListadoServicios extends JDialog {
 			lblNewLabel_5.setBounds(10, 80, 61, 14);
 			panel.add(lblNewLabel_5);
 			
-			txtS = new JTextField();
-			txtS.setText("S-00");
-			txtS.setEditable(false);
-			txtS.setBounds(10, 105, 178, 20);
-			panel.add(txtS);
-			txtS.setColumns(10);
+			txtCodigo = new JTextField();
+			txtCodigo.setText("S-00");
+			txtCodigo.setEditable(false);
+			txtCodigo.setBounds(10, 105, 178, 20);
+			panel.add(txtCodigo);
+			txtCodigo.setColumns(10);
 			
 			JLabel lblNewLabel_6 = new JLabel("Tipo de facturaci\u00F3n:");
 			lblNewLabel_6.setBounds(10, 136, 119, 14);
 			panel.add(lblNewLabel_6);
 			
-			JComboBox comboBox = new JComboBox();
-			comboBox.setModel(new DefaultComboBoxModel(new String[] {"No seleccionada"}));
-			comboBox.setBounds(10, 161, 178, 20);
-			panel.add(comboBox);
+			cmbTipoFac = new JComboBox();
+			cmbTipoFac.setModel(new DefaultComboBoxModel(new String[] {"No seleccionada", "Mensual", "Anual", "Agotable"}));
+			cmbTipoFac.setBounds(10, 161, 178, 20);
+			panel.add(cmbTipoFac);
 			
 			JLabel lblNewLabel_7 = new JLabel("Dias de Vigencia:");
 			lblNewLabel_7.setBounds(10, 192, 119, 14);
 			panel.add(lblNewLabel_7);
 			
-			JSpinner spinner = new JSpinner();
-			spinner.setModel(new SpinnerNumberModel(0, 0, 0, 1));
-			spinner.setBounds(10, 217, 178, 20);
-			panel.add(spinner);
+			spn_DiasVigencia = new JSpinner();
+			spn_DiasVigencia.setModel(new SpinnerNumberModel(0, 0, 0, 1));
+			spn_DiasVigencia.setBounds(10, 217, 178, 20);
+			panel.add(spn_DiasVigencia);
 			
 			JLabel lblNewLabel_8 = new JLabel("Descripci\u00F3n:");
 			lblNewLabel_8.setBounds(10, 248, 119, 14);
@@ -173,62 +205,112 @@ public class ListadoServicios extends JDialog {
 			scrollPane.setBounds(10, 273, 327, 151);
 			panel.add(scrollPane);
 			
-			JTextArea textArea = new JTextArea();
-			textArea.setEditable(false);
-			scrollPane.setViewportView(textArea);
+			txtDescripcion = new JTextArea();
+			txtDescripcion.setEditable(false);
+			scrollPane.setViewportView(txtDescripcion);
 			
 			JLabel lblNewLabel_9 = new JLabel("Tipo de Servicio:");
 			lblNewLabel_9.setBounds(10, 435, 119, 14);
 			panel.add(lblNewLabel_9);
 			
-			txtNoSeleccionado = new JTextField();
-			txtNoSeleccionado.setText("<No seleccionado>");
-			txtNoSeleccionado.setEditable(false);
-			txtNoSeleccionado.setBounds(10, 460, 178, 20);
-			panel.add(txtNoSeleccionado);
-			txtNoSeleccionado.setColumns(10);
+			txtTipoServ = new JTextField();
+			txtTipoServ.setText("<No seleccionado>");
+			txtTipoServ.setEditable(false);
+			txtTipoServ.setBounds(10, 460, 178, 20);
+			panel.add(txtTipoServ);
+			txtTipoServ.setColumns(10);
 		}
+		panelTelevision = new JPanel();
+		panelTelevision.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelTelevision.setBounds(10, 513, 347, 138);
+		contentPanel.add(panelTelevision);
+		panelTelevision.setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(10, 513, 347, 138);
-		contentPanel.add(panel);
-		panel.setLayout(null);
+		JLabel lblNewLabel_15 = new JLabel("Cantidad de canales:");
+		lblNewLabel_15.setBounds(10, 11, 149, 14);
+		panelTelevision.add(lblNewLabel_15);
+		
+		spnCantCanales = new JSpinner();
+		spnCantCanales.setBounds(10, 32, 188, 20);
+		panelTelevision.add(spnCantCanales);
+		
+		JLabel lblNewLabel_16 = new JLabel("Tipo:");
+		lblNewLabel_16.setBounds(10, 63, 149, 14);
+		panelTelevision.add(lblNewLabel_16);
+		
+		cmbTipoTv = new JComboBox();
+		cmbTipoTv.setModel(new DefaultComboBoxModel(new String[] {"Televisi\u00F3n por Fibra", "Televisi\u00F3n Satelital"}));
+		cmbTipoTv.setBounds(10, 85, 188, 20);
+		panelTelevision.add(cmbTipoTv);
+		
+		panelMinutos = new JPanel();
+		panelMinutos.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelMinutos.setBounds(10, 513, 347, 138);
+		contentPanel.add(panelMinutos);
+		panelMinutos.setLayout(null);
+		
+		JLabel lblNewLabel_13 = new JLabel("Cantidad de minutos:");
+		lblNewLabel_13.setBounds(10, 11, 146, 14);
+		panelMinutos.add(lblNewLabel_13);
+		
+		spnCantMinutos = new JSpinner();
+		spnCantMinutos.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		spnCantMinutos.setBounds(10, 36, 207, 20);
+		panelMinutos.add(spnCantMinutos);
+		
+		JLabel lblNewLabel_14 = new JLabel("Tipo:");
+		lblNewLabel_14.setBounds(10, 67, 146, 14);
+		panelMinutos.add(lblNewLabel_14);
+		
+		cmbTipoMinutos = new JComboBox();
+		cmbTipoMinutos.setModel(new DefaultComboBoxModel(new String[] {"Minutos M\u00F3vil", "Minutos del Hogar"}));
+		cmbTipoMinutos.setBounds(10, 92, 207, 20);
+		panelMinutos.add(cmbTipoMinutos);
+		
+		panelInternet = new JPanel();
+		panelInternet.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelInternet.setBounds(10, 513, 347, 138);
+		contentPanel.add(panelInternet);
+		panelInternet.setLayout(null);
 		
 		JLabel lblNewLabel_10 = new JLabel("Velocidad (Mbps):");
 		lblNewLabel_10.setBounds(10, 11, 147, 14);
-		panel.add(lblNewLabel_10);
+		panelInternet.add(lblNewLabel_10);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(0, 0, 0, 1));
-		spinner.setBounds(10, 36, 147, 20);
-		panel.add(spinner);
+		spnVelInter = new JSpinner();
+		spnVelInter.setModel(new SpinnerNumberModel(0, 0, 0, 1));
+		spnVelInter.setBounds(10, 36, 147, 20);
+		panelInternet.add(spnVelInter);
 		
 		JLabel lblNewLabel_11 = new JLabel("Cantidad (Mb):");
 		lblNewLabel_11.setBounds(179, 11, 108, 14);
-		panel.add(lblNewLabel_11);
+		panelInternet.add(lblNewLabel_11);
 		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setModel(new SpinnerNumberModel(0, 0, 0, 1));
-		spinner_1.setBounds(179, 36, 158, 20);
-		panel.add(spinner_1);
+		spnCantInter = new JSpinner();
+		spnCantInter.setModel(new SpinnerNumberModel(0, 0, 0, 1));
+		spnCantInter.setBounds(179, 36, 158, 20);
+		panelInternet.add(spnCantInter);
 		
 		JLabel lblNewLabel_12 = new JLabel("Tipo de internet:");
 		lblNewLabel_12.setBounds(10, 67, 108, 14);
-		panel.add(lblNewLabel_12);
+		panelInternet.add(lblNewLabel_12);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"No seleccionado"}));
-		comboBox.setBounds(10, 92, 147, 20);
-		panel.add(comboBox);
+		cmbTipoInter = new JComboBox();
+		cmbTipoInter.setModel(new DefaultComboBoxModel(new String[] {"No seleccionado", "Internet M\u00F3vil", "Internet del Hogar"}));
+		cmbTipoInter.setBounds(10, 92, 147, 20);
+		panelInternet.add(cmbTipoInter);
+		
+		
+		
+		
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			
-			JButton btnNewButton = new JButton("Modificar servicio");
-			btnNewButton.setEnabled(false);
-			buttonPane.add(btnNewButton);
+			btnEditarServ = new JButton("Modificar servicio");
+			btnEditarServ.setEnabled(false);
+			buttonPane.add(btnEditarServ);
 			{
 				JButton okButton = new JButton("Guardar");
 				okButton.setActionCommand("OK");
@@ -248,6 +330,69 @@ public class ListadoServicios extends JDialog {
 		}
 		loadServicios("");
 	}
+	
+	private void cargarServSel() {
+		if(selected!=null) {
+		txtCodigo.setText(selected.getCodigo());
+		if(selected.getDuracion()==30) {
+			cmbTipoFac.setSelectedIndex(1);
+		}else if(selected.getDuracion()==365) {
+			cmbTipoFac.setSelectedIndex(2);
+		}else {
+			cmbTipoFac.setSelectedIndex(3);
+		}
+		spn_DiasVigencia.setValue(selected.getDuracion());
+		txtDescripcion.setText(selected.getDescripcion());
+		if(selected instanceof Internet) {
+			txtTipoServ.setText("Internet");
+		}else if(selected instanceof Minutos) {
+			txtTipoServ.setText("Minutos");
+		}else {
+			txtTipoServ.setText("Television");
+		}
+		
+		if(selected instanceof Internet) {
+			
+			panelTelevision.setVisible(false);
+			panelInternet.setVisible(true);
+			panelMinutos.setVisible(false);
+			
+			spnVelInter.setValue(((Internet) selected).getVelocidad());
+			spnCantInter.setValue(((Internet) selected).getCantMB());
+			if(((Internet) selected).getTipo().equalsIgnoreCase("")) {
+			cmbTipoInter.setSelectedIndex(1);
+			}
+		}else if(selected instanceof Minutos) {
+			
+			panelTelevision.setVisible(false);
+			panelInternet.setVisible(false);
+			panelMinutos.setVisible(true);
+			
+			spnCantMinutos.setValue(((Minutos) selected).getCantMins());
+			if(((Minutos) selected).getTipo().equalsIgnoreCase("Minutos Móvil")) {
+			cmbTipoMinutos.setSelectedIndex(0);
+			}else if(((Minutos) selected).getTipo().equalsIgnoreCase("Minutos Móvil")) {
+				cmbTipoMinutos.setSelectedIndex(1);
+			}
+		}else if(selected instanceof Television) {
+			
+			panelTelevision.setVisible(true);
+			panelInternet.setVisible(false);
+			panelMinutos.setVisible(false);
+			
+			spnCantCanales.setValue(((Television) selected).getCantCanales());
+			if(((Television) selected).getTipo().equalsIgnoreCase("Televisión por Fibra")) {
+				cmbTipoTv.setSelectedIndex(0);
+			}else if(((Television) selected).getTipo().equalsIgnoreCase("Televisión por Cable")) {
+				cmbTipoTv.setSelectedIndex(1);
+			}
+			
+		}
+		
+		
+		
+		}
+	}
 
 	private void loadServicios(String string) {
 		if(ini=="") {
@@ -256,6 +401,7 @@ public class ListadoServicios extends JDialog {
 			ArrayList<Servicio> servicios = Altice.getInstance().getServicios();
 			for (Servicio servicio : servicios) {
 				row[0]=servicio.getCodigo();
+				
 				if(servicio instanceof Internet) {
 					row[1]="Internet";
 				}else if(servicio instanceof Minutos) {
@@ -263,7 +409,14 @@ public class ListadoServicios extends JDialog {
 				}else {
 					row[1]="Television";
 				}
-				row[2]=servicio.getDuracion();
+				if(servicio.getDuracion()==30) {
+					row[2]="Mensual";
+				}else if(servicio.getDuracion()==365) {
+					row[2]="Anual";
+				}else {
+					row[2]="Agotable";
+				}
+				row[3]=servicio.getDuracion();
 				model.addRow(row);
 			}
 			}else {
