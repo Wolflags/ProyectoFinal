@@ -13,6 +13,7 @@ public abstract class Servicio {
 		this.descripcion = descripcion;
 		this.duracion = duracion;
 		this.autocobro = autocobro;
+		this.codigo = codigo;
 	}
 	public String getCodigo() {
 		return codigo;

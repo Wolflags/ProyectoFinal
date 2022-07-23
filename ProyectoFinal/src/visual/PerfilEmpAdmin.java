@@ -315,7 +315,7 @@ public class PerfilEmpAdmin extends JDialog {
 							JOptionPane.showMessageDialog(null, "Cambios realizados exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
 						}
 						else {
-							JOptionPane.showMessageDialog(null, "Debe rellenar todos los espacios en blanco");
+							JOptionPane.showMessageDialog(null, "Debe rellenar todos los espacios en blanco", "Advertencia", JOptionPane.WARNING_MESSAGE);
 						}
 					}
 				});
