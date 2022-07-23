@@ -52,19 +52,22 @@ public class ListadoClientes extends JDialog {
 		setTitle("Listado de clientes");
 		setModal(true);
 		setResizable(false);
-		setBounds(100, 100, 678, 333);
+		setBounds(100, 100, 900, 500);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(new BorderLayout(0, 0));
+		contentPanel.setLayout(null);
 		{
 			JPanel panel = new JPanel();
-			contentPanel.add(panel, BorderLayout.CENTER);
-			panel.setLayout(new BorderLayout(0, 0));
+			panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			panel.setBounds(219, 13, 663, 392);
+			contentPanel.add(panel);
+			panel.setLayout(null);
 			{
 				JScrollPane scrollPane = new JScrollPane();
-				panel.add(scrollPane, BorderLayout.CENTER);
+				scrollPane.setBounds(12, 60, 639, 319);
+				panel.add(scrollPane);
 				{
 					table = new JTable();
 					table.addMouseListener(new MouseAdapter() {

@@ -97,6 +97,12 @@ public class Inicio extends JFrame {
 			}
 			{
 				JButton btnListadoEmpleados = new JButton("Listado de empleados");
+				btnListadoEmpleados.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						ListadoEmpleados listEmpleados = new ListadoEmpleados();
+						listEmpleados.setVisible(true);
+					}
+				});
 				btnListadoEmpleados.setBackground(Color.WHITE);
 				btnListadoEmpleados.setBounds(30, 110, 205, 45);
 				panelPersonal.add(btnListadoEmpleados);
@@ -155,17 +161,17 @@ public class Inicio extends JFrame {
 			contentPanel.add(lblBienvenida);
 		}
 		{
-			JPanel panel = new JPanel();
-			panel.setLayout(null);
-			panel.setBackground(Color.LIGHT_GRAY);
-			panel.setBounds(139, 457, 265, 183);
-			contentPanel.add(panel);
+			JPanel panelFacturacion = new JPanel();
+			panelFacturacion.setLayout(null);
+			panelFacturacion.setBackground(Color.LIGHT_GRAY);
+			panelFacturacion.setBounds(139, 457, 265, 183);
+			contentPanel.add(panelFacturacion);
 			{
 				JLabel lblFacturacion = new JLabel("FACTURACI\u00D3N");
 				lblFacturacion.setHorizontalAlignment(SwingConstants.CENTER);
 				lblFacturacion.setFont(new Font("Tahoma", Font.BOLD, 14));
 				lblFacturacion.setBounds(62, 11, 140, 32);
-				panel.add(lblFacturacion);
+				panelFacturacion.add(lblFacturacion);
 			}
 			{
 				JButton btnListadoFacturas = new JButton("Listado de facturas");
@@ -176,33 +182,33 @@ public class Inicio extends JFrame {
 				});
 				btnListadoFacturas.setBackground(Color.WHITE);
 				btnListadoFacturas.setBounds(30, 54, 205, 45);
-				panel.add(btnListadoFacturas);
+				panelFacturacion.add(btnListadoFacturas);
 			}
 		}
 		{
-			JPanel panel = new JPanel();
-			panel.setLayout(null);
-			panel.setBackground(Color.LIGHT_GRAY);
-			panel.setBounds(547, 457, 265, 183);
-			contentPanel.add(panel);
+			JPanel panelServicios = new JPanel();
+			panelServicios.setLayout(null);
+			panelServicios.setBackground(Color.LIGHT_GRAY);
+			panelServicios.setBounds(547, 457, 265, 183);
+			contentPanel.add(panelServicios);
 			{
 				JLabel lblServicios = new JLabel("SERVICIOS");
 				lblServicios.setHorizontalAlignment(SwingConstants.CENTER);
 				lblServicios.setFont(new Font("Tahoma", Font.BOLD, 14));
 				lblServicios.setBounds(78, 11, 109, 32);
-				panel.add(lblServicios);
+				panelServicios.add(lblServicios);
 			}
 			{
 				JButton btnNuevoServicio = new JButton("Nuevo servicio");
 				btnNuevoServicio.setBackground(Color.WHITE);
 				btnNuevoServicio.setBounds(30, 54, 205, 45);
-				panel.add(btnNuevoServicio);
+				panelServicios.add(btnNuevoServicio);
 			}
 			{
 				JButton btnListadoDeServicios = new JButton("Listado de servicios");
 				btnListadoDeServicios.setBackground(Color.WHITE);
 				btnListadoDeServicios.setBounds(30, 110, 205, 45);
-				panel.add(btnListadoDeServicios);
+				panelServicios.add(btnListadoDeServicios);
 			}
 		}
 	}

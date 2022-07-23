@@ -73,6 +73,7 @@ public class ListadoEmpleados extends JDialog {
 		setResizable(false);
 		setTitle("Listado de empleados");
 		setBounds(100, 100, 900, 500);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);

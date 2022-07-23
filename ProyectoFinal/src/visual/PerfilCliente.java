@@ -125,7 +125,7 @@ public class PerfilCliente extends JDialog {
 				JButton btnModificarCliente = new JButton("     Modificar cliente");
 				btnModificarCliente.setHorizontalAlignment(SwingConstants.LEADING);
 				btnModificarCliente.setIcon(new ImageIcon(PerfilCliente.class.getResource("/media/imgModificarCliente64px.png")));
-				btnModificarCliente.setBounds(10, 21, 201, 76);
+				btnModificarCliente.setBounds(27, 21, 201, 76);
 				panelBotones.add(btnModificarCliente);
 			}
 			{
@@ -139,7 +139,7 @@ public class PerfilCliente extends JDialog {
 				JButton btnVerFacturas = new JButton("     Ver facturas");
 				btnVerFacturas.setHorizontalAlignment(SwingConstants.LEADING);
 				btnVerFacturas.setIcon(new ImageIcon(PerfilCliente.class.getResource("/media/imgFactura64px.png")));
-				btnVerFacturas.setBounds(467, 21, 201, 76);
+				btnVerFacturas.setBounds(449, 21, 201, 76);
 				panelBotones.add(btnVerFacturas);
 			}
 		}
