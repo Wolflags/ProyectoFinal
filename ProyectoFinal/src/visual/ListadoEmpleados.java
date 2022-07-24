@@ -404,7 +404,8 @@ public class ListadoEmpleados extends JDialog {
 			if (((Empleado) empleado).isEstado())
 				row[4] = "Contratado";
 			else
-				row[4] = "Cancelado"; 
+				row[4] = "Cancelado";
+			model.addRow(row);
 		}
 	}
 }
