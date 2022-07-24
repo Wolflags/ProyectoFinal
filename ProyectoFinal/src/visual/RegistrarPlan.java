@@ -54,7 +54,7 @@ public class RegistrarPlan extends JDialog {
 	public RegistrarPlan() {
 		setTitle("Nuevo Plan");
 		setModal(true);
-		setBounds(100, 100, 450, 430);
+		setBounds(100, 100, 514, 466);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(SystemColor.menu);
@@ -64,7 +64,7 @@ public class RegistrarPlan extends JDialog {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Informaci\u00F3n General:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel.setBounds(10, 11, 414, 96);
+		panel.setBounds(10, 11, 478, 96);
 		contentPanel.add(panel);
 		panel.setLayout(null);
 		
@@ -74,7 +74,7 @@ public class RegistrarPlan extends JDialog {
 		
 		textField = new JTextField();
 		textField.setEditable(false);
-		textField.setBounds(66, 18, 142, 20);
+		textField.setBounds(66, 18, 163, 20);
 		panel.add(textField);
 		textField.setColumns(10);
 		
@@ -83,13 +83,13 @@ public class RegistrarPlan extends JDialog {
 		panel.add(lblNewLabel_1);
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(66, 52, 336, 20);
+		textField_1.setBounds(66, 52, 384, 20);
 		panel.add(textField_1);
 		textField_1.setColumns(10);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Servicios", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_1.setBounds(10, 113, 414, 229);
+		panel_1.setBounds(10, 113, 478, 265);
 		contentPanel.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -106,7 +106,7 @@ public class RegistrarPlan extends JDialog {
 				}
 			}
 		});
-		cbxInternet.setBounds(30, 38, 97, 23);
+		cbxInternet.setBounds(46, 38, 97, 23);
 		panel_1.add(cbxInternet);
 		
 		JCheckBox chckbxNewCheckBox_1 = new JCheckBox("Minutos");
@@ -122,7 +122,7 @@ public class RegistrarPlan extends JDialog {
 				}
 			}
 		});
-		chckbxNewCheckBox_1.setBounds(157, 38, 97, 23);
+		chckbxNewCheckBox_1.setBounds(189, 38, 97, 23);
 		panel_1.add(chckbxNewCheckBox_1);
 		
 		JCheckBox chckbxNewCheckBox_2 = new JCheckBox("Television");
@@ -138,7 +138,7 @@ public class RegistrarPlan extends JDialog {
 				}
 			}
 		});
-		chckbxNewCheckBox_2.setBounds(284, 38, 97, 23);
+		chckbxNewCheckBox_2.setBounds(332, 38, 97, 23);
 		panel_1.add(chckbxNewCheckBox_2);
 		
 		JLabel lblNewLabel_2 = new JLabel("Servicio de internet:");
@@ -148,7 +148,7 @@ public class RegistrarPlan extends JDialog {
 		txtInternet = new JTextField();
 		txtInternet.setText("No seleccionado");
 		txtInternet.setEditable(false);
-		txtInternet.setBounds(140, 77, 264, 20);
+		txtInternet.setBounds(140, 77, 311, 20);
 		panel_1.add(txtInternet);
 		txtInternet.setColumns(10);
 		
@@ -159,7 +159,7 @@ public class RegistrarPlan extends JDialog {
 		txtMinutos = new JTextField();
 		txtMinutos.setText("No seleccionado");
 		txtMinutos.setEditable(false);
-		txtMinutos.setBounds(140, 115, 264, 20);
+		txtMinutos.setBounds(140, 115, 311, 20);
 		panel_1.add(txtMinutos);
 		txtMinutos.setColumns(10);
 		
@@ -170,7 +170,7 @@ public class RegistrarPlan extends JDialog {
 		txtTelevision = new JTextField();
 		txtTelevision.setText("No seleccionado");
 		txtTelevision.setEditable(false);
-		txtTelevision.setBounds(140, 155, 264, 20);
+		txtTelevision.setBounds(140, 155, 311, 20);
 		panel_1.add(txtTelevision);
 		txtTelevision.setColumns(10);
 		
@@ -182,7 +182,7 @@ public class RegistrarPlan extends JDialog {
 		txtPrecio.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		txtPrecio.setText("0.00");
 		txtPrecio.setEditable(false);
-		txtPrecio.setBounds(140, 190, 114, 20);
+		txtPrecio.setBounds(140, 190, 162, 20);
 		panel_1.add(txtPrecio);
 		txtPrecio.setColumns(10);
 		{
