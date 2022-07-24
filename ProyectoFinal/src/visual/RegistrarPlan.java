@@ -8,6 +8,9 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+
+import logico.Servicio;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
@@ -17,17 +20,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JSpinner;
 import java.awt.Font;
+import java.awt.SystemColor;
 
 public class RegistrarPlan extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField;
 	private JTextField textField_1;
-	private JTextField txtNoSeleccionado;
-	private JTextField txtNoSeleccionado_1;
-	private JTextField txtNoSeleccionado_2;
-	private JTextField textField_2;
+	private static JTextField txtInternet;
+	private static JTextField txtMinutos;
+	private static JTextField txtTelevision;
+	private JTextField txtPrecio;
 	private JCheckBox cbxInternet;
+	public static Servicio selected = null;
+	private static int lastSelected = -1;
 
 	/**
 	 * Launch the application.
@@ -51,7 +57,7 @@ public class RegistrarPlan extends JDialog {
 		setBounds(100, 100, 450, 430);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBackground(Color.WHITE);
+		contentPanel.setBackground(SystemColor.menu);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
@@ -91,7 +97,12 @@ public class RegistrarPlan extends JDialog {
 		cbxInternet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(cbxInternet.isSelected()) {
-				System.out.println("S");
+					lastSelected=0;
+					ListadoServiciosModal lisServM = new ListadoServiciosModal(0);
+					lisServM.setVisible(true);
+					lisServM.setModal(true);
+				}else {
+					txtInternet.setText("No seleccionado");
 				}
 			}
 		});
@@ -99,10 +110,34 @@ public class RegistrarPlan extends JDialog {
 		panel_1.add(cbxInternet);
 		
 		JCheckBox chckbxNewCheckBox_1 = new JCheckBox("Minutos");
+		chckbxNewCheckBox_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(cbxInternet.isSelected()) {
+					lastSelected=1;
+					ListadoServiciosModal lisServM = new ListadoServiciosModal(1);
+					lisServM.setVisible(true);
+					lisServM.setModal(true);
+				}else {
+					txtMinutos.setText("No seleccionado");
+				}
+			}
+		});
 		chckbxNewCheckBox_1.setBounds(157, 38, 97, 23);
 		panel_1.add(chckbxNewCheckBox_1);
 		
 		JCheckBox chckbxNewCheckBox_2 = new JCheckBox("Television");
+		chckbxNewCheckBox_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(cbxInternet.isSelected()) {
+					lastSelected=2;
+					ListadoServiciosModal lisServM = new ListadoServiciosModal(2);
+					lisServM.setVisible(true);
+					lisServM.setModal(true);
+				}else {
+					txtTelevision.setText("No seleccionado");
+				}
+			}
+		});
 		chckbxNewCheckBox_2.setBounds(284, 38, 97, 23);
 		panel_1.add(chckbxNewCheckBox_2);
 		
@@ -110,53 +145,53 @@ public class RegistrarPlan extends JDialog {
 		lblNewLabel_2.setBounds(10, 80, 117, 14);
 		panel_1.add(lblNewLabel_2);
 		
-		txtNoSeleccionado = new JTextField();
-		txtNoSeleccionado.setText("No seleccionado");
-		txtNoSeleccionado.setEditable(false);
-		txtNoSeleccionado.setBounds(140, 77, 264, 20);
-		panel_1.add(txtNoSeleccionado);
-		txtNoSeleccionado.setColumns(10);
+		txtInternet = new JTextField();
+		txtInternet.setText("No seleccionado");
+		txtInternet.setEditable(false);
+		txtInternet.setBounds(140, 77, 264, 20);
+		panel_1.add(txtInternet);
+		txtInternet.setColumns(10);
 		
 		JLabel lblNewLabel_3 = new JLabel("Servicio de minutos:");
 		lblNewLabel_3.setBounds(10, 118, 117, 14);
 		panel_1.add(lblNewLabel_3);
 		
-		txtNoSeleccionado_1 = new JTextField();
-		txtNoSeleccionado_1.setText("No seleccionado");
-		txtNoSeleccionado_1.setEditable(false);
-		txtNoSeleccionado_1.setBounds(140, 115, 264, 20);
-		panel_1.add(txtNoSeleccionado_1);
-		txtNoSeleccionado_1.setColumns(10);
+		txtMinutos = new JTextField();
+		txtMinutos.setText("No seleccionado");
+		txtMinutos.setEditable(false);
+		txtMinutos.setBounds(140, 115, 264, 20);
+		panel_1.add(txtMinutos);
+		txtMinutos.setColumns(10);
 		
 		JLabel lblNewLabel_4 = new JLabel("Servicio de televisi\u00F3n:");
 		lblNewLabel_4.setBounds(10, 158, 133, 14);
 		panel_1.add(lblNewLabel_4);
 		
-		txtNoSeleccionado_2 = new JTextField();
-		txtNoSeleccionado_2.setText("No seleccionado");
-		txtNoSeleccionado_2.setEditable(false);
-		txtNoSeleccionado_2.setBounds(140, 155, 264, 20);
-		panel_1.add(txtNoSeleccionado_2);
-		txtNoSeleccionado_2.setColumns(10);
+		txtTelevision = new JTextField();
+		txtTelevision.setText("No seleccionado");
+		txtTelevision.setEditable(false);
+		txtTelevision.setBounds(140, 155, 264, 20);
+		panel_1.add(txtTelevision);
+		txtTelevision.setColumns(10);
 		
 		JLabel lblNewLabel_5 = new JLabel("Precio del plan:");
 		lblNewLabel_5.setBounds(40, 193, 103, 14);
 		panel_1.add(lblNewLabel_5);
 		
-		textField_2 = new JTextField();
-		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		textField_2.setText("0.00");
-		textField_2.setEditable(false);
-		textField_2.setBounds(140, 190, 114, 20);
-		panel_1.add(textField_2);
-		textField_2.setColumns(10);
+		txtPrecio = new JTextField();
+		txtPrecio.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		txtPrecio.setText("0.00");
+		txtPrecio.setEditable(false);
+		txtPrecio.setBounds(140, 190, 114, 20);
+		panel_1.add(txtPrecio);
+		txtPrecio.setColumns(10);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
+				JButton okButton = new JButton("Crear Plan");
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
@@ -172,5 +207,17 @@ public class RegistrarPlan extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+		cargarDatos();
+	}
+
+	public static void cargarDatos() {
+		if(lastSelected==0) {
+			txtInternet.setText(selected.getCodigo());
+		}else if(lastSelected==1) {
+			txtMinutos.setText(selected.getCodigo());
+		}else if(lastSelected==2) {
+			txtTelevision.setText(selected.getCodigo());
+		}
+		
 	}
 }
