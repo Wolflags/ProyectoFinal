@@ -359,9 +359,11 @@ public class ListadoServicios extends JDialog {
 			
 			spnVelInter.setValue(((Internet) selected).getVelocidad());
 			spnCantInter.setValue(((Internet) selected).getCantMB());
-			if(((Internet) selected).getTipo().equalsIgnoreCase("")) {
+			if(((Internet) selected).getTipo().equalsIgnoreCase("Internet Móvil")) {
 			cmbTipoInter.setSelectedIndex(1);
-			}
+			}else if(((Internet) selected).getTipo().equalsIgnoreCase("Internet del Hogar")) {
+				cmbTipoInter.setSelectedIndex(2);
+				}
 		}else if(selected instanceof Minutos) {
 			
 			panelTelevision.setVisible(false);

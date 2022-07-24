@@ -52,6 +52,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		
 		setTitle("Altice");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -124,5 +125,7 @@ public class Login extends JFrame {
 		txtPassword.setBounds(55, 147, 200, 20);
 		panelIniciarSesion.add(txtPassword);
 		txtPassword.setColumns(10);
+		txtUsuario.setText("Admin");
+		txtPassword.setText("1234");
 	}
 }
