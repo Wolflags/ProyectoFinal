@@ -152,9 +152,11 @@ public class ListadoClientes extends JDialog {
 		loadClientes(clientes);
 	}
 	private void conditionalArrayList(ArrayList<Persona> clientes) {
+		String nombreCompleto = "";
 		for (Persona cliente : Altice.getInstance().getPersonas()) {
 			if (cliente instanceof Cliente) {
-				if(txtNombre.getText().contains(""+cliente.getNombre()+" "+cliente.getApellido())) {
+				nombreCompleto = cliente.getNombre()+" "+cliente.getApellido();
+				if(nombreCompleto.substring(0, txtNombre.getText().length()).equalsIgnoreCase(txtNombre.getText())) {
 					clientes.add(cliente);
 				}
 			}

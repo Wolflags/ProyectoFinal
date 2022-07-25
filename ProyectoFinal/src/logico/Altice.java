@@ -20,7 +20,7 @@ public class Altice {
 		facturas = new ArrayList<Factura>();
 		Date nacimiento = new Date();
 		Empleado mainAdmin = new Empleado("admin", "Patrick", "Woerden", "123-456-7890", "1234", 
-				(float)60000.0, 2, "Casado", 10, "Admin", "Oficina 01", "Drahi", nacimiento);
+				(float)60000.0, 2, "Casado", 10, "Administrador", "Oficina 01", "Drahi", nacimiento);
 		personas.add(mainAdmin);
 		
 	}
@@ -152,9 +152,14 @@ public class Altice {
 
 	public ArrayList<Persona> buscarTodosEmpleadoByNombre(String nombre) {
 		ArrayList<Persona> empleados = new ArrayList<Persona>();
+		String nombreCompleto = "";
 		for (Persona empleado : personas) {
-			if (empleado instanceof Empleado && empleado.getNombre().equalsIgnoreCase(nombre)) 
-				empleados.add(empleado);
+			if (empleado instanceof Empleado ) {
+				nombreCompleto = empleado.getNombre()+" "+empleado.getApellido();
+				if(nombreCompleto.substring(0, nombre.length()).equalsIgnoreCase(nombre)) {
+					empleados.add(empleado);
+				}
+			}
 		}
 		return empleados;
 	}

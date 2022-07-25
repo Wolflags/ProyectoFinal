@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class ListadoEmpleados extends JDialog {
 
@@ -52,6 +54,7 @@ public class ListadoEmpleados extends JDialog {
 	private JButton btnBuscar;
 	private Persona selected;
 	private JButton btnSeleccionar;
+	private ArrayList<Persona> empleados;
 
 	/**
 	 * Launch the application.
@@ -70,6 +73,7 @@ public class ListadoEmpleados extends JDialog {
 	 * Create the dialog.
 	 */
 	public ListadoEmpleados() {
+		empleados = new ArrayList<Persona>();
 		setResizable(false);
 		setTitle("Listado de empleados");
 		setBounds(100, 100, 900, 500);
@@ -97,6 +101,19 @@ public class ListadoEmpleados extends JDialog {
 		panel_ListNombre.add(lblNewLabel);
 		
 		txtNombre = new JTextField();
+		txtNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				empleados.removeAll(empleados);
+				if(txtNombre.getText().equalsIgnoreCase("")) {
+					initArrayList(empleados);
+					loadEmpleados(empleados);
+				}else {
+					empleados.addAll(Altice.getInstance().buscarTodosEmpleadoByNombre(txtNombre.getText()));
+					loadEmpleados(empleados);
+				}
+			}
+		});
 		txtNombre.setBounds(155, 27, 155, 22);
 		panel_ListNombre.add(txtNombre);
 		txtNombre.setColumns(10);
@@ -126,7 +143,7 @@ public class ListadoEmpleados extends JDialog {
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<Persona> empleados = new ArrayList<Persona>();
+				empleados.removeAll(empleados);
 				btnSeleccionar.setEnabled(false);
 				
 				if (txtNombre.getText().equalsIgnoreCase("")) {
@@ -157,7 +174,7 @@ public class ListadoEmpleados extends JDialog {
 		cbxEstado = new JComboBox();
 		cbxEstado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<Persona> empleados = new ArrayList<Persona>();
+				empleados.removeAll(empleados);
 				switch(cbxEstado.getSelectedIndex()) {
 					case 0:
 						initArrayList(empleados);
@@ -214,7 +231,7 @@ public class ListadoEmpleados extends JDialog {
 		cbxTipo = new JComboBox();
 		cbxTipo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<Persona> empleados = new ArrayList<Persona>();
+				empleados.removeAll(empleados);
 				switch(cbxTipo.getSelectedIndex()) {
 					case 0:
 						initArrayList(empleados);
@@ -268,7 +285,7 @@ public class ListadoEmpleados extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				rbPorNombre.setSelected(true);
 				if (rbPorNombre.isSelected()) {
-					ArrayList<Persona> empleados = new ArrayList<Persona>();
+					empleados.removeAll(empleados);
 					rbPorTipo.setSelected(false);
 					rbPorEstado.setSelected(false);
 					panel_ListNombre.setVisible(true);
@@ -290,7 +307,7 @@ public class ListadoEmpleados extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				rbPorTipo.setSelected(true);
 				if (rbPorTipo.isSelected()) {
-					ArrayList<Persona> empleados = new ArrayList<Persona>();
+					empleados.removeAll(empleados);
 					rbPorNombre.setSelected(false);
 					rbPorEstado.setSelected(false);
 					panel_ListTipo.setVisible(true);
@@ -311,9 +328,9 @@ public class ListadoEmpleados extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				rbPorEstado.setSelected(true);
 				if (rbPorEstado.isSelected()) {
-					ArrayList<Persona> empleados = new ArrayList<Persona>();
+					empleados.removeAll(empleados);
 					rbPorNombre.setSelected(false);
-					rbPorEstado.setSelected(false);
+					rbPorTipo.setSelected(false);
 					panel_ListEstado.setVisible(true);
 					panel_ListNombre.setVisible(false);
 					panel_ListTipo.setVisible(false);
@@ -349,7 +366,11 @@ public class ListadoEmpleados extends JDialog {
 				buttonPane.add(btnCancelar);
 			}
 		}
+		initArrayList(empleados);
+		loadEmpleados(empleados);
 	}
+	
+	//Iniciar ArrayList<Persona> empleados con los empleados Activos/Contratados de Altice
 	private void initArrayContratado (ArrayList<Persona> empleados) {
 		for (Persona empleado : Altice.getInstance().getPersonas()) {
 			if (empleado instanceof Empleado) {
@@ -358,6 +379,7 @@ public class ListadoEmpleados extends JDialog {
 			}
 		}
 	}
+	//Iniciar ArrayList<Persona> empleados con los empleados inactivos/cancelados de Altice
 	private void initArrayCancelado (ArrayList<Persona> empleados) {
 		for (Persona empleado : Altice.getInstance().getPersonas()) {
 			if (empleado instanceof Empleado) {
@@ -366,6 +388,7 @@ public class ListadoEmpleados extends JDialog {
 			}
 		}
 	}
+	//Iniciar ArrayList<Persona> empleados con solamentes los admins de Altice
 	private void initArrayAdmin(ArrayList<Persona> empleados) {
 		for (Persona empleado : Altice.getInstance().getPersonas()) {
 			if (empleado instanceof Empleado) {
@@ -375,6 +398,7 @@ public class ListadoEmpleados extends JDialog {
 		}
 		
 	}
+	//Iniciar ArrayList<Persona> empleados con solamente los empleados de Altice. No se incluyen los Admins.
 	private void initArrayEmpleados(ArrayList<Persona> empleados) {
 		for (Persona empleado : Altice.getInstance().getPersonas()) {
 			if (empleado instanceof Empleado) {
@@ -384,6 +408,7 @@ public class ListadoEmpleados extends JDialog {
 		}
 		
 	}
+	//Iniciar ArrayList<Persona> empleados con todos los empleados (Admins incluidos) de Altice
 	private void initArrayList (ArrayList<Persona> empleados) {
 		for (Persona empleado : Altice.getInstance().getPersonas())
 			if (empleado instanceof Empleado) 
