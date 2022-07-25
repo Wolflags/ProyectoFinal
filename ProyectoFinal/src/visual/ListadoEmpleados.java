@@ -350,6 +350,13 @@ public class ListadoEmpleados extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnSeleccionar = new JButton("Seleccionar");
+				btnSeleccionar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						PerfilEmpAdmin perfEmp = new PerfilEmpAdmin((Empleado) selected);
+						perfEmp.setVisible(true);
+						perfEmp.setModal(true);
+					}
+				});
 				btnSeleccionar.setEnabled(false);
 				btnSeleccionar.setActionCommand("OK");
 				buttonPane.add(btnSeleccionar);
