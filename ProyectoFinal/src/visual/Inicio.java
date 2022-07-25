@@ -59,12 +59,26 @@ public class Inicio extends JFrame {
 			}
 			{
 				JButton btnRegistrarPlan = new JButton("Registrar plan");
+				btnRegistrarPlan.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						RegistrarPlan regPlan = new RegistrarPlan();
+						regPlan.setVisible(true);
+						regPlan.setModal(true);
+					}
+				});
 				btnRegistrarPlan.setBackground(Color.WHITE);
 				btnRegistrarPlan.setBounds(30, 54, 205, 45);
 				panelPlanes.add(btnRegistrarPlan);
 			}
 			{
 				JButton btnListadoPlanes = new JButton("Listado de planes");
+				btnListadoPlanes.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						RegistrarPlan regPlan = new RegistrarPlan();
+						regPlan.setVisible(true);
+						regPlan.setModal(true);
+					}
+				});
 				btnListadoPlanes.setBackground(Color.WHITE);
 				btnListadoPlanes.setBounds(30, 110, 205, 45);
 				panelPlanes.add(btnListadoPlanes);
