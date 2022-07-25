@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -15,12 +16,17 @@ import javax.swing.table.DefaultTableModel;
 
 import logico.Altice;
 import logico.Cliente;
+import logico.Empleado;
 import logico.Persona;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class ListadoClientes extends JDialog {
 
@@ -31,6 +37,8 @@ public class ListadoClientes extends JDialog {
 	private Cliente selected = null;
 	private Cliente auxCliente = null;
 	private JButton btnVerCliente;
+	private JTextField txtNombre;
+	private ArrayList<Persona> clientes;
 
 	/**
 	 * Launch the application.
@@ -49,10 +57,11 @@ public class ListadoClientes extends JDialog {
 	 * Create the dialog.
 	 */
 	public ListadoClientes() {
+		clientes = new ArrayList<Persona>();
+		setResizable(false);
 		setTitle("Listado de clientes");
 		setModal(true);
-		setResizable(false);
-		setBounds(100, 100, 900, 500);
+		setBounds(100, 100, 727, 500);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -61,12 +70,12 @@ public class ListadoClientes extends JDialog {
 		{
 			JPanel panel = new JPanel();
 			panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			panel.setBounds(219, 13, 663, 392);
+			panel.setBounds(12, 13, 688, 392);
 			contentPanel.add(panel);
 			panel.setLayout(null);
 			{
 				JScrollPane scrollPane = new JScrollPane();
-				scrollPane.setBounds(12, 60, 639, 319);
+				scrollPane.setBounds(12, 42, 664, 337);
 				panel.add(scrollPane);
 				{
 					table = new JTable();
@@ -83,13 +92,33 @@ public class ListadoClientes extends JDialog {
 					});
 					table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 					model = new DefaultTableModel();
-					String[] headers = {"Cédula", "Nombre", "Apellido", "Cantidad de planes"};
+					String[] headers = {"Cédula", "Nombre", "Cantidad de planes"};
 					model.setColumnIdentifiers(headers);
 					table.setModel(model);
 					scrollPane.setViewportView(table);
 				}
 			}
-			loadClientes();
+			
+			JLabel lblNewLabel = new JLabel("Introduzca un nombre:");
+			lblNewLabel.setBounds(24, 13, 137, 16);
+			panel.add(lblNewLabel);
+			
+			txtNombre = new JTextField();
+			txtNombre.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent e) {
+					if(txtNombre.getText().equalsIgnoreCase("")) {
+						initArrayList(clientes);
+						loadClientes(clientes);
+					}else {
+						conditionalArrayList(clientes);
+						loadClientes(clientes);
+					}
+				}
+			});
+			txtNombre.setBounds(160, 10, 174, 22);
+			panel.add(txtNombre);
+			txtNombre.setColumns(10);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -119,20 +148,33 @@ public class ListadoClientes extends JDialog {
 				buttonPane.add(btnCancelar);
 			}
 		}
+		initArrayList(clientes);
+		loadClientes(clientes);
 	}
-	
-	public static void loadClientes() {
-		model.setRowCount(0);
-		row = new Object[model.getColumnCount()];
-		for (Persona persona : Altice.getInstance().getPersonas()) {
-			if(persona instanceof Cliente) {
-				row[0] = persona.getCedula();
-				row[1] = persona.getNombre();
-				row[2] = persona.getApellido();
-				row[3] = Integer.toString(((Cliente) persona).getMisPlanes().size());
-				model.addRow(row);
+	private void conditionalArrayList(ArrayList<Persona> clientes) {
+		for (Persona cliente : Altice.getInstance().getPersonas()) {
+			if (cliente instanceof Cliente) {
+				if(txtNombre.getText().contains(""+cliente.getNombre()+" "+cliente.getApellido())) {
+					clientes.add(cliente);
+				}
 			}
 		}
+		
 	}
-
+	private void initArrayList (ArrayList<Persona> clientes) {
+		for (Persona cliente : Altice.getInstance().getPersonas())
+			if (cliente instanceof Cliente) 
+				clientes.add(cliente);
+		return;
+	}
+	public static void loadClientes(ArrayList<Persona> clientes) {
+		model.setRowCount(0);
+		row = new Object[model.getColumnCount()];
+		for (Persona cliente : clientes) {
+			row[0] = cliente.getCedula();
+			row[1] = ""+cliente.getNombre()+" "+cliente.getApellido();
+			row[3] = Integer.toString(((Cliente) cliente).getMisPlanes().size());
+			model.addRow(row);
+		}
+	}
 }
