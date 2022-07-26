@@ -9,6 +9,8 @@ public class Plan {
 	private String numero;
 	private ArrayList<Servicio> misServicios;
 	private float precio;
+	public static int genIdPlan = 1;
+	
 	public Plan(String idplan, ArrayList<Servicio> misServicios, float precio) {
 		super();
 		this.idplan = idplan;

@@ -25,16 +25,18 @@ import javax.swing.JTable;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class ListadoServiciosModal extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textField;
+	private JTextField txtBuscar;
 	private JTable table;
 	private static DefaultTableModel model;
 	private static Object[] row;
 	private Servicio selected = null;
-	private String ini = null;
+	private String ini = "";
 	private JButton btnDetalles;
 
 	/**
@@ -92,10 +94,20 @@ public class ListadoServiciosModal extends JDialog {
 			contentPanel.add(lblNewLabel);
 		}
 		{
-			textField = new JTextField();
-			textField.setBounds(88, 55, 245, 20);
-			contentPanel.add(textField);
-			textField.setColumns(10);
+			txtBuscar = new JTextField();
+			txtBuscar.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent e) {
+					ini=txtBuscar.getText();
+					cargarServ(tipo);
+				}
+			});
+			
+			
+			
+			txtBuscar.setBounds(88, 55, 245, 20);
+			contentPanel.add(txtBuscar);
+			txtBuscar.setColumns(10);
 		}
 		{
 			JLabel lblNewLabel_1 = new JLabel("Seleccionar servicio");
@@ -138,6 +150,7 @@ public class ListadoServiciosModal extends JDialog {
 				JButton cancelButton = new JButton("Cancelar");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						RegistrarPlan.setCancel(tipo);
 						dispose();
 					}
 				});
@@ -190,7 +203,14 @@ public class ListadoServiciosModal extends JDialog {
 						}else {
 							row[1]="Television";
 						}
-						row[2]=servicio.getDuracion();
+						if(servicio.getDuracion()==30) {
+							row[2]="Mensual";
+						}else if(servicio.getDuracion()==365) {
+							row[2]="Anual";
+						}else {
+							row[2]="Agotable";
+						}
+						row[3]=servicio.getDuracion();
 						if(servicio instanceof Internet) {
 							model.addRow(row);
 							}
@@ -238,7 +258,14 @@ public class ListadoServiciosModal extends JDialog {
 						}else {
 							row[1]="Television";
 						}
-						row[2]=servicio.getDuracion();
+						if(servicio.getDuracion()==30) {
+							row[2]="Mensual";
+						}else if(servicio.getDuracion()==365) {
+							row[2]="Anual";
+						}else {
+							row[2]="Agotable";
+						}
+						row[3]=servicio.getDuracion();
 						if(servicio instanceof Minutos) {
 							model.addRow(row);
 							}
@@ -286,7 +313,14 @@ public class ListadoServiciosModal extends JDialog {
 						}else {
 							row[1]="Television";
 						}
-						row[2]=servicio.getDuracion();
+						if(servicio.getDuracion()==30) {
+							row[2]="Mensual";
+						}else if(servicio.getDuracion()==365) {
+							row[2]="Anual";
+						}else {
+							row[2]="Agotable";
+						}
+						row[3]=servicio.getDuracion();
 						if(servicio instanceof Television) {
 							model.addRow(row);
 							}

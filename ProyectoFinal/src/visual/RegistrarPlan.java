@@ -9,14 +9,21 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import logico.Altice;
+import logico.Internet;
+import logico.Minutos;
+import logico.Plan;
 import logico.Servicio;
+import logico.Television;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import java.awt.Color;
 import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JSpinner;
 import java.awt.Font;
@@ -31,9 +38,11 @@ public class RegistrarPlan extends JDialog {
 	private static JTextField txtMinutos;
 	private static JTextField txtTelevision;
 	private JTextField txtPrecio;
-	private JCheckBox cbxInternet;
+	private static JCheckBox cbxInternet;
 	public static Servicio selected = null;
 	private static int lastSelected = -1;
+	private static JCheckBox cbxTelevision;
+	private static JCheckBox cbxMinutos;
 
 	/**
 	 * Launch the application.
@@ -109,8 +118,8 @@ public class RegistrarPlan extends JDialog {
 		cbxInternet.setBounds(46, 38, 97, 23);
 		panel_1.add(cbxInternet);
 		
-		JCheckBox chckbxNewCheckBox_1 = new JCheckBox("Minutos");
-		chckbxNewCheckBox_1.addActionListener(new ActionListener() {
+		cbxMinutos = new JCheckBox("Minutos");
+		cbxMinutos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(cbxInternet.isSelected()) {
 					lastSelected=1;
@@ -118,17 +127,17 @@ public class RegistrarPlan extends JDialog {
 					lisServM.setVisible(true);
 					lisServM.setModal(true);
 				}else {
-					txtMinutos.setText("No seleccionado");
+					txtInternet.setText("No seleccionado");
 				}
 			}
 		});
-		chckbxNewCheckBox_1.setBounds(189, 38, 97, 23);
-		panel_1.add(chckbxNewCheckBox_1);
+		cbxMinutos.setBounds(189, 38, 97, 23);
+		panel_1.add(cbxMinutos);
 		
-		JCheckBox chckbxNewCheckBox_2 = new JCheckBox("Television");
-		chckbxNewCheckBox_2.addActionListener(new ActionListener() {
+		cbxTelevision = new JCheckBox("Television");
+		cbxTelevision.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(cbxInternet.isSelected()) {
+				if(cbxTelevision.isSelected()) {
 					lastSelected=2;
 					ListadoServiciosModal lisServM = new ListadoServiciosModal(2);
 					lisServM.setVisible(true);
@@ -138,8 +147,8 @@ public class RegistrarPlan extends JDialog {
 				}
 			}
 		});
-		chckbxNewCheckBox_2.setBounds(332, 38, 97, 23);
-		panel_1.add(chckbxNewCheckBox_2);
+		cbxTelevision.setBounds(332, 38, 97, 23);
+		panel_1.add(cbxTelevision);
 		
 		JLabel lblNewLabel_2 = new JLabel("Servicio de internet:");
 		lblNewLabel_2.setBounds(10, 80, 117, 14);
@@ -192,6 +201,34 @@ public class RegistrarPlan extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Crear Plan");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						Plan auxPlan = null;
+						ArrayList<Servicio> auxServicios = new ArrayList<Servicio>();
+						//public Plan(String idplan, ArrayList<Servicio> misServicios, float precio) 
+						
+						
+						if(cbxInternet.isSelected()) {
+							auxServicios.add(0, Altice.getInstance().buscarServicioByCod(txtInternet.getText()));
+						}else if(cbxMinutos.isSelected()) {
+							auxServicios.add(1, Altice.getInstance().buscarServicioByCod(txtMinutos.getText()));
+						}else if(cbxTelevision.isSelected()) {
+							auxServicios.add(2, Altice.getInstance().buscarServicioByCod(txtTelevision.getText()));
+						}
+						
+						if(!auxServicios.isEmpty()){
+						auxPlan = new Plan("P-"+Plan.genIdPlan,auxServicios,Float.parseFloat(txtPrecio.getText().toString()));
+						}else {
+							JOptionPane.showMessageDialog(null, "Debe seleccionar al menos un servicio!", "Error", ERROR);
+						}
+						
+						if(auxPlan!=null){
+						Altice.getInstance().getPlanes().add(auxPlan);
+						Plan.genIdPlan++;
+						dispose();
+						}
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
@@ -217,6 +254,20 @@ public class RegistrarPlan extends JDialog {
 			txtMinutos.setText(selected.getCodigo());
 		}else if(lastSelected==2) {
 			txtTelevision.setText(selected.getCodigo());
+		}
+		
+	}
+
+	public static void setCancel(int tipo) {
+		if(tipo==0) {
+			txtInternet.setText("No seleccionado");
+			cbxInternet.setSelected(false);
+		}else if(tipo==1) {
+			txtMinutos.setText("No seleccionado");
+			cbxMinutos.setSelected(false);
+		}else {
+			txtTelevision.setText("No seleccionado");
+			cbxTelevision.setSelected(false);
 		}
 		
 	}
