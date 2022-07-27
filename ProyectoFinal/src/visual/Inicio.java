@@ -16,11 +16,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTabbedPane;
 
 public class Inicio extends JFrame {
 
@@ -240,6 +242,45 @@ public class Inicio extends JFrame {
 				panelServicios.add(btnListadoDeServicios);
 			}
 		}
+		
+		JPanel panelSesion = new JPanel();
+		panelSesion.setLayout(null);
+		panelSesion.setBackground(Color.LIGHT_GRAY);
+		panelSesion.setBounds(953, 457, 265, 183);
+		contentPanel.add(panelSesion);
+		
+		JLabel lblSesion = new JLabel("SESI\u00D3N");
+		lblSesion.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSesion.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblSesion.setBounds(78, 11, 109, 32);
+		panelSesion.add(lblSesion);
+		
+		JButton btnVerMiPerfil = new JButton("Ver mi perfil");
+		btnVerMiPerfil.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				PerfilEmpAdmin perEmpAdm = new PerfilEmpAdmin(auxEmpleado);
+				perEmpAdm.setVisible(true);
+			}
+		});
+		btnVerMiPerfil.setBackground(Color.WHITE);
+		btnVerMiPerfil.setBounds(30, 54, 205, 45);
+		panelSesion.add(btnVerMiPerfil);
+		
+		JButton btnCerrarSesion = new JButton("     Cerrar sesi\u00F3n");
+		btnCerrarSesion.setHorizontalAlignment(SwingConstants.LEADING);
+		btnCerrarSesion.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgCerrarSesion32px.png")));
+		btnCerrarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro que quiere cerrar sesión?");
+				if(opcion == 0) {
+					dispose();
+					Login login = new Login();
+					login.setVisible(true);
+				}
+			}
+		});
+		btnCerrarSesion.setBackground(Color.WHITE);
+		btnCerrarSesion.setBounds(30, 110, 205, 45);
+		panelSesion.add(btnCerrarSesion);
 	}
-
 }

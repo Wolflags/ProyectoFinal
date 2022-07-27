@@ -23,6 +23,8 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Login extends JFrame {
 
@@ -30,7 +32,7 @@ public class Login extends JFrame {
 	private Dimension dim;
 	private JTextField txtUsuario;
 	private Empleado auxEmpleado = null;
-	private JTextField txtPassword;
+	private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
@@ -86,6 +88,7 @@ public class Login extends JFrame {
 		txtUsuario.setBounds(55, 91, 200, 20);
 		panelIniciarSesion.add(txtUsuario);
 		txtUsuario.setColumns(10);
+		txtUsuario.setText("Admin");
 		
 		JLabel lblPassword = new JLabel("Contrase\u00F1a:");
 		lblPassword.setBounds(55, 122, 79, 14);
@@ -101,7 +104,7 @@ public class Login extends JFrame {
 		btnIniciarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!txtUsuario.getText().equalsIgnoreCase("")) {
-					if(Altice.getInstance().validarClave(txtUsuario.getText().toString(), txtPassword.getText().toString())) {
+					if(Altice.getInstance().validarClave(txtUsuario.getText().toString(), String.valueOf(passwordField.getPassword()))) {
 						auxEmpleado = Altice.getInstance().buscarEmpleadoByCedula(txtUsuario.getText().toString());
 						JOptionPane.showMessageDialog(null, "Inicio de sesión satisfactorio", "Información", JOptionPane.INFORMATION_MESSAGE);
 						Inicio inicio = new Inicio(auxEmpleado);
@@ -121,11 +124,27 @@ public class Login extends JFrame {
 		btnIniciarSesion.setBounds(97, 188, 116, 23);
 		panelIniciarSesion.add(btnIniciarSesion);
 		
-		txtPassword = new JTextField();
-		txtPassword.setBounds(55, 147, 200, 20);
-		panelIniciarSesion.add(txtPassword);
-		txtPassword.setColumns(10);
-		txtUsuario.setText("Admin");
-		txtPassword.setText("1234");
+		passwordField = new JPasswordField();
+		passwordField.setBounds(55, 147, 200, 20);
+		panelIniciarSesion.add(passwordField);
+		passwordField.setText("1234");
+		
+		JLabel lblImagenContrasenaVisible = new JLabel("");
+		lblImagenContrasenaVisible.setIcon(new ImageIcon(Login.class.getResource("/media/imgVerClaveNo16px.png")));
+		lblImagenContrasenaVisible.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				lblImagenContrasenaVisible.setIcon(new ImageIcon(Login.class.getResource("/media/imgVerClaveSi16px.png")));
+				passwordField.setEchoChar((char)0);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lblImagenContrasenaVisible.setIcon(new ImageIcon(Login.class.getResource("/media/imgVerClaveNo16px.png")));
+				passwordField.setEchoChar('•');
+			}
+		});
+		
+		lblImagenContrasenaVisible.setBounds(264, 147, 21, 20);
+		panelIniciarSesion.add(lblImagenContrasenaVisible);
 	}
 }
