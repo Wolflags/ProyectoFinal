@@ -422,7 +422,7 @@ public class ListadoEmpleados extends JDialog {
 				empleados.add(empleado);
 		}
 		return;
-	}
+	}//
 	private void loadEmpleados(ArrayList<Persona> empleados) {
 		model.setRowCount(0);
 		row = new Object[model.getColumnCount()];
