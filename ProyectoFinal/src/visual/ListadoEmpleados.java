@@ -191,7 +191,7 @@ public class ListadoEmpleados extends JDialog {
 				}
 			}
 		});
-		cbxEstado.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Administradores", "Empleados"}));
+		cbxEstado.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Contratado", "Cancelado"}));
 		cbxEstado.setBounds(150, 27, 155, 22);
 		panel_ListEstado.add(cbxEstado);
 		
@@ -417,9 +417,10 @@ public class ListadoEmpleados extends JDialog {
 	}
 	//Iniciar ArrayList<Persona> empleados con todos los empleados (Admins incluidos) de Altice
 	private void initArrayList (ArrayList<Persona> empleados) {
-		for (Persona empleado : Altice.getInstance().getPersonas())
+		for (Persona empleado : Altice.getInstance().getPersonas()) {
 			if (empleado instanceof Empleado) 
 				empleados.add(empleado);
+		}
 		return;
 	}
 	private void loadEmpleados(ArrayList<Persona> empleados) {

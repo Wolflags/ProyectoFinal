@@ -19,6 +19,7 @@ public class Persona {
 		this.apellido = apellido;
 		this.direccion = direccion;
 		this.telefono = telefono;
+		this.apellido = apellido;
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	
