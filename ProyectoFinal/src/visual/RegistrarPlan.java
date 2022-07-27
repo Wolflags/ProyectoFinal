@@ -32,7 +32,7 @@ import java.awt.SystemColor;
 public class RegistrarPlan extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textField;
+	private static JTextField txtId;
 	private JTextField textField_1;
 	private static JTextField txtInternet;
 	private static JTextField txtMinutos;
@@ -81,11 +81,11 @@ public class RegistrarPlan extends JDialog {
 		lblNewLabel.setBounds(10, 21, 46, 14);
 		panel.add(lblNewLabel);
 		
-		textField = new JTextField();
-		textField.setEditable(false);
-		textField.setBounds(66, 18, 163, 20);
-		panel.add(textField);
-		textField.setColumns(10);
+		txtId = new JTextField();
+		txtId.setEditable(false);
+		txtId.setBounds(66, 18, 163, 20);
+		panel.add(txtId);
+		txtId.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Nombre:");
 		lblNewLabel_1.setBounds(10, 55, 63, 14);
@@ -121,7 +121,7 @@ public class RegistrarPlan extends JDialog {
 		cbxMinutos = new JCheckBox("Minutos");
 		cbxMinutos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(cbxInternet.isSelected()) {
+				if(cbxMinutos.isSelected()) {
 					lastSelected=1;
 					ListadoServiciosModal lisServM = new ListadoServiciosModal(1);
 					lisServM.setVisible(true);
@@ -248,6 +248,9 @@ public class RegistrarPlan extends JDialog {
 	}
 
 	public static void cargarDatos() {
+		
+		txtId.setText("P-"+Plan.genIdPlan);
+		
 		if(lastSelected==0) {
 			txtInternet.setText(selected.getCodigo());
 		}else if(lastSelected==1) {
