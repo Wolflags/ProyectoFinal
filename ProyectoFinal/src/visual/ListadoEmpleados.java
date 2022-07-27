@@ -74,6 +74,7 @@ public class ListadoEmpleados extends JDialog {
 	 */
 	public ListadoEmpleados() {
 		empleados = new ArrayList<Persona>();
+		initArrayList(empleados);
 		setResizable(false);
 		setTitle("Listado de empleados");
 		setBounds(100, 100, 900, 500);
@@ -316,7 +317,6 @@ public class ListadoEmpleados extends JDialog {
 					btnSeleccionar.setEnabled(false);
 					cbxTipo.setSelectedIndex(0);
 					initArrayList(empleados);
-					loadEmpleados(empleados);
 				}
 			}
 		});
@@ -337,7 +337,6 @@ public class ListadoEmpleados extends JDialog {
 					btnSeleccionar.setEnabled(false);
 					cbxEstado.setSelectedIndex(0);
 					initArrayList(empleados);
-					loadEmpleados(empleados);
 				}
 			}
 		});
@@ -373,7 +372,6 @@ public class ListadoEmpleados extends JDialog {
 				buttonPane.add(btnCancelar);
 			}
 		}
-		initArrayList(empleados);
 		loadEmpleados(empleados);
 	}
 	

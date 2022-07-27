@@ -349,7 +349,7 @@ public class RegEmpAdmin extends JDialog {
 								fecNac.setYear(Integer.parseInt(spnYear.getValue().toString())-1900);
 								Persona empleado = new Empleado(txtCedula.getText(), txtNombre.getText(), txtDireccion.getText(), txtTelefono.getText(), txtContraseña.getText(), Float.parseFloat(spnSalario.getValue().toString()), 
 										Integer.parseInt(spnCantHijos.getValue().toString()), cbxEstCivil.getSelectedItem().toString(), Integer.parseInt(spnExpLaboral.getValue().toString()), 
-										"Administrador", txtPuestoTrabajo.toString(), txtApellido.toString(), fecNac);
+										"Administrador", txtPuestoTrabajo.getText(), txtApellido.getText(), fecNac);
 								Altice.getInstance().insertarPersona(empleado);
 								clean();
 								JOptionPane.showMessageDialog(null, "Registro existoso.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
@@ -360,7 +360,7 @@ public class RegEmpAdmin extends JDialog {
 								fecNac.setYear(Integer.parseInt(spnYear.getValue().toString())-1900);
 								Persona empleado = new Empleado(txtCedula.getText(), txtNombre.getText(), txtDireccion.getText(), txtTelefono.getText(), txtContraseña.getText(), Float.parseFloat(spnSalario.getValue().toString()), 
 										Integer.parseInt(spnCantHijos.getValue().toString()), cbxEstCivil.getSelectedItem().toString(), Integer.parseInt(spnExpLaboral.getValue().toString()), 
-										"Empleado", txtPuestoTrabajo.toString(), txtApellido.toString(), fecNac);
+										"Empleado", txtPuestoTrabajo.getText(), txtApellido.getText(), fecNac);
 								Altice.getInstance().insertarPersona(empleado);
 								clean();
 								JOptionPane.showMessageDialog(null, "Registro existoso.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
