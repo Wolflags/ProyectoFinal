@@ -9,7 +9,25 @@ public class Factura {
 	private float subtotal;
 	private Persona empleado;
 	private Persona cliente;
-	private ArrayList<Plan> planes;
+	private Plan plan;
+	private boolean estado;
+	
+	public Factura(String codigo, Date fecha, float subtotal, Persona empleado, Persona cliente, Plan plan) {
+		super();
+		this.codigo = codigo;
+		this.fecha = fecha;
+		this.subtotal = subtotal;
+		this.empleado = empleado;
+		this.cliente = cliente;
+		this.plan = plan;
+		this.estado = true;
+	}
+	public boolean isEstado() {
+		return estado;
+	}
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}
 	public Date getFecha() {
 		return fecha;
 	}
@@ -37,8 +55,8 @@ public class Factura {
 	public String getCodigo() {
 		return codigo;
 	}
-	public ArrayList<Plan> getPlanes() {
-		return planes;
+	public Plan getPlan() {
+		return plan;
 	}
 	
 

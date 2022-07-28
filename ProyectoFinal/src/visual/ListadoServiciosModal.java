@@ -302,6 +302,7 @@ public class ListadoServiciosModal extends JDialog {
 				row[4]=servicio.getPrecio();
 				if(servicio instanceof Television) {
 				model.addRow(row);
+				
 				}
 			}
 			}else {

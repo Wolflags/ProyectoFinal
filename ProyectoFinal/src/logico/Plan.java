@@ -9,6 +9,7 @@ public class Plan {
 	private String numero;
 	private ArrayList<Servicio> misServicios;
 	private float precio;
+	private boolean estado;
 	public static int genIdPlan = 1;
 	
 	public Plan(String idplan, ArrayList<Servicio> misServicios, float precio) {
@@ -16,6 +17,13 @@ public class Plan {
 		this.idplan = idplan;
 		this.misServicios = new ArrayList<Servicio>();
 		this.precio = precio;
+		this.estado=true;
+	}
+	public boolean isEstado() {
+		return estado;
+	}
+	public void setEstado(boolean estado) {
+		this.estado = estado;
 	}
 	public String getIdplan() {
 		return idplan;
