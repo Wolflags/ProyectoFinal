@@ -8,17 +8,32 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import logico.Altice;
+import logico.Cliente;
+
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
+import java.awt.event.ActionListener;
+import java.util.Date;
+import java.awt.event.ActionEvent;
+import javax.swing.JSpinner;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.SpinnerNumberModel;
 
 public class RealizarVenta extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
+	private Date fechaActual;
 	private JTextField txtCedula;
-	private JTextField txtNombreComp;
+	private JTextField txtNombre;
 	private JTextField txtTelefono;
 	private JTextField txtDireccion;
 	private JTable table;
@@ -26,6 +41,11 @@ public class RealizarVenta extends JDialog {
 	private JButton btnAnnadirPlan;
 	private JButton btnBuscar;
 	private JScrollPane spPlanes;
+	private JTextField txtApellido;
+	private JSpinner spnDia;
+	private JComboBox cbxMes;
+	private JSpinner spnYear;
+	private static SpinnerNumberModel spnDiaModel;
 
 	/**
 	 * Launch the application.
@@ -44,10 +64,12 @@ public class RealizarVenta extends JDialog {
 	 * Create the dialog.
 	 */
 	public RealizarVenta() {
+		fechaActual = new Date();
 		setResizable(false);
 		setModal(true);
 		setTitle("Realizar Venta");
-		setBounds(100, 100, 623, 530);
+		setBounds(100, 100, 623, 570);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -55,12 +77,12 @@ public class RealizarVenta extends JDialog {
 		
 		JPanel panel_InfoCliente = new JPanel();
 		panel_InfoCliente.setBorder(new TitledBorder(null, "Informaci\u00F3n del Cliente", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_InfoCliente.setBounds(12, 13, 578, 149);
+		panel_InfoCliente.setBounds(12, 13, 578, 192);
 		contentPanel.add(panel_InfoCliente);
 		panel_InfoCliente.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("C\u00E9dula:");
-		lblNewLabel.setBounds(76, 30, 44, 16);
+		lblNewLabel.setBounds(79, 30, 44, 16);
 		panel_InfoCliente.add(lblNewLabel);
 		
 		txtCedula = new JTextField();
@@ -69,46 +91,165 @@ public class RealizarVenta extends JDialog {
 		txtCedula.setColumns(10);
 		
 		btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (txtCedula.getText().equalsIgnoreCase("")) {
+					JOptionPane.showMessageDialog(null, "Introduzca una cédula.", "Información", JOptionPane.INFORMATION_MESSAGE);
+				}else {
+					Cliente cliente = Altice.getInstance().buscarClienteByCedula(txtCedula.getText());
+					if (cliente == null) {
+						txtNombre.setEditable(true);
+						txtApellido.setEditable(true);
+						txtTelefono.setEditable(true);
+						txtDireccion.setEditable(true);
+						spnDia.setEnabled(true);
+						spnYear.setEnabled(true);
+						cbxMes.setEnabled(true);
+						spPlanes.setEnabled(true);
+						btnAnnadirPlan.setEnabled(true);
+					}else {
+						txtNombre.setText(cliente.getNombre());
+						txtApellido.setText(cliente.getApellido());
+						txtTelefono.setText(cliente.getTelefono());
+						txtDireccion.setText(cliente.getDireccion());
+						spnDia.setValue(cliente.getFechaNacimiento().getDate());
+						cbxMes.setSelectedIndex(cliente.getFechaNacimiento().getMonth());
+						spnYear.setValue(cliente.getFechaNacimiento().getYear()+1900);
+						spPlanes.setEnabled(true);
+						btnAnnadirPlan.setEnabled(true);
+						txtNombre.setEditable(false);
+						txtApellido.setEditable(false);
+						txtTelefono.setEditable(false);
+						txtDireccion.setEditable(false);
+						spnDia.setEnabled(false);
+						spnYear.setEnabled(false);
+						cbxMes.setEnabled(false);
+					}
+				}
+			}
+		});
 		btnBuscar.setBounds(336, 26, 97, 25);
 		panel_InfoCliente.add(btnBuscar);
 		
-		JLabel lblNombreCompleto = new JLabel("Nombre Completo:");
-		lblNombreCompleto.setBounds(12, 70, 108, 16);
-		panel_InfoCliente.add(lblNombreCompleto);
+		JLabel lblNombre = new JLabel("Nombre:");
+		lblNombre.setBounds(76, 70, 50, 16);
+		panel_InfoCliente.add(lblNombre);
 		
-		txtNombreComp = new JTextField();
-		txtNombreComp.setEditable(false);
-		txtNombreComp.setColumns(10);
-		txtNombreComp.setBounds(135, 67, 170, 22);
-		panel_InfoCliente.add(txtNombreComp);
+		txtNombre = new JTextField();
+		txtNombre.setEditable(false);
+		txtNombre.setColumns(10);
+		txtNombre.setBounds(135, 67, 170, 22);
+		panel_InfoCliente.add(txtNombre);
 		
 		JLabel lblTelfono = new JLabel("Tel\u00E9fono:");
-		lblTelfono.setBounds(325, 70, 108, 16);
+		lblTelfono.setBounds(325, 110, 108, 16);
 		panel_InfoCliente.add(lblTelfono);
 		
 		txtTelefono = new JTextField();
 		txtTelefono.setEditable(false);
 		txtTelefono.setColumns(10);
-		txtTelefono.setBounds(389, 64, 170, 22);
+		txtTelefono.setBounds(389, 107, 170, 22);
 		panel_InfoCliente.add(txtTelefono);
 		
 		JLabel lblDireccin = new JLabel("Direcci\u00F3n:");
-		lblDireccin.setBounds(63, 110, 57, 16);
+		lblDireccin.setBounds(69, 150, 57, 16);
 		panel_InfoCliente.add(lblDireccin);
 		
 		txtDireccion = new JTextField();
 		txtDireccion.setEditable(false);
 		txtDireccion.setColumns(10);
-		txtDireccion.setBounds(135, 107, 424, 22);
+		txtDireccion.setBounds(135, 147, 424, 22);
 		panel_InfoCliente.add(txtDireccion);
+		
+		JLabel lblApellido = new JLabel("Apellido:");
+		lblApellido.setBounds(326, 70, 50, 16);
+		panel_InfoCliente.add(lblApellido);
+		
+		txtApellido = new JTextField();
+		txtApellido.setEditable(false);
+		txtApellido.setColumns(10);
+		txtApellido.setBounds(389, 67, 170, 22);
+		panel_InfoCliente.add(txtApellido);
+		
+		JLabel lblFechaDeNacimiento = new JLabel("Fec. de Nacimiento:");
+		lblFechaDeNacimiento.setBounds(12, 110, 114, 16);
+		panel_InfoCliente.add(lblFechaDeNacimiento);
+		
+		spnDia = new JSpinner();
+		spnDia.setEnabled(false);
+		spnDiaModel = new SpinnerNumberModel(fechaActual.getDate() ,1 ,31 ,1);
+		spnDia.setModel(spnDiaModel);
+		spnDia.setBounds(135, 107, 41, 22);
+		panel_InfoCliente.add(spnDia);
+		
+		cbxMes = new JComboBox();
+		cbxMes.setEnabled(false);
+		cbxMes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Meses de 30
+				if (cbxMes.getSelectedIndex() == 3 || cbxMes.getSelectedIndex() == 5 || cbxMes.getSelectedIndex() == 8 || cbxMes.getSelectedIndex() == 10) {
+					if (Integer.parseInt(spnDia.getValue().toString()) > 30)
+						spnDia.setValue(30);
+					spnDiaModel.setMaximum(30);
+				}
+				//Meses de 31
+				else if (cbxMes.getSelectedIndex() == 0 || cbxMes.getSelectedIndex() == 2 || cbxMes.getSelectedIndex() == 4 || cbxMes.getSelectedIndex() == 6 || cbxMes.getSelectedIndex() == 7 || cbxMes.getSelectedIndex() == 9 || cbxMes.getSelectedIndex() == 11) {
+					if (Integer.parseInt(spnDia.getValue().toString()) > 31)
+						spnDia.setValue(31);
+					spnDiaModel.setMaximum(31);
+				}
+				//Febrero
+				else if (cbxMes.getSelectedIndex() == 1) {
+					//Bisiesto
+					if ((Integer.parseInt(spnYear.getValue().toString()) % 4 == 0) && ((Integer.parseInt(spnYear.getValue().toString()) % 100 != 0) || (Integer.parseInt(spnYear.getValue().toString()) % 400 == 0))) {
+						if (Integer.parseInt(spnDia.getValue().toString()) > 29)
+							spnDia.setValue(29);
+						spnDiaModel.setMaximum(29);
+					}else {//No bisiesto
+						if (Integer.parseInt(spnDia.getValue().toString()) > 28)
+							spnDia.setValue(28);
+						spnDiaModel.setMaximum(28);
+					}
+				}
+				
+			}
+		});
+		cbxMes.setModel(new DefaultComboBoxModel(new String[] {"Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"}));
+		cbxMes.setSelectedIndex(fechaActual.getMonth());
+		cbxMes.setBounds(188, 107, 50, 22);
+		panel_InfoCliente.add(cbxMes);
+		
+		spnYear = new JSpinner();
+		spnYear.setEnabled(false);
+		spnYear.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				//Febrero
+				if (cbxMes.getSelectedIndex() == 1) {
+					//Bisiesto
+					if ((Integer.parseInt(spnYear.getValue().toString()) % 4 == 0) && ((Integer.parseInt(spnYear.getValue().toString()) % 100 != 0) || (Integer.parseInt(spnYear.getValue().toString()) % 400 == 0))) {
+						if (Integer.parseInt(spnDia.getValue().toString()) > 29)
+							spnDia.setValue(29);
+						spnDiaModel.setMaximum(29);
+					}else {//No bisiesto
+						if (Integer.parseInt(spnDia.getValue().toString()) > 28)
+							spnDia.setValue(28);
+						spnDiaModel.setMaximum(28);
+					}
+				}
+			}
+		});
+		spnYear.setModel(new SpinnerNumberModel(fechaActual.getYear()+1900, 1900, 2022, 1));
+		spnYear.setBounds(249, 107, 56, 22);
+		panel_InfoCliente.add(spnYear);
 		
 		JPanel panel_SelPlanes = new JPanel();
 		panel_SelPlanes.setBorder(new TitledBorder(null, "Selecci\u00F3n de Planes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_SelPlanes.setBounds(12, 175, 578, 261);
+		panel_SelPlanes.setBounds(12, 214, 578, 261);
 		contentPanel.add(panel_SelPlanes);
 		panel_SelPlanes.setLayout(null);
 		
 		spPlanes = new JScrollPane();
+		spPlanes.setEnabled(false);
 		spPlanes.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		spPlanes.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		spPlanes.setBounds(70, 37, 426, 153);
@@ -144,9 +285,35 @@ public class RealizarVenta extends JDialog {
 			}
 			{
 				JButton btnCancelar = new JButton("Cancelar");
+				btnCancelar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
 				btnCancelar.setActionCommand("Cancel");
 				buttonPane.add(btnCancelar);
 			}
 		}
+	}
+	
+	private void clear() {
+		txtCedula.setText("");
+		txtNombre.setText("");
+		txtApellido.setText("");
+		txtTelefono.setText("");
+		txtDireccion.setText("");
+		spnDia.setValue(fechaActual.getDate());
+		spnYear.setValue(fechaActual.getYear()+1900);
+		cbxMes.setSelectedIndex(fechaActual.getMonth());
+		txtPrecioTotal.setText("");
+		spPlanes.setEnabled(false);
+		btnAnnadirPlan.setEnabled(false);
+		txtNombre.setEditable(false);
+		txtApellido.setEditable(false);
+		txtTelefono.setEditable(false);
+		txtDireccion.setEditable(false);
+		spnDia.setEnabled(false);
+		spnYear.setEnabled(false);
+		cbxMes.setEnabled(false);
 	}
 }

@@ -25,8 +25,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Date;
 import java.text.ParseException;
+import java.util.Date;
 
 import javax.swing.event.ChangeListener;
 import javax.swing.text.MaskFormatter;
@@ -42,7 +42,7 @@ public class RegEmpAdmin extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private static SpinnerNumberModel spnDiaModel;
 	@SuppressWarnings("deprecation")
-	private Date fechaActual = new Date(2022-1900, 6, 21);
+	private Date fechaActual;
 	private JFormattedTextField txtCedula;
 	private JTextField txtNombre;
 	private JTextField txtApellido;
@@ -79,6 +79,7 @@ public class RegEmpAdmin extends JDialog {
 	 */
 	@SuppressWarnings("deprecation")
 	public RegEmpAdmin() {
+		fechaActual = new Date();
 		setTitle("Registrar Empleado");
 		setBounds(100, 100, 451, 694);
 		setLocationRelativeTo(null);
