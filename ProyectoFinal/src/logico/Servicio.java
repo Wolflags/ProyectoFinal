@@ -37,5 +37,7 @@ public abstract class Servicio {
 		this.autocobro = autocobro;
 	}
 	
+	public abstract float getPrecio();
+	
 	
 }

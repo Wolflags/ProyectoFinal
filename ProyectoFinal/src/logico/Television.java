@@ -25,5 +25,16 @@ public class Television extends Servicio {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
+
+	@Override
+	public float getPrecio() {
+		float precio = 0;
+		if(this.tipo=="Televisión por Fibra") {
+			precio = (float) (precio+(15*this.cantCanales));
+		}else {
+			precio = (float) (precio+(10*this.cantCanales));
+		}
+		return precio;
+	}
 	
 }

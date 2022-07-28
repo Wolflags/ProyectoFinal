@@ -82,7 +82,7 @@ public class ListadoServiciosModal extends JDialog {
 					}
 				});
 				model = new DefaultTableModel();
-				String[] headers = {"Código","Tipo de servicio","Tipo de facturación","Dias Vigencia"};
+				String[] headers = {"Código","Tipo de servicio","Tipo de facturación","Dias Vigencia","Precio"};
 				model.setColumnIdentifiers(headers);
 				table.setModel(model);
 				scrollPane.setViewportView(table);
@@ -185,6 +185,7 @@ public class ListadoServiciosModal extends JDialog {
 					row[2]="Agotable";
 				}
 				row[3]=servicio.getDuracion();
+				row[4]=servicio.getPrecio();
 				if(servicio instanceof Internet) {
 				model.addRow(row);
 				}
@@ -211,6 +212,7 @@ public class ListadoServiciosModal extends JDialog {
 							row[2]="Agotable";
 						}
 						row[3]=servicio.getDuracion();
+						row[4]=servicio.getPrecio();
 						if(servicio instanceof Internet) {
 							model.addRow(row);
 							}
@@ -240,6 +242,7 @@ public class ListadoServiciosModal extends JDialog {
 					row[2]="Agotable";
 				}
 				row[3]=servicio.getDuracion();
+				row[4]=servicio.getPrecio();
 				if(servicio instanceof Minutos) {
 				model.addRow(row);
 				}
@@ -266,6 +269,7 @@ public class ListadoServiciosModal extends JDialog {
 							row[2]="Agotable";
 						}
 						row[3]=servicio.getDuracion();
+						row[4]=servicio.getPrecio();
 						if(servicio instanceof Minutos) {
 							model.addRow(row);
 							}
@@ -295,6 +299,7 @@ public class ListadoServiciosModal extends JDialog {
 					row[2]="Agotable";
 				}
 				row[3]=servicio.getDuracion();
+				row[4]=servicio.getPrecio();
 				if(servicio instanceof Television) {
 				model.addRow(row);
 				}
@@ -321,6 +326,7 @@ public class ListadoServiciosModal extends JDialog {
 							row[2]="Agotable";
 						}
 						row[3]=servicio.getDuracion();
+						row[4]=servicio.getPrecio();
 						if(servicio instanceof Television) {
 							model.addRow(row);
 							}

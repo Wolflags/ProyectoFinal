@@ -33,5 +33,16 @@ public class Internet extends Servicio {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
+
+	@Override
+	public float getPrecio() {
+		float precio = 0;
+		if(this.tipo=="Internet Móvil") {
+		precio = (float) (precio+(0.07*this.cantMB)+(70*this.velocidad));
+		}else {
+		precio = (float) (precio+(0.03*this.cantMB)+(100*this.velocidad));
+		}
+		return precio;
+	}
 	
 }

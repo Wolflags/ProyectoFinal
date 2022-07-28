@@ -115,7 +115,7 @@ public class ListadoServicios extends JDialog {
 				
 			});
 			model = new DefaultTableModel();
-			String[] headers = {"Código","Tipo de servicio","Tipo de facturación","Dias Vigencia"};
+			String[] headers = {"Código","Tipo de servicio","Tipo de facturación","Dias Vigencia", "Precio"};
 			model.setColumnIdentifiers(headers);
 			table.setModel(model);
 			scrollPane.setViewportView(table);
@@ -152,7 +152,7 @@ public class ListadoServicios extends JDialog {
 			panel.add(lblNewLabel_3);
 			
 			JComboBox comboBox_1 = new JComboBox();
-			comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"C\u00F3digo", "Tipo de servicio", "Tipo de facturaci\u00F3n", "Dias de vigencia"}));
+			comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"C\u00F3digo", "Tipo de servicio", "Tipo de facturaci\u00F3n", "Dias de vigencia", "Precio"}));
 			comboBox_1.setBounds(807, 129, 166, 20);
 			panel.add(comboBox_1);
 		}
@@ -419,6 +419,7 @@ public class ListadoServicios extends JDialog {
 					row[2]="Agotable";
 				}
 				row[3]=servicio.getDuracion();
+				row[4]=servicio.getPrecio();
 				model.addRow(row);
 			}
 			}else {
@@ -435,7 +436,15 @@ public class ListadoServicios extends JDialog {
 						}else {
 							row[1]="Television";
 						}
-						row[2]=servicio.getDuracion();
+						if(servicio.getDuracion()==30) {
+							row[2]="Mensual";
+						}else if(servicio.getDuracion()==365) {
+							row[2]="Anual";
+						}else {
+							row[2]="Agotable";
+						}
+						row[3]=servicio.getDuracion();
+						row[4]=servicio.getPrecio();
 					model.addRow(row);
 					}
 				}

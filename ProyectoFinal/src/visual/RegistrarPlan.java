@@ -24,6 +24,7 @@ import java.awt.Color;
 import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Spliterator;
 import java.awt.event.ActionEvent;
 import javax.swing.JSpinner;
 import java.awt.Font;
@@ -37,7 +38,7 @@ public class RegistrarPlan extends JDialog {
 	private static JTextField txtInternet;
 	private static JTextField txtMinutos;
 	private static JTextField txtTelevision;
-	private JTextField txtPrecio;
+	private static JTextField txtPrecio;
 	private static JCheckBox cbxInternet;
 	public static Servicio selected = null;
 	private static int lastSelected = -1;
@@ -113,6 +114,7 @@ public class RegistrarPlan extends JDialog {
 				}else {
 					txtInternet.setText("No seleccionado");
 				}
+				cargarPrecio();
 			}
 		});
 		cbxInternet.setBounds(46, 38, 97, 23);
@@ -127,8 +129,9 @@ public class RegistrarPlan extends JDialog {
 					lisServM.setVisible(true);
 					lisServM.setModal(true);
 				}else {
-					txtInternet.setText("No seleccionado");
+					txtMinutos.setText("No seleccionado");
 				}
+				cargarPrecio();
 			}
 		});
 		cbxMinutos.setBounds(189, 38, 97, 23);
@@ -145,6 +148,7 @@ public class RegistrarPlan extends JDialog {
 				}else {
 					txtTelevision.setText("No seleccionado");
 				}
+				cargarPrecio();
 			}
 		});
 		cbxTelevision.setBounds(332, 38, 97, 23);
@@ -205,23 +209,23 @@ public class RegistrarPlan extends JDialog {
 					public void actionPerformed(ActionEvent arg0) {
 						Plan auxPlan = null;
 						ArrayList<Servicio> auxServicios = new ArrayList<Servicio>();
-						//public Plan(String idplan, ArrayList<Servicio> misServicios, float precio) 
-						
 						
 						if(cbxInternet.isSelected()) {
-							auxServicios.add(0, Altice.getInstance().buscarServicioByCod(txtInternet.getText()));
+							String[] split = txtInternet.getText().split(" ");
+							auxServicios.add(0, Altice.getInstance().buscarServicioByCod(split[0]));
 						}else if(cbxMinutos.isSelected()) {
-							auxServicios.add(1, Altice.getInstance().buscarServicioByCod(txtMinutos.getText()));
+							String[] split = txtMinutos.getText().split(" ");
+							auxServicios.add(1, Altice.getInstance().buscarServicioByCod(split[0]));
 						}else if(cbxTelevision.isSelected()) {
-							auxServicios.add(2, Altice.getInstance().buscarServicioByCod(txtTelevision.getText()));
+							String[] split = txtTelevision.getText().split(" ");
+							auxServicios.add(2, Altice.getInstance().buscarServicioByCod(split[0]));
 						}
 						
 						if(!auxServicios.isEmpty()){
 						auxPlan = new Plan("P-"+Plan.genIdPlan,auxServicios,Float.parseFloat(txtPrecio.getText().toString()));
 						}else {
-							JOptionPane.showMessageDialog(null, "Debe seleccionar al menos un servicio!", "Error", ERROR);
+							//JOptionPane.showMessageDialog(null, "Debe seleccionar al menos un servicio!", "Error", ERROR);
 						}
-						
 						if(auxPlan!=null){
 						Altice.getInstance().getPlanes().add(auxPlan);
 						Plan.genIdPlan++;
@@ -252,12 +256,16 @@ public class RegistrarPlan extends JDialog {
 		txtId.setText("P-"+Plan.genIdPlan);
 		
 		if(lastSelected==0) {
-			txtInternet.setText(selected.getCodigo());
+			Internet auxint = (Internet) selected;
+			txtInternet.setText(selected.getCodigo()+" || "+auxint.getCantMB()+"MB"+" || "+auxint.getVelocidad()+"Mbps"+" || "+auxint.getDuracion()+" Dias"+" || "+selected.getPrecio());
 		}else if(lastSelected==1) {
-			txtMinutos.setText(selected.getCodigo());
+			Minutos auxmins = (Minutos) selected;
+			txtMinutos.setText(selected.getCodigo()+" || "+auxmins.getCantMins()+" Minutos"+" || "+auxmins.getDuracion()+" Dias"+" || "+selected.getPrecio());
 		}else if(lastSelected==2) {
-			txtTelevision.setText(selected.getCodigo());
+			Television auxtv = (Television) selected;
+			txtTelevision.setText(selected.getCodigo()+" || "+auxtv.getCantCanales()+" Canales"+" || "+auxtv.getDuracion()+" Dias"+" || "+selected.getPrecio());
 		}
+		cargarPrecio();
 		
 	}
 
@@ -272,6 +280,31 @@ public class RegistrarPlan extends JDialog {
 			txtTelevision.setText("No seleccionado");
 			cbxTelevision.setSelected(false);
 		}
+		cargarPrecio();
+		
+	}
+
+	private static void cargarPrecio() {
+		float precio = 0;
+		if(cbxInternet.isSelected()) {
+			String[] split = txtInternet.getText().split(" ");
+			if(Altice.getInstance().buscarServicioByCod(split[0])!=null) {
+			precio = precio + Altice.getInstance().buscarServicioByCod(split[0]).getPrecio();
+			}
+		} 
+			if(cbxMinutos.isSelected()) {
+			String[] split = txtMinutos.getText().split(" ");
+			if(Altice.getInstance().buscarServicioByCod(split[0])!=null) {
+			precio = precio + Altice.getInstance().buscarServicioByCod(split[0]).getPrecio();
+			}
+		} 
+			if(cbxTelevision.isSelected()) {
+			String[] split = txtTelevision.getText().split(" ");
+			if(Altice.getInstance().buscarServicioByCod(split[0])!=null) {
+			precio = precio + Altice.getInstance().buscarServicioByCod(split[0]).getPrecio();
+			}
+		}
+		txtPrecio.setText(precio+"");
 		
 	}
 }

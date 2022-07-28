@@ -25,5 +25,16 @@ public class Minutos extends Servicio {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
+
+	@Override
+	public float getPrecio() {
+		float precio = 0;
+		if(this.tipo=="Minutos Móvil") {
+			precio = (float) (precio+(4.75*this.cantMins));
+		}else {
+			precio = (float) (precio+(3.75*this.cantMins));
+		}
+		return precio;
+	}
 	
 }
