@@ -8,15 +8,20 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.JTable;
 
 public class ListadoPlanesModal extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField;
+	private JTable table;
+	private static DefaultTableModel model;
+	private static Object[] row;
 
 	/**
 	 * Launch the application.
@@ -57,6 +62,9 @@ public class ListadoPlanesModal extends JDialog {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 111, 779, 287);
 		panel.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
 		
 		JLabel lblNewLabel_1 = new JLabel("Buscar:");
 		lblNewLabel_1.setBounds(20, 86, 67, 14);
