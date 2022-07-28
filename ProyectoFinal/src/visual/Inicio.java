@@ -197,9 +197,21 @@ public class Inicio extends JFrame {
 					}
 				});
 				btnListadoFacturas.setBackground(Color.WHITE);
-				btnListadoFacturas.setBounds(30, 54, 205, 45);
+				btnListadoFacturas.setBounds(29, 109, 205, 45);
 				panelFacturacion.add(btnListadoFacturas);
 			}
+			
+			JButton btnRealizarVenta = new JButton("Realizar venta");
+			btnRealizarVenta.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					RealizarVenta reVen = new RealizarVenta();
+					reVen.setVisible(true);
+					reVen.setModal(true);
+				}
+			});
+			btnRealizarVenta.setBackground(Color.WHITE);
+			btnRealizarVenta.setBounds(29, 53, 205, 45);
+			panelFacturacion.add(btnRealizarVenta);
 		}
 		{
 			JPanel panelServicios = new JPanel();
