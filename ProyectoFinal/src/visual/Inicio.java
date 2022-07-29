@@ -30,7 +30,7 @@ public class Inicio extends JFrame {
 	private Empleado auxEmpleado = null;
 	private Dimension dim;
 	private Date hoy;
-
+	//Nada
 	public Inicio(Empleado empleado) {
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Inicio.class.getResource("/media/imgLogoPequeno.jpg")));
