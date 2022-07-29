@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
 
 import logico.Altice;
 import logico.Cliente;
@@ -36,16 +37,18 @@ public class RealizarVenta extends JDialog {
 	private JTextField txtNombre;
 	private JTextField txtTelefono;
 	private JTextField txtDireccion;
-	private JTable table;
 	private JTextField txtPrecioTotal;
 	private JButton btnAnnadirPlan;
 	private JButton btnBuscar;
-	private JScrollPane spPlanes;
 	private JTextField txtApellido;
 	private JSpinner spnDia;
 	private JComboBox cbxMes;
 	private JSpinner spnYear;
 	private static SpinnerNumberModel spnDiaModel;
+	private JTable table;
+	private static DefaultTableModel model;
+	private static Object[] row;
+	private JScrollPane spPlanes;
 
 	/**
 	 * Launch the application.
@@ -248,18 +251,7 @@ public class RealizarVenta extends JDialog {
 		contentPanel.add(panel_SelPlanes);
 		panel_SelPlanes.setLayout(null);
 		
-		spPlanes = new JScrollPane();
-		spPlanes.setEnabled(false);
-		spPlanes.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		spPlanes.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		spPlanes.setBounds(70, 37, 426, 153);
-		panel_SelPlanes.add(spPlanes);
-		
-		table = new JTable();
-		spPlanes.setViewportView(table);
-		
 		btnAnnadirPlan = new JButton("A\u00F1adir Planes");
-		btnAnnadirPlan.setEnabled(false);
 		btnAnnadirPlan.setBounds(80, 203, 111, 25);
 		panel_SelPlanes.add(btnAnnadirPlan);
 		
@@ -272,6 +264,17 @@ public class RealizarVenta extends JDialog {
 		txtPrecioTotal.setBounds(367, 204, 116, 22);
 		panel_SelPlanes.add(txtPrecioTotal);
 		txtPrecioTotal.setColumns(10);
+		
+		spPlanes = new JScrollPane();
+		spPlanes.setBounds(10, 23, 558, 169);
+		panel_SelPlanes.add(spPlanes);
+		
+		table = new JTable();
+		model = new DefaultTableModel();
+		String[] headers = {"Código","Nombre","Cantidad de servicios", "Precio"};
+		model.setColumnIdentifiers(headers);
+		table.setModel(model);
+		spPlanes.setViewportView(table);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -293,9 +296,15 @@ public class RealizarVenta extends JDialog {
 				btnCancelar.setActionCommand("Cancel");
 				buttonPane.add(btnCancelar);
 			}
+			cargarPlanesSel();
 		}
 	}
 	
+	private void cargarPlanesSel() {
+		
+		
+	}
+
 	private void clear() {
 		txtCedula.setText("");
 		txtNombre.setText("");
