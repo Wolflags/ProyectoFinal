@@ -204,9 +204,9 @@ public class Inicio extends JFrame {
 			JButton btnRealizarVenta = new JButton("Realizar venta");
 			btnRealizarVenta.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					RegistrarServicio regServ = new RegistrarServicio();
-					regServ.setVisible(true);
-					regServ.setModal(true);
+					RealizarVenta reVen = new RealizarVenta();
+					reVen.setVisible(true);
+					reVen.setModal(true);
 				}
 			});
 			btnRealizarVenta.setBackground(Color.WHITE);

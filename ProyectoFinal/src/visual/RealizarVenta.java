@@ -16,12 +16,14 @@ import javax.swing.table.DefaultTableModel;
 
 import logico.Altice;
 import logico.Cliente;
+import logico.Plan;
 
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JSpinner;
@@ -49,6 +51,9 @@ public class RealizarVenta extends JDialog {
 	private static DefaultTableModel model;
 	private static Object[] row;
 	private JScrollPane spPlanes;
+	
+	public static ArrayList<Plan> carrito =  new ArrayList<Plan>();
+	private JButton btnNewButton;
 
 	/**
 	 * Launch the application.
@@ -241,7 +246,7 @@ public class RealizarVenta extends JDialog {
 				}
 			}
 		});
-		spnYear.setModel(new SpinnerNumberModel(fechaActual.getYear()+1900, 1900, 2022, 1));
+		spnYear.setModel(new SpinnerNumberModel(2022, 1900, 2022, 1));
 		spnYear.setBounds(249, 107, 56, 22);
 		panel_InfoCliente.add(spnYear);
 		
@@ -251,17 +256,25 @@ public class RealizarVenta extends JDialog {
 		contentPanel.add(panel_SelPlanes);
 		panel_SelPlanes.setLayout(null);
 		
-		btnAnnadirPlan = new JButton("A\u00F1adir Planes");
-		btnAnnadirPlan.setBounds(80, 203, 111, 25);
+		btnAnnadirPlan = new JButton("A\u00F1adir");
+		btnAnnadirPlan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListadoPlanesModal lisMod = new ListadoPlanesModal();
+				lisMod.setVisible(true);
+				lisMod.setModal(true);
+				
+			}
+		});
+		btnAnnadirPlan.setBounds(10, 203, 89, 23);
 		panel_SelPlanes.add(btnAnnadirPlan);
 		
 		JLabel lblNewLabel_1 = new JLabel("Precio Total:");
-		lblNewLabel_1.setBounds(282, 207, 73, 16);
+		lblNewLabel_1.setBounds(360, 206, 73, 16);
 		panel_SelPlanes.add(lblNewLabel_1);
 		
 		txtPrecioTotal = new JTextField();
 		txtPrecioTotal.setEnabled(false);
-		txtPrecioTotal.setBounds(367, 204, 116, 22);
+		txtPrecioTotal.setBounds(452, 203, 116, 22);
 		panel_SelPlanes.add(txtPrecioTotal);
 		txtPrecioTotal.setColumns(10);
 		
@@ -275,6 +288,11 @@ public class RealizarVenta extends JDialog {
 		model.setColumnIdentifiers(headers);
 		table.setModel(model);
 		spPlanes.setViewportView(table);
+		
+		btnNewButton = new JButton("Remover");
+		btnNewButton.setEnabled(false);
+		btnNewButton.setBounds(109, 203, 89, 23);
+		panel_SelPlanes.add(btnNewButton);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -282,6 +300,11 @@ public class RealizarVenta extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton btnFacturar = new JButton("Facturar");
+				btnFacturar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+					}
+				});
 				btnFacturar.setActionCommand("OK");
 				buttonPane.add(btnFacturar);
 				getRootPane().setDefaultButton(btnFacturar);
@@ -300,8 +323,28 @@ public class RealizarVenta extends JDialog {
 		}
 	}
 	
-	private void cargarPlanesSel() {
+	public static void cargarPlanesSel() {
 		
+		model.setRowCount(0);
+		row = new Object[model.getColumnCount()];
+		
+		for (Plan plan : carrito) {
+			row[0]=plan.getIdplan();
+			row[1]=plan.getNombre();
+			int cantserv=0;
+			if(plan.getMisServicios().get(0)!=null) {
+				cantserv++;
+			}
+			if(plan.getMisServicios().get(1)!=null) {
+				cantserv++;
+			}
+			if(plan.getMisServicios().get(2)!=null) {
+				cantserv++;
+			}
+			row[2]=cantserv;
+			row[3]=plan.getPrecio();
+			model.addRow(row);
+		}
 		
 	}
 

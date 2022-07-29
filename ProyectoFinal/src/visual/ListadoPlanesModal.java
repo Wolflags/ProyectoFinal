@@ -23,6 +23,10 @@ import java.util.ArrayList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTable;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ListadoPlanesModal extends JDialog {
 
@@ -32,6 +36,7 @@ public class ListadoPlanesModal extends JDialog {
 	private static DefaultTableModel model;
 	private static Object[] row;
 	private static String ini="";
+	private static Plan selected = null;
 
 	/**
 	 * Launch the application.
@@ -50,6 +55,7 @@ public class ListadoPlanesModal extends JDialog {
 	 * Create the dialog.
 	 */
 	public ListadoPlanesModal() {
+		setModal(true);
 		setResizable(false);
 		setBounds(100, 100, 825, 493);
 		setLocationRelativeTo(null);
@@ -74,6 +80,17 @@ public class ListadoPlanesModal extends JDialog {
 		panel.add(scrollPane);
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				int index = table.getSelectedRow();
+				if(index>=0) {
+				//btnDetalles.setEnabled(true);
+				String codPlan = table.getValueAt(index, 0).toString();
+				selected=Altice.getInstance().buscarPlanByCod(codPlan);
+				}
+			}
+		});
 		model = new DefaultTableModel();
 		String[] headers = {"Código","Nombre","Cantidad de servicios", "Precio"};
 		model.setColumnIdentifiers(headers);
@@ -94,6 +111,13 @@ public class ListadoPlanesModal extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton btnSeleccionar = new JButton("Seleccionar");
+				btnSeleccionar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						RealizarVenta.carrito.add(selected);
+						RealizarVenta.cargarPlanesSel();
+						dispose();
+					}
+				});
 				btnSeleccionar.setActionCommand("OK");
 				buttonPane.add(btnSeleccionar);
 				getRootPane().setDefaultButton(btnSeleccionar);
@@ -111,11 +135,13 @@ public class ListadoPlanesModal extends JDialog {
 		if(ini=="") {
 			model.setRowCount(0);
 			row = new Object[model.getColumnCount()];
-			ArrayList<Plan> planes = Altice.getInstance().getPlanes();
+			ArrayList<Plan> planes = new ArrayList<Plan>();
+			planes.addAll(Altice.getInstance().getPlanes());
 			for (Plan plan : planes) {
 				row[0]=plan.getIdplan();
 				row[1]=plan.getNombre();
 				int cantserv=0;
+				
 				if(plan.getMisServicios().get(0)!=null) {
 					cantserv++;
 				}
@@ -125,6 +151,7 @@ public class ListadoPlanesModal extends JDialog {
 				if(plan.getMisServicios().get(2)!=null) {
 					cantserv++;
 				}
+				
 				row[2]=cantserv;
 				row[3]=plan.getPrecio();
 				model.addRow(row);

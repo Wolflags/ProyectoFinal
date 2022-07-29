@@ -12,10 +12,12 @@ public class Plan {
 	private boolean estado;
 	public static int genIdPlan = 1;
 	
-	public Plan(String idplan, ArrayList<Servicio> misServicios, float precio) {
+	public Plan(String idplan, String nombre,ArrayList<Servicio> misServicios, float precio) {
 		super();
 		this.idplan = idplan;
-		this.misServicios = new ArrayList<Servicio>();
+		this.nombre = nombre;
+		this.numero = "0";
+		this.misServicios = misServicios;
 		this.precio = precio;
 		this.estado=true;
 	}

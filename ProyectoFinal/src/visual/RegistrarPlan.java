@@ -34,7 +34,7 @@ public class RegistrarPlan extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private static JTextField txtId;
-	private JTextField textField_1;
+	private JTextField txtNombre;
 	private static JTextField txtInternet;
 	private static JTextField txtMinutos;
 	private static JTextField txtTelevision;
@@ -92,10 +92,10 @@ public class RegistrarPlan extends JDialog {
 		lblNewLabel_1.setBounds(10, 55, 63, 14);
 		panel.add(lblNewLabel_1);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(66, 52, 384, 20);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
+		txtNombre = new JTextField();
+		txtNombre.setBounds(66, 52, 384, 20);
+		panel.add(txtNombre);
+		txtNombre.setColumns(10);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Servicios", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -209,20 +209,33 @@ public class RegistrarPlan extends JDialog {
 					public void actionPerformed(ActionEvent arg0) {
 						Plan auxPlan = null;
 						ArrayList<Servicio> auxServicios = new ArrayList<Servicio>();
+						auxServicios.add(null);
 						
 						if(cbxInternet.isSelected()) {
 							String[] split = txtInternet.getText().split(" ");
 							auxServicios.add(0, Altice.getInstance().buscarServicioByCod(split[0]));
-						}else if(cbxMinutos.isSelected()) {
+						}else
+						{
+							auxServicios.add(0, null);
+						}
+						
+						if(cbxMinutos.isSelected()) {
 							String[] split = txtMinutos.getText().split(" ");
 							auxServicios.add(1, Altice.getInstance().buscarServicioByCod(split[0]));
-						}else if(cbxTelevision.isSelected()) {
+						}else {
+							auxServicios.add(1, null);
+						}
+							
+						if(cbxTelevision.isSelected()) {
 							String[] split = txtTelevision.getText().split(" ");
 							auxServicios.add(2, Altice.getInstance().buscarServicioByCod(split[0]));
+						}else {
+							auxServicios.add(2, null);
 						}
 						
 						if(!auxServicios.isEmpty()){
-						auxPlan = new Plan("P-"+Plan.genIdPlan,auxServicios,Float.parseFloat(txtPrecio.getText().toString()));
+						auxPlan = new Plan("P-"+Plan.genIdPlan,txtNombre.getText(),auxServicios,Float.parseFloat(txtPrecio.getText().toString()));
+						
 						}else {
 							//JOptionPane.showMessageDialog(null, "Debe seleccionar al menos un servicio!", "Error", ERROR);
 						}

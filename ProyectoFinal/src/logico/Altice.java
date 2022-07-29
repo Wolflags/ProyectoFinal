@@ -163,5 +163,21 @@ public class Altice {
 		}
 		return empleados;
 	}
+
+	public Plan buscarPlanByCod(String codPlan) {
+		Plan auxPlan = null;
+		int i = 0;
+		boolean encontrado = false;
+		while(i < planes.size() && !encontrado) {
+			
+				if(planes.get(i).getIdplan().equalsIgnoreCase(codPlan)) {
+					auxPlan = planes.get(i);
+					encontrado = true;
+				}
+			
+			i++;
+		}
+		return auxPlan;
+	}
 	
 }
