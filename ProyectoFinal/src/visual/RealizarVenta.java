@@ -16,6 +16,8 @@ import javax.swing.table.DefaultTableModel;
 
 import logico.Altice;
 import logico.Cliente;
+import logico.Empleado;
+import logico.Factura;
 import logico.Plan;
 
 import javax.swing.JTextField;
@@ -30,6 +32,8 @@ import javax.swing.JSpinner;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.SpinnerNumberModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class RealizarVenta extends JDialog {
 
@@ -39,7 +43,7 @@ public class RealizarVenta extends JDialog {
 	private JTextField txtNombre;
 	private JTextField txtTelefono;
 	private JTextField txtDireccion;
-	private JTextField txtPrecioTotal;
+	private static JTextField txtPrecioTotal;
 	private JButton btnAnnadirPlan;
 	private JButton btnBuscar;
 	private JTextField txtApellido;
@@ -51,16 +55,17 @@ public class RealizarVenta extends JDialog {
 	private static DefaultTableModel model;
 	private static Object[] row;
 	private JScrollPane spPlanes;
+	private static Plan selected;
 	
 	public static ArrayList<Plan> carrito =  new ArrayList<Plan>();
-	private JButton btnNewButton;
+	private JButton btnRemover;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			RealizarVenta dialog = new RealizarVenta();
+			RealizarVenta dialog = new RealizarVenta(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -70,8 +75,9 @@ public class RealizarVenta extends JDialog {
 
 	/**
 	 * Create the dialog.
+	 * @param empleado 
 	 */
-	public RealizarVenta() {
+	public RealizarVenta(Empleado empleado) {
 		fechaActual = new Date();
 		setResizable(false);
 		setModal(true);
@@ -273,7 +279,7 @@ public class RealizarVenta extends JDialog {
 		panel_SelPlanes.add(lblNewLabel_1);
 		
 		txtPrecioTotal = new JTextField();
-		txtPrecioTotal.setEnabled(false);
+		txtPrecioTotal.setEditable(false);
 		txtPrecioTotal.setBounds(452, 203, 116, 22);
 		panel_SelPlanes.add(txtPrecioTotal);
 		txtPrecioTotal.setColumns(10);
@@ -283,16 +289,36 @@ public class RealizarVenta extends JDialog {
 		panel_SelPlanes.add(spPlanes);
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				int index = table.getSelectedRow();
+				if(index>=0) {
+				selected=carrito.get(index);
+				btnRemover.setEnabled(true);
+				}
+			}
+		});
 		model = new DefaultTableModel();
-		String[] headers = {"Código","Nombre","Cantidad de servicios", "Precio"};
+		String[] headers = {"Código","Nombre","Numero de telefono", "Precio"};
 		model.setColumnIdentifiers(headers);
 		table.setModel(model);
 		spPlanes.setViewportView(table);
 		
-		btnNewButton = new JButton("Remover");
-		btnNewButton.setEnabled(false);
-		btnNewButton.setBounds(109, 203, 89, 23);
-		panel_SelPlanes.add(btnNewButton);
+		btnRemover = new JButton("Remover");
+		btnRemover.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int index = table.getSelectedRow();
+				if(index>=0) {
+				carrito.remove(index);
+				cargarPlanesSel();
+				btnRemover.setEnabled(false);
+				}
+			}
+		});
+		btnRemover.setEnabled(false);
+		btnRemover.setBounds(109, 203, 89, 23);
+		panel_SelPlanes.add(btnRemover);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -302,7 +328,21 @@ public class RealizarVenta extends JDialog {
 				JButton btnFacturar = new JButton("Facturar");
 				btnFacturar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						
+						Cliente auxCliente = Altice.getInstance().buscarClienteByCedula(txtCedula.getText());
+						Date fecNac = new Date(1, 1, 1);
+						fecNac.setDate(Integer.parseInt(spnDia.getValue().toString()));
+						fecNac.setMonth(cbxMes.getSelectedIndex());
+						fecNac.setYear(Integer.parseInt(spnYear.getValue().toString())-1900);
+						if(auxCliente==null) {
+							auxCliente = new Cliente(txtCedula.getText(), txtNombre.getText(), txtDireccion.getText(), txtTelefono.getText(), txtApellido.getText(), fecNac);
+						}
+						for (Plan plan : carrito) {
+							Factura auxFac = new Factura("P-"+Factura.genIdFact, new Date(), plan.getPrecio(), empleado, auxCliente, plan);
+							Altice.getInstance().getFacturas().add(auxFac);
+							Factura.genIdFact++;
+						}
+						carrito = new ArrayList<Plan>();
+						dispose();
 					}
 				});
 				btnFacturar.setActionCommand("OK");
@@ -331,21 +371,20 @@ public class RealizarVenta extends JDialog {
 		for (Plan plan : carrito) {
 			row[0]=plan.getIdplan();
 			row[1]=plan.getNombre();
-			int cantserv=0;
-			if(plan.getMisServicios().get(0)!=null) {
-				cantserv++;
-			}
-			if(plan.getMisServicios().get(1)!=null) {
-				cantserv++;
-			}
-			if(plan.getMisServicios().get(2)!=null) {
-				cantserv++;
-			}
-			row[2]=cantserv;
+			row[2]=plan.getNumero();
 			row[3]=plan.getPrecio();
 			model.addRow(row);
 		}
+		cargartxtPrecio();
 		
+	}
+
+	private static void cargartxtPrecio() {
+		float precio=0;
+		for (Plan plan : carrito) {
+			precio+=plan.getPrecio();
+		}
+		txtPrecioTotal.setText(""+precio);
 	}
 
 	private void clear() {

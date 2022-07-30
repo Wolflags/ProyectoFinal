@@ -5,10 +5,12 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 import logico.Altice;
 import logico.Internet;
@@ -17,6 +19,8 @@ import logico.Plan;
 import logico.Servicio;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.util.ArrayList;
 
@@ -27,6 +31,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
 
 public class ListadoPlanesModal extends JDialog {
 
@@ -37,6 +42,7 @@ public class ListadoPlanesModal extends JDialog {
 	private static Object[] row;
 	private static String ini="";
 	private static Plan selected = null;
+	private JFormattedTextField txtTelefono;
 
 	/**
 	 * Launch the application.
@@ -113,8 +119,27 @@ public class ListadoPlanesModal extends JDialog {
 				JButton btnSeleccionar = new JButton("Seleccionar");
 				btnSeleccionar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						RealizarVenta.carrito.add(selected);
-						RealizarVenta.cargarPlanesSel();
+						MaskFormatter formatter = null;
+						try {
+							formatter = new MaskFormatter("(###) ###-####");
+						} catch (ParseException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						txtTelefono = new JFormattedTextField(formatter);
+						int opc = JOptionPane.showConfirmDialog(null, txtTelefono,"Numero de telefono para el plan",JOptionPane.OK_CANCEL_OPTION);
+						while((txtTelefono.getText().charAt(1)==' ')&&opc==0) {
+							JOptionPane.showMessageDialog(null, "Por favor ingresa un número válido!",
+								      "Número Inválido!", JOptionPane.ERROR_MESSAGE);
+						opc = JOptionPane.showConfirmDialog(null, txtTelefono,"Numero de telefono para el plan",JOptionPane.OK_CANCEL_OPTION);
+						}
+						if(opc==0&&selected!=null) {
+							Plan auxPlan = new Plan(selected.getIdplan(), selected.getNombre(), selected.getMisServicios(), selected.getPrecio());
+							auxPlan.setNumero(txtTelefono.getText());
+							RealizarVenta.carrito.add(auxPlan);
+							RealizarVenta.cargarPlanesSel();
+						}
+						
 						dispose();
 					}
 				});
