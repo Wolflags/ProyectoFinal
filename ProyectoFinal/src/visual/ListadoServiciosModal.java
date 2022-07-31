@@ -20,11 +20,14 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -45,7 +48,7 @@ public class ListadoServiciosModal extends JDialog {
 	public static void main(String[] args) {
 		try {
 			ListadoServiciosModal dialog = new ListadoServiciosModal(0);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -56,6 +59,13 @@ public class ListadoServiciosModal extends JDialog {
 	 * Create the dialog.
 	 */
 	public ListadoServiciosModal(int tipo) {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				RegistrarPlan.setCancel(tipo);
+				dispose();
+			}
+		});
 		setTitle("Seleccionar Servicio");
 		setModal(true);
 		setBounds(100, 100, 700, 445);

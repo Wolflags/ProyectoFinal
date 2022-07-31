@@ -23,6 +23,8 @@ import javax.swing.UIManager;
 import java.awt.Color;
 import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Spliterator;
 import java.awt.event.ActionEvent;
@@ -51,7 +53,7 @@ public class RegistrarPlan extends JDialog {
 	public static void main(String[] args) {
 		try {
 			RegistrarPlan dialog = new RegistrarPlan();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -62,6 +64,18 @@ public class RegistrarPlan extends JDialog {
 	 * Create the dialog.
 	 */
 	public RegistrarPlan() {
+		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				int opc = JOptionPane.showConfirmDialog(null,"Está seguro que desea salir?","Advertencia",JOptionPane.YES_NO_OPTION);
+				if(opc==0) {
+					dispose();
+				}else {
+					
+				}
+			}
+		});
 		setTitle("Nuevo Plan");
 		setModal(true);
 		setBounds(100, 100, 514, 466);
@@ -207,6 +221,8 @@ public class RegistrarPlan extends JDialog {
 				JButton okButton = new JButton("Crear Plan");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
+						if(txtNombre.getText().length()>3) {
+							if(cbxInternet.isSelected()||cbxMinutos.isSelected()||cbxTelevision.isSelected()) {
 						Plan auxPlan = null;
 						ArrayList<Servicio> auxServicios = new ArrayList<Servicio>();
 						auxServicios.add(null);
@@ -242,8 +258,25 @@ public class RegistrarPlan extends JDialog {
 						if(auxPlan!=null){
 						Altice.getInstance().getPlanes().add(auxPlan);
 						Plan.genIdPlan++;
-						dispose();
+						JOptionPane.showMessageDialog(null, "Registro existoso.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+						clear();
 						}
+						}else {
+							JOptionPane.showMessageDialog(null, "Debe seleccionar al menos un servicio.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+						}
+					}else {
+						JOptionPane.showMessageDialog(null, "Por favor ingrese un nombre válido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+					}
+					}
+
+					private void clear() {
+						setCancel(0);
+						setCancel(1);
+						setCancel(2);
+						txtNombre.setText("");
+						txtId.setText("P-"+Plan.genIdPlan);
+						selected = null;
+						lastSelected = -1;
 					}
 				});
 				okButton.setActionCommand("OK");

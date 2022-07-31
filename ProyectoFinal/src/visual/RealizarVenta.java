@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -13,6 +14,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 import logico.Altice;
 import logico.Cliente;
@@ -34,14 +36,17 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.SpinnerNumberModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.text.ParseException;
 
 public class RealizarVenta extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private Date fechaActual;
-	private JTextField txtCedula;
+	private JFormattedTextField txtCedula;
 	private JTextField txtNombre;
-	private JTextField txtTelefono;
+	private JFormattedTextField txtTelefono;
 	private JTextField txtDireccion;
 	private static JTextField txtPrecioTotal;
 	private JButton btnAnnadirPlan;
@@ -66,7 +71,7 @@ public class RealizarVenta extends JDialog {
 	public static void main(String[] args) {
 		try {
 			RealizarVenta dialog = new RealizarVenta(null);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,6 +83,18 @@ public class RealizarVenta extends JDialog {
 	 * @param empleado 
 	 */
 	public RealizarVenta(Empleado empleado) {
+		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				int opc = JOptionPane.showConfirmDialog(null,"Está seguro que desea salir?","Advertencia",JOptionPane.YES_NO_OPTION);
+				if(opc==0) {
+					dispose();
+				}else {
+					
+				}
+			}
+		});
 		fechaActual = new Date();
 		setResizable(false);
 		setModal(true);
@@ -99,7 +116,16 @@ public class RealizarVenta extends JDialog {
 		lblNewLabel.setBounds(79, 30, 44, 16);
 		panel_InfoCliente.add(lblNewLabel);
 		
-		txtCedula = new JTextField();
+		MaskFormatter formatterced = null;
+		
+		try {
+			formatterced = new MaskFormatter("###-#######-#");
+		} catch (ParseException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		txtCedula = new JFormattedTextField(formatterced);
 		txtCedula.setBounds(135, 27, 170, 22);
 		panel_InfoCliente.add(txtCedula);
 		txtCedula.setColumns(10);
@@ -107,11 +133,16 @@ public class RealizarVenta extends JDialog {
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (txtCedula.getText().equalsIgnoreCase("")) {
-					JOptionPane.showMessageDialog(null, "Introduzca una cédula.", "Información", JOptionPane.INFORMATION_MESSAGE);
+				
+				if (txtCedula.getText().equalsIgnoreCase("")||txtCedula.getText().charAt(12)==' ') {
+					JOptionPane.showMessageDialog(null, "Introduzca una cédula válida.", "Información", JOptionPane.INFORMATION_MESSAGE);
 				}else {
 					Cliente cliente = Altice.getInstance().buscarClienteByCedula(txtCedula.getText());
+					
 					if (cliente == null) {
+						String temced = txtCedula.getText();
+						clear();
+						txtCedula.setText(temced);
 						txtNombre.setEditable(true);
 						txtApellido.setEditable(true);
 						txtTelefono.setEditable(true);
@@ -122,6 +153,7 @@ public class RealizarVenta extends JDialog {
 						spPlanes.setEnabled(true);
 						btnAnnadirPlan.setEnabled(true);
 					}else {
+						
 						txtNombre.setText(cliente.getNombre());
 						txtApellido.setText(cliente.getApellido());
 						txtTelefono.setText(cliente.getTelefono());
@@ -139,7 +171,21 @@ public class RealizarVenta extends JDialog {
 						spnYear.setEnabled(false);
 						cbxMes.setEnabled(false);
 					}
+					if(!validarClienteNoDebe(cliente)) {
+						JOptionPane.showMessageDialog(null, "El cliente tiene deudas pendientes!.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+						clear();
+					}
 				}
+			}
+
+			private boolean validarClienteNoDebe(Cliente cliente) {
+				boolean hacer = true;
+				for (Factura factura: cliente.getMisFacturas()) {
+					if(!factura.isEstado()) {
+						hacer=false;
+					}
+				}
+				return hacer;
 			}
 		});
 		btnBuscar.setBounds(336, 26, 97, 25);
@@ -159,7 +205,14 @@ public class RealizarVenta extends JDialog {
 		lblTelfono.setBounds(325, 110, 108, 16);
 		panel_InfoCliente.add(lblTelfono);
 		
-		txtTelefono = new JTextField();
+		MaskFormatter formatter = null;
+		try {
+			formatter = new MaskFormatter("(###) ###-####");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        txtTelefono = new JFormattedTextField(formatter);
 		txtTelefono.setEditable(false);
 		txtTelefono.setColumns(10);
 		txtTelefono.setBounds(389, 107, 170, 22);
@@ -328,6 +381,8 @@ public class RealizarVenta extends JDialog {
 				JButton btnFacturar = new JButton("Facturar");
 				btnFacturar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						if(!carrito.isEmpty()) {
+							if(validarDatosCliente()) {
 						Cliente auxCliente = Altice.getInstance().buscarClienteByCedula(txtCedula.getText());
 						Date fecNac = new Date(1, 1, 1);
 						fecNac.setDate(Integer.parseInt(spnDia.getValue().toString()));
@@ -344,9 +399,48 @@ public class RealizarVenta extends JDialog {
 							Altice.getInstance().buscarClienteByCedula(txtCedula.getText()).getMisPlanes().add(auxFac.getPlan());
 							Factura.genIdFact++;
 						}
+						JOptionPane.showMessageDialog(null, "Registro existoso.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
 						carrito = new ArrayList<Plan>();
-						dispose();
+						clear();
+							}
+					}else {
+						JOptionPane.showMessageDialog(null, "Debe seleccionar al menos un plan.", "Advertencia", JOptionPane.WARNING_MESSAGE);
 					}
+					}
+					//
+					//
+					//
+					//
+					//
+					//
+					private boolean validarDatosCliente() {
+						boolean hacer = true;
+						if (txtCedula.getText().equalsIgnoreCase("")||txtCedula.getText().charAt(12)==' ') {
+							JOptionPane.showMessageDialog(null, "Introduzca una cédula válida.", "Información", JOptionPane.INFORMATION_MESSAGE);
+							hacer=false;
+						}
+						if(txtNombre.getText().length()<2) {
+							JOptionPane.showMessageDialog(null, "Introduzca un nombre válido.", "Información", JOptionPane.INFORMATION_MESSAGE);
+							hacer=false;
+						}
+						if(txtApellido.getText().length()<2) {
+							JOptionPane.showMessageDialog(null, "Introduzca un apellido válido.", "Información", JOptionPane.INFORMATION_MESSAGE);
+							hacer=false;
+						}
+						if(txtDireccion.getText().length()<5) {
+							JOptionPane.showMessageDialog(null, "Introduzca una dirección válida.", "Información", JOptionPane.INFORMATION_MESSAGE);
+							hacer=false;
+						}
+						if (txtTelefono.getText().equalsIgnoreCase("")||txtTelefono.getText().charAt(11)==' ') {
+							JOptionPane.showMessageDialog(null, "Introduzca una teléfono válido.", "Información", JOptionPane.INFORMATION_MESSAGE);
+							hacer=false;
+						}
+						return hacer;
+					}
+					//
+					//
+					//
+					//
 				});
 				btnFacturar.setActionCommand("OK");
 				buttonPane.add(btnFacturar);
@@ -391,6 +485,7 @@ public class RealizarVenta extends JDialog {
 	}
 
 	private void clear() {
+		carrito = new ArrayList<Plan>();
 		txtCedula.setText("");
 		txtNombre.setText("");
 		txtApellido.setText("");
@@ -400,8 +495,6 @@ public class RealizarVenta extends JDialog {
 		spnYear.setValue(fechaActual.getYear()+1900);
 		cbxMes.setSelectedIndex(fechaActual.getMonth());
 		txtPrecioTotal.setText("");
-		spPlanes.setEnabled(false);
-		btnAnnadirPlan.setEnabled(false);
 		txtNombre.setEditable(false);
 		txtApellido.setEditable(false);
 		txtTelefono.setEditable(false);
@@ -409,5 +502,6 @@ public class RealizarVenta extends JDialog {
 		spnDia.setEnabled(false);
 		spnYear.setEnabled(false);
 		cbxMes.setEnabled(false);
+		cargarPlanesSel();
 	}
 }

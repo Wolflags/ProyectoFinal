@@ -16,6 +16,7 @@ import logico.Servicio;
 import logico.Television;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import java.awt.Color;
 import javax.swing.JTextField;
@@ -29,6 +30,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.JRadioButton;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class RegistrarServicio extends JDialog {
 
@@ -56,7 +59,7 @@ public class RegistrarServicio extends JDialog {
 	public static void main(String[] args) {
 		try {
 			RegistrarServicio dialog = new RegistrarServicio();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -67,6 +70,18 @@ public class RegistrarServicio extends JDialog {
 	 * Create the dialog.
 	 */
 	public RegistrarServicio() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				int opc = JOptionPane.showConfirmDialog(null,"Está seguro que desea salir?","Advertencia",JOptionPane.YES_NO_OPTION);
+				if(opc==0) {
+					dispose();
+				}else {
+					
+				}
+			}
+		});
+		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		setModal(true);
 		setTitle("RegistrarServicio");
 		setResizable(false);
@@ -205,6 +220,7 @@ public class RegistrarServicio extends JDialog {
 		panel_tv.add(lblNewLabel_10);
 		
 		spn_cantCanales = new JSpinner();
+		spn_cantCanales.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 		spn_cantCanales.setBounds(54, 29, 141, 20);
 		panel_tv.add(spn_cantCanales);
 		
@@ -229,6 +245,7 @@ public class RegistrarServicio extends JDialog {
 		panel_minutos.add(lblNewLabel_8);
 		
 		spn_cantMin = new JSpinner();
+		spn_cantMin.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 		spn_cantMin.setBounds(54, 29, 141, 20);
 		panel_minutos.add(spn_cantMin);
 		
@@ -252,6 +269,7 @@ public class RegistrarServicio extends JDialog {
 		panel_internet.add(lblNewLabel_5);
 		
 		spn_velocidad = new JSpinner();
+		spn_velocidad.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 		spn_velocidad.setBounds(17, 29, 125, 20);
 		panel_internet.add(spn_velocidad);
 		
@@ -260,6 +278,7 @@ public class RegistrarServicio extends JDialog {
 		panel_internet.add(lblNewLabel_6);
 		
 		JSpinner spn_cantMb = new JSpinner();
+		spn_cantMb.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 		spn_cantMb.setBounds(159, 29, 125, 20);
 		panel_internet.add(spn_cantMb);
 		
@@ -284,6 +303,7 @@ public class RegistrarServicio extends JDialog {
 				JButton okButton = new JButton("Registrar");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						if(txtDescripcion.getText().length()>5) {
 						Servicio auxServicio = null;
 						if(cmbTipoFac.getSelectedIndex()==2) {
 							autocobro=false;
@@ -298,8 +318,33 @@ public class RegistrarServicio extends JDialog {
 						if(auxServicio!=null){
 						Altice.getInstance().getServicios().add(auxServicio);
 						Servicio.genIdServicio++;
-						dispose();
+						JOptionPane.showMessageDialog(null, "Registro existoso.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+						clear();
 						}
+						}else {
+							JOptionPane.showMessageDialog(null, "Por favor ingrese una descripción válida.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+						}
+					}
+
+					private void clear() {
+						txtDescripcion.setText("");
+						cargar();
+						cmbTipoFac.setSelectedIndex(0);
+						spn_diasVigencia.setModel(new SpinnerNumberModel(30, 30, 30, 1));
+						autocobro=false;
+						rdbInternet.setSelected(true);
+						rdbMinutos.setSelected(false);
+						rdbTelevision.setSelected(false);
+						panel_internet.setVisible(true);
+						panel_tv.setVisible(false);
+						panel_minutos.setVisible(false);
+						spn_cantCanales.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+						spn_cantMin.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+						spn_velocidad.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+						spn_cantMb.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+						cmbTipoInternet.setSelectedIndex(0);
+						cmbTipoMinutos.setSelectedIndex(0);
+						cmbTipoTv.setSelectedIndex(0);
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -319,6 +364,7 @@ public class RegistrarServicio extends JDialog {
 		}
 		cargar();
 	}
+	
 
 	private void cargar() {
 		txtCodigo.setText("S-"+Servicio.genIdServicio);

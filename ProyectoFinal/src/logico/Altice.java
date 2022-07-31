@@ -179,5 +179,31 @@ public class Altice {
 		}
 		return auxPlan;
 	}
+
+	public boolean buscarTelefonoExisteEnPlanes(String num) {
+		boolean hacer = false;
+		for (Persona cliente: personas) {
+			if(cliente instanceof Cliente) {
+				for (Plan plan : ((Cliente) cliente).getMisPlanes()) {
+					if(plan.getNumero().equals(num)) {
+						hacer=true;
+					}
+				}
+			}
+		}
+		return hacer;
+	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
