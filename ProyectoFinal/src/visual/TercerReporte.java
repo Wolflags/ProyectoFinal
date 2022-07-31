@@ -27,7 +27,7 @@ import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class PrimerReporte extends JDialog {
+public class TercerReporte extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
@@ -39,7 +39,7 @@ public class PrimerReporte extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			PrimerReporte dialog = new PrimerReporte();
+			TercerReporte dialog = new TercerReporte();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -50,7 +50,7 @@ public class PrimerReporte extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public PrimerReporte() {
+	public TercerReporte() {
 		setResizable(false);
 		setModal(true);
 		setTitle("Ventas Por Planes");
@@ -73,9 +73,10 @@ public class PrimerReporte extends JDialog {
 		scrollPane.setBounds(12, 30, 750, 272);
 		panel.add(scrollPane);
 		
+		
 		table = new JTable();
 		model = new DefaultTableModel();
-		String[] headers = {"ID", "Nombre", "Cantidad de Servicios", "Cantidad de Ventas", "Precio"};  
+		String[] headers = {"ID", "Nombre", "Cantidad de Servicios", "Dinero Generado", "Precio"};  
 		model.setColumnIdentifiers(headers);
 		table.setModel(model);
 		scrollPane.setViewportView(table);
@@ -106,7 +107,7 @@ public class PrimerReporte extends JDialog {
 				row[0] = plan.getIdplan();
 				row[1] = plan.getNombre();
 				row[2] = Integer.valueOf(cantidadServiciosPorPlan(plan)).toString();
-				row[3] = Integer.valueOf(cantidadVentasPorPlan(plan)).toString();
+				row[3] = Float.valueOf(cantidadDineroGeneradoPorPlan(plan));
 				row[4] = Float.valueOf(plan.getPrecio()).toString();
 				model.addRow(row);
 			}
@@ -125,12 +126,12 @@ public class PrimerReporte extends JDialog {
 		return cantidad;
 	}
 	
-	private int cantidadVentasPorPlan(Plan plan) {
-		int cantidad = 0;
+	private float cantidadDineroGeneradoPorPlan(Plan plan) {
+		float cantidad = 0;
 		
 		for (Factura factura: Altice.getInstance().getFacturas()) {
 			if (factura.getPlan().getNombre().equalsIgnoreCase(plan.getNombre())) {
-				cantidad++;
+				cantidad += factura.getPlan().getPrecio();
 			}
 		}
 		return cantidad;
