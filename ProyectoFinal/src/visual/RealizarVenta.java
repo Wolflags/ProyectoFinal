@@ -335,10 +335,13 @@ public class RealizarVenta extends JDialog {
 						fecNac.setYear(Integer.parseInt(spnYear.getValue().toString())-1900);
 						if(auxCliente==null) {
 							auxCliente = new Cliente(txtCedula.getText(), txtNombre.getText(), txtDireccion.getText(), txtTelefono.getText(), txtApellido.getText(), fecNac);
+							Altice.getInstance().getPersonas().add(auxCliente);
 						}
 						for (Plan plan : carrito) {
 							Factura auxFac = new Factura("P-"+Factura.genIdFact, new Date(), plan.getPrecio(), empleado, auxCliente, plan);
 							Altice.getInstance().getFacturas().add(auxFac);
+							Altice.getInstance().buscarClienteByCedula(txtCedula.getText()).getMisFacturas().add(auxFac);
+							Altice.getInstance().buscarClienteByCedula(txtCedula.getText()).getMisPlanes().add(auxFac.getPlan());
 							Factura.genIdFact++;
 						}
 						carrito = new ArrayList<Plan>();
