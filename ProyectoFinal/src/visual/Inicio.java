@@ -39,6 +39,17 @@ public class Inicio extends JFrame {
 	private Dimension dim;
 	private Date hoy;
 	public Inicio(Empleado empleado) {
+		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				try {
+					
+				} catch (Exception e) {
+					
+				}
+			}
+		});
 		
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Inicio.class.getResource("/media/imgLogoPequeno.jpg")));

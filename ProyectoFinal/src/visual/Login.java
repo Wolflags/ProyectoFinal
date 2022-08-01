@@ -25,12 +25,6 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 public class Login extends JFrame {
 
@@ -46,37 +40,6 @@ public class Login extends JFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				FileInputStream empresa;
-				FileOutputStream empresa2;
-				ObjectInputStream empresaRead;
-				ObjectOutputStream empresaWrite;
-				try {
-					empresa = new FileInputStream ("altice.dat");
-					empresaRead = new ObjectInputStream(empresa);
-					Altice temp = (Altice)empresaRead.readObject();
-					Altice.getInstance().setServicios(temp.getServicios());
-					empresa.close();
-					empresaRead.close();
-				} catch (FileNotFoundException e) {
-					try {
-						empresa2 = new  FileOutputStream("altice.dat");
-						empresaWrite = new ObjectOutputStream(empresa2);
-						//User aux = new User("Administrador", "Admin", "Admin");
-						//Altice.getInstance().regUser(aux);
-						empresaWrite.writeObject(Altice.getInstance());
-						empresa2.close();
-						empresaWrite.close();
-					} catch (FileNotFoundException e1) {
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-					}
-				} catch (IOException e) {
-					
-					
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				try {
 					Login frame = new Login();
 					frame.setVisible(true);

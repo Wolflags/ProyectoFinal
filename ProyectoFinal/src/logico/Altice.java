@@ -1,15 +1,21 @@
 package logico;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Altice {
+
+public class Altice implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//Atributos
-	private ArrayList<Persona> personas;
-	private ArrayList<Plan> planes;
-	private ArrayList<Servicio> servicios;
-	private ArrayList<Factura> facturas;
-	private static Altice alti = null;
+	private transient ArrayList<Persona> personas;
+	private transient ArrayList<Plan> planes;
+	private transient ArrayList<Servicio> servicios;
+	private transient ArrayList<Factura> facturas;
+	private transient static Altice alti = null;
 	
 	//Constructor
 	private Altice() {
@@ -206,6 +212,11 @@ public class Altice {
 			i++;
 		}
 		return aux;
+	}
+
+	public static void setInstance(Altice altice) {
+		Altice.alti=altice;
+		
 	}
 	
 }
