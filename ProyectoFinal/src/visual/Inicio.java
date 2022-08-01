@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-
 import logico.Altice;
 import logico.Empleado;
 import java.awt.Toolkit;
@@ -39,15 +38,23 @@ public class Inicio extends JFrame {
 	private Dimension dim;
 	private Date hoy;
 	public Inicio(Empleado empleado) {
-		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
+				/*FileOutputStream altice2;
+				ObjectOutputStream alticeWrite;
 				try {
-					
-				} catch (Exception e) {
-					
-				}
+					altice2 = new  FileOutputStream("altice.datxf");
+					alticeWrite = new ObjectOutputStream(altice2);
+					alticeWrite.writeObject(Altice.getInstance());
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}*/
 			}
 		});
 		
