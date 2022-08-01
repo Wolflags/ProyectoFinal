@@ -175,7 +175,7 @@ public class ListadoClientes extends JDialog {
 		for (Persona cliente : clientes) {
 			row[0] = cliente.getCedula();
 			row[1] = ""+cliente.getNombre()+" "+cliente.getApellido();
-			row[3] = Integer.valueOf(((Cliente) cliente).getMisPlanes().size()).toString();
+			row[2] = ((((Cliente) cliente).getMisPlanes().size()));
 			model.addRow(row);
 		}
 	}
