@@ -38,7 +38,6 @@ public class Inicio extends JFrame {
 	private Empleado auxEmpleado = null;
 	private Dimension dim;
 	private Date hoy;
-	//Nada
 	public Inicio(Empleado empleado) {
 		
 		setResizable(false);

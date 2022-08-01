@@ -68,7 +68,6 @@ public class DetallesFactura extends JDialog {
 			Cliente c1 = new Cliente("123", "Leonardo", "La Zurza II", "8299741202", "Tejada", hoy);
 			Altice.getInstance().insertarPersona(c1);
 			Empleado e1 = new Empleado("402", "Marlon", "La Zurza", "829", "1234", (float)50000, 0, "Soltero", 5, "Administrador", "Oficina 1", "Tejada", hoy);
-			//serviciosEjemplo.set(2, s2);
 			Plan p1 = new Plan("1234", "Ejemplo", serviciosEjemplo, (float)2300);
 			Factura f1 = new Factura("F-1", hoy, (float)3400, e1, c1, p1);
 			c1.getMisFacturas().add(f1);

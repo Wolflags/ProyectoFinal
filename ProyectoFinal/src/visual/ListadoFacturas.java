@@ -263,7 +263,6 @@ public class ListadoFacturas extends JDialog {
 		model.setRowCount(0);
 		row = new Object[model.getColumnCount()];
 		for (Factura factura : auxCliente.getMisFacturas()) {
-			//{"Código", "Plan", "Empleado", "Subtotal", "Fecha"}
 			row[0] = factura.getCodigo().toString();
 			row[1] = factura.getPlan().getNombre().toString();
 			row[2] = factura.getEmpleado().getNombre() + " " +factura.getEmpleado().getApellido();

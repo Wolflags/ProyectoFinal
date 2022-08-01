@@ -107,7 +107,7 @@ public class DetallesPlan extends JDialog {
 	}
 
 	/**
-	 * Create the dialog.
+	 * Create the dialog.///
 	 */
 	public DetallesPlan(Plan plan) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(DetallesPlan.class.getResource("/media/imgPlan32px.png")));
