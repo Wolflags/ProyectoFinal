@@ -379,6 +379,9 @@ public class ListadoEmpleados extends JDialog {
 	private void initArrayContratado (ArrayList<Persona> empleados) {
 		for (Persona empleado : Altice.getInstance().getPersonas()) {
 			if (empleado instanceof Empleado) {
+				if (empleado.getCedula().equalsIgnoreCase("admin")) {
+					continue;
+				}
 				if (((Empleado) empleado).isEstado())
 					empleados.add(empleado);
 			}
@@ -388,6 +391,9 @@ public class ListadoEmpleados extends JDialog {
 	private void initArrayCancelado (ArrayList<Persona> empleados) {
 		for (Persona empleado : Altice.getInstance().getPersonas()) {
 			if (empleado instanceof Empleado) {
+				if (empleado.getCedula().equalsIgnoreCase("admin")) {
+					continue;
+				}
 				if (!((Empleado) empleado).isEstado())
 					empleados.add(empleado);
 			}
@@ -397,6 +403,9 @@ public class ListadoEmpleados extends JDialog {
 	private void initArrayAdmin(ArrayList<Persona> empleados) {
 		for (Persona empleado : Altice.getInstance().getPersonas()) {
 			if (empleado instanceof Empleado) {
+				if (empleado.getCedula().equalsIgnoreCase("admin")) {
+					continue;
+				}
 				if (((Empleado) empleado).getTipoEmpleado().equalsIgnoreCase("Administrador"))
 					empleados.add(empleado);
 			}
@@ -407,6 +416,9 @@ public class ListadoEmpleados extends JDialog {
 	private void initArrayEmpleados(ArrayList<Persona> empleados) {
 		for (Persona empleado : Altice.getInstance().getPersonas()) {
 			if (empleado instanceof Empleado) {
+				if (empleado.getCedula().equalsIgnoreCase("admin")) {
+					continue;
+				}
 				if (((Empleado) empleado).getTipoEmpleado().equalsIgnoreCase("Empleado"))
 					empleados.add(empleado);
 			}
@@ -416,6 +428,9 @@ public class ListadoEmpleados extends JDialog {
 	//Iniciar ArrayList<Persona> empleados con todos los empleados (Admins incluidos) de Altice
 	private void initArrayList (ArrayList<Persona> empleados) {
 		for (Persona empleado : Altice.getInstance().getPersonas()) {
+			if (empleado.getCedula().equalsIgnoreCase("admin")) {
+				continue;
+			}
 			if (empleado instanceof Empleado) 
 				empleados.add(empleado);
 		}
