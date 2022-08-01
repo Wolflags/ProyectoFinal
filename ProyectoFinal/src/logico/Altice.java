@@ -24,7 +24,10 @@ public class Altice implements Serializable{
 		planes = new ArrayList<Plan>();
 		setServicios(new ArrayList<Servicio>());
 		facturas = new ArrayList<Factura>();
-		
+		Date nacimiento = new Date();
+		Empleado mainAdmin = new Empleado("admin", "Patrick", "Woerden", "123-456-7890", "1234", 
+				(float)60000.0, 2, "Casado", 10, "Administrador", "Oficina 01", "Drahi", nacimiento);
+		personas.add(mainAdmin);
 	}
 	
 	//GetInstance
@@ -213,6 +216,20 @@ public class Altice implements Serializable{
 	public static void setInstance(Altice altice) {
 		Altice.alti=altice;
 		
+	}
+	
+	public Plan buscarPlanByCodigo(String codigo) {
+		Plan aux = null;
+		int i = 0;
+		boolean encontrado = false;
+		while(i < planes.size() && !encontrado) {
+			if(planes.get(i).getIdplan().equalsIgnoreCase(codigo)) {
+				aux = planes.get(i);
+				encontrado = true;
+			}
+			i++;
+		}
+		return aux;
 	}
 	
 }

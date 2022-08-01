@@ -49,6 +49,14 @@ public class Plan {
 		this.numero = numero;
 	}
 	
-
+	public int cantServicios() {
+		int cant = 0;
+		for(Servicio servicio : misServicios) {
+			if(servicio != null) {
+				cant++;
+			}
+		}
+		return cant;
+	}
 
 }
