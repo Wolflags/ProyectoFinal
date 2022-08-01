@@ -170,21 +170,25 @@ public class RealizarVenta extends JDialog {
 						spnDia.setEnabled(false);
 						spnYear.setEnabled(false);
 						cbxMes.setEnabled(false);
+						if(!validarClienteNoDebe(cliente)) {
+							JOptionPane.showMessageDialog(null, "El cliente tiene deudas pendientes!.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+							clear();
+						}
 					}
-					if(!validarClienteNoDebe(cliente)) {
-						JOptionPane.showMessageDialog(null, "El cliente tiene deudas pendientes!.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
-						clear();
-					}
+					
 				}
 			}
 
 			private boolean validarClienteNoDebe(Cliente cliente) {
 				boolean hacer = true;
+				if(!cliente.getMisFacturas().isEmpty()&&cliente!=null) {
 				for (Factura factura: cliente.getMisFacturas()) {
 					if(!factura.isEstado()) {
 						hacer=false;
 					}
 				}
+				}
+				
 				return hacer;
 			}
 		});
