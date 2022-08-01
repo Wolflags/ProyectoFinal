@@ -69,7 +69,9 @@ public class Inicio extends JFrame {
 				panelPlanes.add(lblPlanes);
 			}
 			{
-				JButton btnRegistrarPlan = new JButton("Registrar plan");
+				JButton btnRegistrarPlan = new JButton("     Registrar plan");
+				btnRegistrarPlan.setHorizontalAlignment(SwingConstants.LEFT);
+				btnRegistrarPlan.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgAgregarPlan32px.png")));
 				btnRegistrarPlan.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						RegistrarPlan regPlan = new RegistrarPlan();
@@ -82,7 +84,9 @@ public class Inicio extends JFrame {
 				panelPlanes.add(btnRegistrarPlan);
 			}
 			{
-				JButton btnListadoPlanes = new JButton("Listado de planes");
+				JButton btnListadoPlanes = new JButton("     Listado de planes");
+				btnListadoPlanes.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgListadoPlanes32px.png")));
+				btnListadoPlanes.setHorizontalAlignment(SwingConstants.LEFT);
 				btnListadoPlanes.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						RegistrarPlan regPlan = new RegistrarPlan();
@@ -109,7 +113,9 @@ public class Inicio extends JFrame {
 				panelPersonal.add(lblPersonal);
 			}
 			{
-				JButton btnRegistrarEmpleado = new JButton("Registrar empleado");
+				JButton btnRegistrarEmpleado = new JButton("     Registrar empleado");
+				btnRegistrarEmpleado.setHorizontalAlignment(SwingConstants.LEFT);
+				btnRegistrarEmpleado.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgAgregarEmpleado32px.png")));
 				btnRegistrarEmpleado.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						RegEmpAdmin regEmpleado = new RegEmpAdmin();
@@ -121,7 +127,9 @@ public class Inicio extends JFrame {
 				panelPersonal.add(btnRegistrarEmpleado);
 			}
 			{
-				JButton btnListadoEmpleados = new JButton("Listado de empleados");
+				JButton btnListadoEmpleados = new JButton("     Listado de empleados");
+				btnListadoEmpleados.setHorizontalAlignment(SwingConstants.LEFT);
+				btnListadoEmpleados.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgListadoEmpleados32px.png")));
 				btnListadoEmpleados.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						ListadoEmpleados listEmpleados = new ListadoEmpleados();
@@ -147,7 +155,9 @@ public class Inicio extends JFrame {
 				panelClientes.add(lblClientes);
 			}
 			{
-				JButton btnListadoClientes = new JButton("Listado de clientes");
+				JButton btnListadoClientes = new JButton("     Listado de clientes");
+				btnListadoClientes.setHorizontalAlignment(SwingConstants.LEFT);
+				btnListadoClientes.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgListadoClientes32px.png")));
 				btnListadoClientes.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						ListadoClientes listClientes = new ListadoClientes();
@@ -199,10 +209,13 @@ public class Inicio extends JFrame {
 				panelFacturacion.add(lblFacturacion);
 			}
 			{
-				JButton btnListadoFacturas = new JButton("Listado de facturas");
+				JButton btnListadoFacturas = new JButton("     Listado de facturas");
+				btnListadoFacturas.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgListadoFacturas32pxB.png")));
+				btnListadoFacturas.setHorizontalAlignment(SwingConstants.LEFT);
 				btnListadoFacturas.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						
+						ListadoFacturas listFacturas = new ListadoFacturas();
+						listFacturas.setVisible(true);
 					}
 				});
 				btnListadoFacturas.setBackground(Color.WHITE);
@@ -210,7 +223,9 @@ public class Inicio extends JFrame {
 				panelFacturacion.add(btnListadoFacturas);
 			}
 			
-			JButton btnRealizarVenta = new JButton("Realizar venta");
+			JButton btnRealizarVenta = new JButton("     Realizar venta");
+			btnRealizarVenta.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgRealizarVenta32px.png")));
+			btnRealizarVenta.setHorizontalAlignment(SwingConstants.LEFT);
 			btnRealizarVenta.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					RealizarVenta reVen = new RealizarVenta(empleado);
@@ -236,7 +251,9 @@ public class Inicio extends JFrame {
 				panelServicios.add(lblServicios);
 			}
 			{
-				JButton btnNuevoServicio = new JButton("Nuevo servicio");
+				JButton btnNuevoServicio = new JButton("     Nuevo servicio");
+				btnNuevoServicio.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgAgregarServicio32pxB.png")));
+				btnNuevoServicio.setHorizontalAlignment(SwingConstants.LEFT);
 				btnNuevoServicio.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						RegistrarServicio regServ = new RegistrarServicio();
@@ -249,7 +266,9 @@ public class Inicio extends JFrame {
 				panelServicios.add(btnNuevoServicio);
 			}
 			{
-				JButton btnListadoDeServicios = new JButton("Listado de servicios");
+				JButton btnListadoDeServicios = new JButton("     Listado de servicios");
+				btnListadoDeServicios.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgListadoServicios32px.png")));
+				btnListadoDeServicios.setHorizontalAlignment(SwingConstants.LEFT);
 				btnListadoDeServicios.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						ListadoServicios lisServ = new ListadoServicios();
@@ -276,7 +295,9 @@ public class Inicio extends JFrame {
 		lblSesion.setBounds(78, 11, 109, 32);
 		panelSesion.add(lblSesion);
 		
-		JButton btnVerMiPerfil = new JButton("Ver mi perfil");
+		JButton btnVerMiPerfil = new JButton("     Ver mi perfil");
+		btnVerMiPerfil.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgVerPerfil32px.png")));
+		btnVerMiPerfil.setHorizontalAlignment(SwingConstants.LEFT);
 		btnVerMiPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				PerfilEmpAdmin perEmpAdm = new PerfilEmpAdmin(auxEmpleado);

@@ -68,7 +68,7 @@ public class DetallesServicio extends JDialog {
 	}
 
 	/**
-	 * Create the dialog.
+	 * Create the dialog
 	 */
 	public DetallesServicio(Servicio servicio) {
 		auxServicio = servicio;
