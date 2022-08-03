@@ -30,6 +30,9 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.awt.event.ActionEvent;
 import javax.swing.JTabbedPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Cursor;
 
 public class Inicio extends JFrame {
 
@@ -38,33 +41,32 @@ public class Inicio extends JFrame {
 	private Dimension dim;
 	private Date hoy;
 	public Inicio(Empleado empleado) {
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				 FileOutputStream empresa2;
-	                ObjectOutputStream empresaWrite;
-	                try {
-	                    empresa2 = new  FileOutputStream("empresa.dat");
-	                    empresaWrite = new ObjectOutputStream(empresa2);
-	                    empresaWrite.writeObject(Altice.getInstance());
-	                } catch (FileNotFoundException e1) {
-	                    // TODO Auto-generated catch block
-	                    e1.printStackTrace();
-	                } catch (IOException e1) {
-	                    // TODO Auto-generated catch block
-	                    e1.printStackTrace();
-	                }
-				
-			}
-		});
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent arg0) {
-				
-			}
-		});
+            @Override
+            public void windowClosing(WindowEvent e) {
+                 FileOutputStream empresa2;
+                    ObjectOutputStream empresaWrite;
+                    try {
+                        empresa2 = new  FileOutputStream("empresa.dat");
+                        empresaWrite = new ObjectOutputStream(empresa2);
+                        empresaWrite.writeObject(Altice.getInstance());
+                    } catch (FileNotFoundException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    } catch (IOException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+    				int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro que quiere cerrar sesión?");
+    				if(opcion == 0) {
+    					dispose();
+    					Login login = new Login();
+    					login.setVisible(true);
+    				}
+
+            }
+        });
 		
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Inicio.class.getResource("/media/imgLogoPequeno.jpg")));
@@ -128,7 +130,7 @@ public class Inicio extends JFrame {
 			JPanel panelPersonal = new JPanel();
 			panelPersonal.setLayout(null);
 			panelPersonal.setBackground(Color.LIGHT_GRAY);
-			panelPersonal.setBounds(139, 250, 265, 183);
+			panelPersonal.setBounds(139, 250, 265, 165);
 			contentPanel.add(panelPersonal);
 			{
 				JLabel lblPersonal = new JLabel("PERSONAL");
@@ -170,7 +172,7 @@ public class Inicio extends JFrame {
 			JPanel panelClientes = new JPanel();
 			panelClientes.setLayout(null);
 			panelClientes.setBackground(Color.LIGHT_GRAY);
-			panelClientes.setBounds(953, 250, 265, 183);
+			panelClientes.setBounds(953, 250, 265, 124);
 			contentPanel.add(panelClientes);
 			{
 				JLabel lblClientes = new JLabel("CLIENTES");
@@ -224,7 +226,7 @@ public class Inicio extends JFrame {
 			JPanel panelFacturacion = new JPanel();
 			panelFacturacion.setLayout(null);
 			panelFacturacion.setBackground(Color.LIGHT_GRAY);
-			panelFacturacion.setBounds(139, 457, 265, 183);
+			panelFacturacion.setBounds(139, 457, 265, 219);
 			contentPanel.add(panelFacturacion);
 			{
 				JLabel lblFacturacion = new JLabel("FACTURACI\u00D3N");
@@ -261,6 +263,13 @@ public class Inicio extends JFrame {
 			btnRealizarVenta.setBackground(Color.WHITE);
 			btnRealizarVenta.setBounds(29, 53, 205, 45);
 			panelFacturacion.add(btnRealizarVenta);
+			{
+				JButton btnGenerarFactura = new JButton("     Generar factura");
+				btnGenerarFactura.setHorizontalAlignment(SwingConstants.LEFT);
+				btnGenerarFactura.setBackground(Color.WHITE);
+				btnGenerarFactura.setBounds(29, 163, 205, 45);
+				panelFacturacion.add(btnGenerarFactura);
+			}
 		}
 		{
 			JPanel panelServicios = new JPanel();
@@ -308,46 +317,99 @@ public class Inicio extends JFrame {
 			}
 		}
 		
-		JPanel panelSesion = new JPanel();
-		panelSesion.setLayout(null);
-		panelSesion.setBackground(Color.LIGHT_GRAY);
-		panelSesion.setBounds(953, 457, 265, 183);
-		contentPanel.add(panelSesion);
+		JPanel panelReportes = new JPanel();
+		panelReportes.setLayout(null);
+		panelReportes.setBackground(Color.LIGHT_GRAY);
+		panelReportes.setBounds(953, 398, 265, 242);
+		contentPanel.add(panelReportes);
 		
-		JLabel lblSesion = new JLabel("SESI\u00D3N");
-		lblSesion.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSesion.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblSesion.setBounds(78, 11, 109, 32);
-		panelSesion.add(lblSesion);
+		JLabel lblReportes = new JLabel("REPORTES");
+		lblReportes.setHorizontalAlignment(SwingConstants.CENTER);
+		lblReportes.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblReportes.setBounds(78, 11, 109, 32);
+		panelReportes.add(lblReportes);
 		
-		JButton btnVerMiPerfil = new JButton("     Ver mi perfil");
-		btnVerMiPerfil.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgVerPerfil32px.png")));
-		btnVerMiPerfil.setHorizontalAlignment(SwingConstants.LEFT);
-		btnVerMiPerfil.addActionListener(new ActionListener() {
+		JButton btnReporte1 = new JButton("     Primer reporte");
+		btnReporte1.setToolTipText("Cantidad de ventas por plan");
+		btnReporte1.setIcon(null);
+		btnReporte1.setHorizontalAlignment(SwingConstants.LEFT);
+		btnReporte1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				PerfilEmpAdmin perEmpAdm = new PerfilEmpAdmin(auxEmpleado);
-				perEmpAdm.setVisible(true);
+				PrimerReporte primerReporte = new PrimerReporte();
+				primerReporte.setVisible(true);
 			}
 		});
-		btnVerMiPerfil.setBackground(Color.WHITE);
-		btnVerMiPerfil.setBounds(30, 54, 205, 45);
-		panelSesion.add(btnVerMiPerfil);
+		btnReporte1.setBackground(Color.WHITE);
+		btnReporte1.setBounds(30, 54, 205, 45);
+		panelReportes.add(btnReporte1);
 		
-		JButton btnCerrarSesion = new JButton("     Cerrar sesi\u00F3n");
-		btnCerrarSesion.setHorizontalAlignment(SwingConstants.LEADING);
-		btnCerrarSesion.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgCerrarSesion32px.png")));
-		btnCerrarSesion.addActionListener(new ActionListener() {
+		JButton btnReporte2 = new JButton("     Segundo reporte");
+		btnReporte2.setToolTipText("Cantidad de dinero que deber\u00EDa haber generado vs cantidad de dinero real");
+		btnReporte2.setHorizontalAlignment(SwingConstants.LEADING);
+		btnReporte2.setIcon(null);
+		btnReporte2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro que quiere cerrar sesión?");
-				if(opcion == 0) {
-					dispose();
-					Login login = new Login();
-					login.setVisible(true);
-				}
+				//ABRIR REPORTE 2
 			}
 		});
-		btnCerrarSesion.setBackground(Color.WHITE);
-		btnCerrarSesion.setBounds(30, 110, 205, 45);
-		panelSesion.add(btnCerrarSesion);
+		btnReporte2.setBackground(Color.WHITE);
+		btnReporte2.setBounds(30, 110, 205, 45);
+		panelReportes.add(btnReporte2);
+		
+		JButton btnReporte3 = new JButton("     Tercer reporte");
+		btnReporte3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				TercerReporte tercerReporte = new TercerReporte();
+				tercerReporte.setVisible(true);
+			}
+		});
+		btnReporte3.setToolTipText("Cantidad de dinero por plan");
+		btnReporte3.setHorizontalAlignment(SwingConstants.LEADING);
+		btnReporte3.setBackground(Color.WHITE);
+		btnReporte3.setBounds(30, 166, 205, 45);
+		panelReportes.add(btnReporte3);
+		{
+			JButton btnCerrarSesion = new JButton("     Cerrar sesi\u00F3n");
+			btnCerrarSesion.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			btnCerrarSesion.setBorder(null);
+			btnCerrarSesion.setForeground(Color.LIGHT_GRAY);
+			btnCerrarSesion.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro que quiere cerrar sesión?");
+					if(opcion == 0) {
+						dispose();
+						Login login = new Login();
+						login.setVisible(true);
+					}
+				}
+			});
+			btnCerrarSesion.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgCerrarSesion32px.png")));
+			btnCerrarSesion.setBackground(Color.DARK_GRAY);
+			btnCerrarSesion.setBounds(1027, 100, 191, 42);
+			contentPanel.add(btnCerrarSesion);
+		}
+		{
+			JButton btnVerMiPerfil = new JButton("     Ver mi perfil");
+			btnVerMiPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			btnVerMiPerfil.setBorder(null);
+			btnVerMiPerfil.setForeground(Color.LIGHT_GRAY);
+			btnVerMiPerfil.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					PerfilEmpAdmin perEmpAdm = new PerfilEmpAdmin(auxEmpleado);
+					perEmpAdm.setVisible(true);
+				}
+			});
+			btnVerMiPerfil.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgVerPerfil32px.png")));
+			btnVerMiPerfil.setBackground(Color.DARK_GRAY);
+			btnVerMiPerfil.setBounds(1027, 47, 191, 42);
+			contentPanel.add(btnVerMiPerfil);
+		}
+		{
+			JButton btnNewButton = new JButton("New button");
+			btnNewButton.setVisible(false);
+			btnNewButton.setEnabled(false);
+			btnNewButton.setBounds(10, 653, 89, 23);
+			contentPanel.add(btnNewButton);
+		}
 	}
 }
