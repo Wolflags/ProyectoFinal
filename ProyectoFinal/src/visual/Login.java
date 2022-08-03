@@ -60,7 +60,7 @@ public class Login extends JFrame {
 				ObjectInputStream empresaRead;
 				ObjectOutputStream empresaWrite;
 				try {
-					empresa = new FileInputStream ("empresa.dat");
+					empresa = new FileInputStream ("altice.mrj");
 					empresaRead = new ObjectInputStream(empresa);
 					Altice temp = (Altice)empresaRead.readObject();
 					Altice.setInstance(temp);
@@ -68,7 +68,7 @@ public class Login extends JFrame {
 					empresaRead.close();
 				} catch (FileNotFoundException e) {
 					try {
-						empresa2 = new  FileOutputStream("empresa.dat");
+						empresa2 = new  FileOutputStream("altice.mrj");
 						empresaWrite = new ObjectOutputStream(empresa2);
 						Date nacimiento = new Date();
 						Empleado mainAdmin = new Empleado("admin", "Patrick", "Woerden", "123-456-7890", "1234", 
@@ -108,7 +108,7 @@ public class Login extends JFrame {
 				 FileOutputStream empresa2;
 	                ObjectOutputStream empresaWrite;
 	                try {
-	                    empresa2 = new  FileOutputStream("empresa.dat");
+	                    empresa2 = new  FileOutputStream("altice.mrj");
 	                    empresaWrite = new ObjectOutputStream(empresa2);
 	                    empresaWrite.writeObject(Altice.getInstance());
 	                } catch (FileNotFoundException e1) {
