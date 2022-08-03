@@ -10,7 +10,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import logico.Altice;
+import logico.Cliente;
 import logico.Empleado;
+import logico.Persona;
+import logico.Plan;
+
 import java.awt.Toolkit;
 import java.util.Date;
 import java.awt.Color;
@@ -265,6 +269,21 @@ public class Inicio extends JFrame {
 			panelFacturacion.add(btnRealizarVenta);
 			{
 				JButton btnGenerarFactura = new JButton("     Generar factura");
+				btnGenerarFactura.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						for (Persona cliente : Altice.getInstance().getPersonas()) {
+							if(cliente instanceof Cliente) {
+								for (Plan plan : ((Cliente) cliente).getMisPlanes()) {
+									if(plan.isEstado()) {
+										if(plan.getMisServicios().get(0) != null) {
+											
+										}
+									}
+								}
+							}
+						}
+					}
+				});
 				btnGenerarFactura.setHorizontalAlignment(SwingConstants.LEFT);
 				btnGenerarFactura.setBackground(Color.WHITE);
 				btnGenerarFactura.setBounds(29, 163, 205, 45);

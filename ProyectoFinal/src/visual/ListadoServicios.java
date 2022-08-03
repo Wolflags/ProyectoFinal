@@ -334,14 +334,6 @@ public class ListadoServicios extends JDialog {
 	private void cargarServSel() {
 		if(selected!=null) {
 		txtCodigo.setText(selected.getCodigo());
-		if(selected.getDuracion()==30) {
-			cmbTipoFac.setSelectedIndex(1);
-		}else if(selected.getDuracion()==365) {
-			cmbTipoFac.setSelectedIndex(2);
-		}else {
-			cmbTipoFac.setSelectedIndex(3);
-		}
-		spn_DiasVigencia.setValue(selected.getDuracion());
 		txtDescripcion.setText(selected.getDescripcion());
 		if(selected instanceof Internet) {
 			txtTipoServ.setText("Internet");
@@ -411,14 +403,7 @@ public class ListadoServicios extends JDialog {
 				}else {
 					row[1]="Television";
 				}
-				if(servicio.getDuracion()==30) {
-					row[2]="Mensual";
-				}else if(servicio.getDuracion()==365) {
-					row[2]="Anual";
-				}else {
-					row[2]="Agotable";
-				}
-				row[3]=servicio.getDuracion();
+				
 				row[4]=servicio.getPrecio();
 				model.addRow(row);
 			}
@@ -436,14 +421,6 @@ public class ListadoServicios extends JDialog {
 						}else {
 							row[1]="Television";
 						}
-						if(servicio.getDuracion()==30) {
-							row[2]="Mensual";
-						}else if(servicio.getDuracion()==365) {
-							row[2]="Anual";
-						}else {
-							row[2]="Agotable";
-						}
-						row[3]=servicio.getDuracion();
 						row[4]=servicio.getPrecio();
 					model.addRow(row);
 					}

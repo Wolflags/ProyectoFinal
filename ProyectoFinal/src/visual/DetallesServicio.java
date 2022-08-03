@@ -35,8 +35,6 @@ public class DetallesServicio extends JDialog {
 	private Servicio auxServicio = null;
 	private JTextField txtCodigo;
 	private JTextField txtDescripcion;
-	private JSpinner spnDuracion;
-	private JComboBox cbxAutocobro;
 	private JSpinner spnCantCanales;
 	private JComboBox cbxTipoTelevision;
 	private JPanel panelInternet;
@@ -55,9 +53,9 @@ public class DetallesServicio extends JDialog {
 	 */
 	
 	public static void main(String[] args) {
-		Television s1 = new Television("S-1", "Esta es la descripcion", 30, true, 150, "Cable");
-		Internet s2 = new Internet("S-2", "Esta es la descripcion 2", 15, false, 40, 15000, "Internet Móvil");
-		Minutos s3 = new Minutos("S-3", "Esta es la descripcion 3", 5, true, 200, "Minutos Hogar");
+		Television s1 = new Television("S-1", "Esta es la descripcion", 150, "Cable");
+		Internet s2 = new Internet("S-2", "Esta es la descripcion 2", 40, 15000, "Internet Móvil");
+		Minutos s3 = new Minutos("S-3", "Esta es la descripcion 3", 200, "Minutos Hogar");
 		try {
 			DetallesServicio dialog = new DetallesServicio(s3);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -147,16 +145,6 @@ public class DetallesServicio extends JDialog {
 				panelInfoGeneral.add(txtCodigo);
 			}
 			{
-				JLabel lblDuracion = new JLabel("Duraci\u00F3n (d\u00EDas):");
-				lblDuracion.setBounds(10, 53, 107, 14);
-				panelInfoGeneral.add(lblDuracion);
-			}
-			{
-				JLabel lblAutocobro = new JLabel("Autocobro:");
-				lblAutocobro.setBounds(10, 81, 79, 14);
-				panelInfoGeneral.add(lblAutocobro);
-			}
-			{
 				JLabel lblDescripcion = new JLabel("Descripci\u00F3n:");
 				lblDescripcion.setBounds(335, 25, 93, 14);
 				panelInfoGeneral.add(lblDescripcion);
@@ -171,29 +159,8 @@ public class DetallesServicio extends JDialog {
 				txtDescripcion.setColumns(10);
 			}
 			{
-				spnDuracion = new JSpinner();
-				spnDuracion.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-				spnDuracion.setValue(auxServicio.getDuracion());
-				spnDuracion.setEnabled(false);
-				spnDuracion.setBounds(116, 50, 191, 20);
-				panelInfoGeneral.add(spnDuracion);
-			}
-			{
-				cbxAutocobro = new JComboBox();
-				cbxAutocobro.setModel(new DefaultComboBoxModel(new String[] {"S\u00ED", "No"}));
-				if(auxServicio.isAutocobro()) {
-					cbxAutocobro.setSelectedItem("S\u00ED");
-				}
-				else {
-					cbxAutocobro.setSelectedItem("No");
-				}
-				cbxAutocobro.setEnabled(false);
-				cbxAutocobro.setBounds(99, 78, 208, 20);
-				panelInfoGeneral.add(cbxAutocobro);
-			}
-			{
 				JLabel lblTipo = new JLabel("Tipo de servicio:");
-				lblTipo.setBounds(10, 109, 107, 14);
+				lblTipo.setBounds(10, 65, 107, 14);
 				panelInfoGeneral.add(lblTipo);
 			}
 			{
@@ -209,7 +176,7 @@ public class DetallesServicio extends JDialog {
 					cbxTipoServicio.setSelectedItem("Televisión");
 				}
 				cbxTipoServicio.setEnabled(false);
-				cbxTipoServicio.setBounds(116, 106, 191, 20);
+				cbxTipoServicio.setBounds(116, 62, 191, 20);
 				panelInfoGeneral.add(cbxTipoServicio);
 			}
 		}
@@ -382,13 +349,6 @@ public class DetallesServicio extends JDialog {
 				btnAplicar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(isCompleted()) {
-							auxServicio.setDuracion(Integer.parseInt(spnDuracion.getValue().toString()));
-							if(cbxAutocobro.getSelectedItem().toString().equals("No")) {
-								auxServicio.setAutocobro(false);
-							}
-							else {
-								auxServicio.setAutocobro(true);
-							}
 							auxServicio.setDescripcion(txtDescripcion.getText().toString());
 							if(auxServicio instanceof Television) {
 								((Television)auxServicio).setCantCanales(Integer.parseInt(spnCantCanales.getValue().toString()));
@@ -433,8 +393,7 @@ public class DetallesServicio extends JDialog {
 		}
 	}
 	private void celdasEditables(boolean editable) {
-		spnDuracion.setEnabled(editable);
-		cbxAutocobro.setEnabled(editable);
+		
 		txtDescripcion.setEditable(editable);
 		if(auxServicio instanceof Television) {
 			spnCantCanales.setEnabled(editable);
@@ -452,8 +411,7 @@ public class DetallesServicio extends JDialog {
 	}
 	private boolean isCompleted() {
 		boolean completed = false;
-		if(Integer.parseInt(spnDuracion.getValue().toString()) != 0 
-				&& !txtDescripcion.getText().equals("")) {
+		if(!txtDescripcion.getText().equals("")) {
 			if(auxServicio instanceof Television) {
 				if(Integer.parseInt(spnCantCanales.getValue().toString()) != 0) {
 					completed = true;

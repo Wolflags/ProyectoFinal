@@ -85,9 +85,9 @@ public class DetallesPlan extends JDialog {
 			Servicio s1 = null;
 			Servicio s2 = null;
 			Servicio s3 = null;
-			s1 = new Internet("S-1", "Desc1", 30, true, 50, 100, "Móvil");
-			s2 = new Television("S-2", "Desc2", 15, false, 150, "Hogar");
-			s3 = new Internet("S-3", "Desc3", 20, true, 100, 200, "Hogar");
+			s1 = new Internet("S-1", "Desc1", 50, 100, "Móvil");
+			s2 = new Television("S-2", "Desc2", 150, "Hogar");
+			s3 = new Internet("S-3", "Desc3", 100, 200, "Hogar");
 			Altice.getInstance().getServicios().add(s1);
 			Altice.getInstance().getServicios().add(s2);
 			Altice.getInstance().getServicios().add(s3);
@@ -352,7 +352,7 @@ public class DetallesPlan extends JDialog {
 				});
 				tableInternet.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 				modelInternet = new DefaultTableModel();
-				String[] headers = {"Código", "Duración", "Velocidad", "Cantidad MB", "Tipo"};
+				String[] headers = {"Código", "Velocidad", "Cantidad MB", "Tipo"};
 				modelInternet.setColumnIdentifiers(headers);
 				tableInternet.setModel(modelInternet);
 				scrollPane.setViewportView(tableInternet);
@@ -533,10 +533,9 @@ public class DetallesPlan extends JDialog {
 			for (Servicio servicio : Altice.getInstance().getServicios()) {
 				if(servicio instanceof Internet && servicio != auxPlan.getMisServicios().get(0)) {
 					row[0] = servicio.getCodigo();
-					row[1] = Integer.toString(servicio.getDuracion()) + " días";
-					row[2] = Integer.toString(((Internet)servicio).getVelocidad());
-					row[3] = Integer.toString(((Internet)servicio).getCantMB());
-					row[4] = ((Internet) servicio).getTipo();
+					row[1] = Integer.toString(((Internet)servicio).getVelocidad());
+					row[2] = Integer.toString(((Internet)servicio).getCantMB());
+					row[3] = ((Internet) servicio).getTipo();
 					modelInternet.addRow(row);
 				}
 			}
@@ -547,9 +546,8 @@ public class DetallesPlan extends JDialog {
 			for (Servicio servicio : Altice.getInstance().getServicios()) {
 				if(servicio instanceof Minutos && servicio != auxPlan.getMisServicios().get(1)) {
 					row[0] = servicio.getCodigo();
-					row[1] = Integer.toString(servicio.getDuracion()) + " días";
-					row[2] = Integer.toString(((Minutos)servicio).getCantMins());
-					row[4] = ((Minutos) servicio).getTipo();
+					row[1] = Integer.toString(((Minutos)servicio).getCantMins());
+					row[2] = ((Minutos) servicio).getTipo();
 					modelMinutos.addRow(row);
 				}
 			}
@@ -560,9 +558,8 @@ public class DetallesPlan extends JDialog {
 			for (Servicio servicio : Altice.getInstance().getServicios()) {
 				if(servicio instanceof Television && servicio != auxPlan.getMisServicios().get(2)) {
 					row[0] = servicio.getCodigo();
-					row[1] = Integer.toString(servicio.getDuracion()) + " días";
-					row[2] = Integer.toString(((Television)servicio).getCantCanales());
-					row[3] = ((Television) servicio).getTipo();
+					row[1] = Integer.toString(((Television)servicio).getCantCanales());
+					row[2] = ((Television) servicio).getTipo();
 					modelTelevision.addRow(row);
 				}
 			}
