@@ -404,11 +404,10 @@ public class RealizarVenta extends JDialog {
 							Altice.getInstance().getPersonas().add(auxCliente);
 						}
 						for (Plan plan : carrito) {
-							Factura auxFac = new Factura("P-"+Factura.genIdFact, new Date(), plan.getPrecio(), empleado, auxCliente, plan);
-							Altice.getInstance().getFacturas().add(auxFac);
+							Factura auxFac = new Factura("F-"+Altice.getInstance().getGenIdFactura(), new Date(), plan.getPrecio(), empleado, auxCliente, plan);
+							Altice.getInstance().insertarFactura(auxFac);;
 							Altice.getInstance().buscarClienteByCedula(txtCedula.getText()).getMisFacturas().add(auxFac);
 							Altice.getInstance().buscarClienteByCedula(txtCedula.getText()).getMisPlanes().add(auxFac.getPlan());
-							Factura.genIdFact++;
 						}
 						JOptionPane.showMessageDialog(null, "Registro existoso.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
 						carrito = new ArrayList<Plan>();

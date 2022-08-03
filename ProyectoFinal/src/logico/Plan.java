@@ -14,7 +14,6 @@ public class Plan implements Serializable{
 	private ArrayList<Servicio> misServicios;
 	private float precio;
 	private boolean estado;
-	public static int genIdPlan = 1;
 	
 	public Plan(String idplan, String nombre,ArrayList<Servicio> misServicios, float precio) {
 		super();

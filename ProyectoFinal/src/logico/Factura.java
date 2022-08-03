@@ -15,7 +15,6 @@ public class Factura implements Serializable{
 	private Persona cliente;
 	private Plan plan;
 	private boolean estado;
-	public static int genIdFact = 1;
 	
 	public Factura(String codigo, Date fecha, float subtotal, Persona empleado, Persona cliente, Plan plan) {
 		super();

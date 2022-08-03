@@ -72,7 +72,7 @@ public class RegistrarPlan extends JDialog {
 				if(opc==0) {
 					dispose();
 				}else {
-					
+
 				}
 			}
 		});
@@ -85,38 +85,38 @@ public class RegistrarPlan extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		
+
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Informaci\u00F3n General:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel.setBounds(10, 11, 478, 96);
 		contentPanel.add(panel);
 		panel.setLayout(null);
-		
+
 		JLabel lblNewLabel = new JLabel("ID:");
 		lblNewLabel.setBounds(10, 21, 46, 14);
 		panel.add(lblNewLabel);
-		
+
 		txtId = new JTextField();
 		txtId.setEditable(false);
 		txtId.setBounds(66, 18, 163, 20);
 		panel.add(txtId);
 		txtId.setColumns(10);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("Nombre:");
 		lblNewLabel_1.setBounds(10, 55, 63, 14);
 		panel.add(lblNewLabel_1);
-		
+
 		txtNombre = new JTextField();
 		txtNombre.setBounds(66, 52, 384, 20);
 		panel.add(txtNombre);
 		txtNombre.setColumns(10);
-		
+
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Servicios", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_1.setBounds(10, 113, 478, 265);
 		contentPanel.add(panel_1);
 		panel_1.setLayout(null);
-		
+
 		cbxInternet = new JCheckBox("Internet");
 		cbxInternet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -133,7 +133,7 @@ public class RegistrarPlan extends JDialog {
 		});
 		cbxInternet.setBounds(46, 38, 97, 23);
 		panel_1.add(cbxInternet);
-		
+
 		cbxMinutos = new JCheckBox("Minutos");
 		cbxMinutos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -150,7 +150,7 @@ public class RegistrarPlan extends JDialog {
 		});
 		cbxMinutos.setBounds(189, 38, 97, 23);
 		panel_1.add(cbxMinutos);
-		
+
 		cbxTelevision = new JCheckBox("Television");
 		cbxTelevision.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -167,44 +167,44 @@ public class RegistrarPlan extends JDialog {
 		});
 		cbxTelevision.setBounds(332, 38, 97, 23);
 		panel_1.add(cbxTelevision);
-		
+
 		JLabel lblNewLabel_2 = new JLabel("Servicio de internet:");
 		lblNewLabel_2.setBounds(10, 80, 117, 14);
 		panel_1.add(lblNewLabel_2);
-		
+
 		txtInternet = new JTextField();
 		txtInternet.setText("No seleccionado");
 		txtInternet.setEditable(false);
 		txtInternet.setBounds(140, 77, 311, 20);
 		panel_1.add(txtInternet);
 		txtInternet.setColumns(10);
-		
+
 		JLabel lblNewLabel_3 = new JLabel("Servicio de minutos:");
 		lblNewLabel_3.setBounds(10, 118, 117, 14);
 		panel_1.add(lblNewLabel_3);
-		
+
 		txtMinutos = new JTextField();
 		txtMinutos.setText("No seleccionado");
 		txtMinutos.setEditable(false);
 		txtMinutos.setBounds(140, 115, 311, 20);
 		panel_1.add(txtMinutos);
 		txtMinutos.setColumns(10);
-		
+
 		JLabel lblNewLabel_4 = new JLabel("Servicio de televisi\u00F3n:");
 		lblNewLabel_4.setBounds(10, 158, 133, 14);
 		panel_1.add(lblNewLabel_4);
-		
+
 		txtTelevision = new JTextField();
 		txtTelevision.setText("No seleccionado");
 		txtTelevision.setEditable(false);
 		txtTelevision.setBounds(140, 155, 311, 20);
 		panel_1.add(txtTelevision);
 		txtTelevision.setColumns(10);
-		
+
 		JLabel lblNewLabel_5 = new JLabel("Precio del plan:");
 		lblNewLabel_5.setBounds(40, 193, 103, 14);
 		panel_1.add(lblNewLabel_5);
-		
+
 		txtPrecio = new JTextField();
 		txtPrecio.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		txtPrecio.setText("0.00");
@@ -223,50 +223,49 @@ public class RegistrarPlan extends JDialog {
 					public void actionPerformed(ActionEvent arg0) {
 						if(txtNombre.getText().length()>3) {
 							if(cbxInternet.isSelected()||cbxMinutos.isSelected()||cbxTelevision.isSelected()) {
-						Plan auxPlan = null;
-						ArrayList<Servicio> auxServicios = new ArrayList<Servicio>();
-						auxServicios.add(null);
-						
-						if(cbxInternet.isSelected()) {
-							String[] split = txtInternet.getText().split(" ");
-							auxServicios.add(0, Altice.getInstance().buscarServicioByCod(split[0]));
-						}else
-						{
-							auxServicios.add(0, null);
-						}
-						
-						if(cbxMinutos.isSelected()) {
-							String[] split = txtMinutos.getText().split(" ");
-							auxServicios.add(1, Altice.getInstance().buscarServicioByCod(split[0]));
+								Plan auxPlan = null;
+								ArrayList<Servicio> auxServicios = new ArrayList<Servicio>();
+								auxServicios.add(null);
+
+								if(cbxInternet.isSelected()) {
+									String[] split = txtInternet.getText().split(" ");
+									auxServicios.add(0, Altice.getInstance().buscarServicioByCod(split[0]));
+								}else
+								{
+									auxServicios.add(0, null);
+								}
+
+								if(cbxMinutos.isSelected()) {
+									String[] split = txtMinutos.getText().split(" ");
+									auxServicios.add(1, Altice.getInstance().buscarServicioByCod(split[0]));
+								}else {
+									auxServicios.add(1, null);
+								}
+
+								if(cbxTelevision.isSelected()) {
+									String[] split = txtTelevision.getText().split(" ");
+									auxServicios.add(2, Altice.getInstance().buscarServicioByCod(split[0]));
+								}else {
+									auxServicios.add(2, null);
+								}
+
+								if(!auxServicios.isEmpty()){
+									auxPlan = new Plan("P-"+Altice.getInstance().getGenIdPlan(),txtNombre.getText(),auxServicios,Float.parseFloat(txtPrecio.getText().toString()));
+
+								}else {
+									//JOptionPane.showMessageDialog(null, "Debe seleccionar al menos un servicio!", "Error", ERROR);
+								}
+								if(auxPlan!=null){
+									Altice.getInstance().insertarPlan(auxPlan);
+									JOptionPane.showMessageDialog(null, "Registro existoso.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+									clear();
+								}
+							}else {
+								JOptionPane.showMessageDialog(null, "Debe seleccionar al menos un servicio.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+							}
 						}else {
-							auxServicios.add(1, null);
+							JOptionPane.showMessageDialog(null, "Por favor ingrese un nombre válido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
 						}
-							
-						if(cbxTelevision.isSelected()) {
-							String[] split = txtTelevision.getText().split(" ");
-							auxServicios.add(2, Altice.getInstance().buscarServicioByCod(split[0]));
-						}else {
-							auxServicios.add(2, null);
-						}
-						
-						if(!auxServicios.isEmpty()){
-						auxPlan = new Plan("P-"+Plan.genIdPlan,txtNombre.getText(),auxServicios,Float.parseFloat(txtPrecio.getText().toString()));
-						
-						}else {
-							//JOptionPane.showMessageDialog(null, "Debe seleccionar al menos un servicio!", "Error", ERROR);
-						}
-						if(auxPlan!=null){
-						Altice.getInstance().getPlanes().add(auxPlan);
-						Plan.genIdPlan++;
-						JOptionPane.showMessageDialog(null, "Registro existoso.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
-						clear();
-						}
-						}else {
-							JOptionPane.showMessageDialog(null, "Debe seleccionar al menos un servicio.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-						}
-					}else {
-						JOptionPane.showMessageDialog(null, "Por favor ingrese un nombre válido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-					}
 					}
 
 					private void clear() {
@@ -274,7 +273,7 @@ public class RegistrarPlan extends JDialog {
 						setCancel(1);
 						setCancel(2);
 						txtNombre.setText("");
-						txtId.setText("P-"+Plan.genIdPlan);
+						txtId.setText("P-"+Altice.getInstance().getGenIdPlan());
 						selected = null;
 						lastSelected = -1;
 					}
@@ -298,9 +297,9 @@ public class RegistrarPlan extends JDialog {
 	}
 
 	public static void cargarDatos() {
-		
-		txtId.setText("P-"+Plan.genIdPlan);
-		
+
+		txtId.setText("P-"+Altice.getInstance().getGenIdPlan());
+
 		if(lastSelected==0) {
 			Internet auxint = (Internet) selected;
 			txtInternet.setText(selected.getCodigo()+" || "+auxint.getCantMB()+"MB"+" || "+auxint.getVelocidad()+"Mbps"+" || "+auxint.getDuracion()+" Dias"+" || "+selected.getPrecio());
@@ -312,7 +311,7 @@ public class RegistrarPlan extends JDialog {
 			txtTelevision.setText(selected.getCodigo()+" || "+auxtv.getCantCanales()+" Canales"+" || "+auxtv.getDuracion()+" Dias"+" || "+selected.getPrecio());
 		}
 		cargarPrecio();
-		
+
 	}
 
 	public static void setCancel(int tipo) {
@@ -327,7 +326,7 @@ public class RegistrarPlan extends JDialog {
 			cbxTelevision.setSelected(false);
 		}
 		cargarPrecio();
-		
+
 	}
 
 	private static void cargarPrecio() {
@@ -335,22 +334,22 @@ public class RegistrarPlan extends JDialog {
 		if(cbxInternet.isSelected()) {
 			String[] split = txtInternet.getText().split(" ");
 			if(Altice.getInstance().buscarServicioByCod(split[0])!=null) {
-			precio = precio + Altice.getInstance().buscarServicioByCod(split[0]).getPrecio();
+				precio = precio + Altice.getInstance().buscarServicioByCod(split[0]).getPrecio();
 			}
 		} 
-			if(cbxMinutos.isSelected()) {
+		if(cbxMinutos.isSelected()) {
 			String[] split = txtMinutos.getText().split(" ");
 			if(Altice.getInstance().buscarServicioByCod(split[0])!=null) {
-			precio = precio + Altice.getInstance().buscarServicioByCod(split[0]).getPrecio();
+				precio = precio + Altice.getInstance().buscarServicioByCod(split[0]).getPrecio();
 			}
 		} 
-			if(cbxTelevision.isSelected()) {
+		if(cbxTelevision.isSelected()) {
 			String[] split = txtTelevision.getText().split(" ");
 			if(Altice.getInstance().buscarServicioByCod(split[0])!=null) {
-			precio = precio + Altice.getInstance().buscarServicioByCod(split[0]).getPrecio();
+				precio = precio + Altice.getInstance().buscarServicioByCod(split[0]).getPrecio();
 			}
 		}
 		txtPrecio.setText(precio+"");
-		
+
 	}
 }
