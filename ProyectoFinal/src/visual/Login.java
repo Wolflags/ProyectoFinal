@@ -102,25 +102,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				 FileOutputStream empresa2;
-	                ObjectOutputStream empresaWrite;
-	                try {
-	                    empresa2 = new  FileOutputStream("altice.mrj");
-	                    empresaWrite = new ObjectOutputStream(empresa2);
-	                    empresaWrite.writeObject(Altice.getInstance());
-	                } catch (FileNotFoundException e1) {
-	                    // TODO Auto-generated catch block
-	                    e1.printStackTrace();
-	                } catch (IOException e1) {
-	                    // TODO Auto-generated catch block
-	                    e1.printStackTrace();
-	                }
-				
-			}
-		});
+		
 		setTitle("Altice");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
