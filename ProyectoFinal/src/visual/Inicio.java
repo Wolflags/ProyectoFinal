@@ -42,19 +42,7 @@ public class Inicio extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
-				/*FileOutputStream altice2;
-				ObjectOutputStream alticeWrite;
-				try {
-					altice2 = new  FileOutputStream("altice.datxf");
-					alticeWrite = new ObjectOutputStream(altice2);
-					alticeWrite.writeObject(Altice.getInstance());
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}*/
+				
 			}
 		});
 		

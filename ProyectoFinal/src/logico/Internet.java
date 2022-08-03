@@ -1,6 +1,12 @@
 package logico;
 
-public class Internet extends Servicio {
+import java.io.Serializable;
+
+public class Internet extends Servicio implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//Atributos
 	private int velocidad;
 	private int cantMB;

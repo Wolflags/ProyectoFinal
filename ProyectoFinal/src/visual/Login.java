@@ -47,40 +47,7 @@ public class Login extends JFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				/*FileInputStream altice;
-				FileOutputStream altice2;
-				ObjectInputStream alticeRead;
-				ObjectOutputStream alticeWrite;
-				try {
-					altice = new FileInputStream ("altice.datxf");
-					alticeRead = new ObjectInputStream(altice);
-					Altice temp = (Altice)alticeRead.readObject();
-					Altice.setInstance(temp);
-					altice.close();
-					alticeRead.close();
-				} catch (FileNotFoundException e) {
-					try {
-						altice2 = new  FileOutputStream("altice.datx");
-						alticeWrite = new ObjectOutputStream(altice2);
-						Date nacimiento = new Date();
-						Empleado mainAdmin = new Empleado("admin", "Patrick", "Woerden", "123-456-7890", "1234", 
-								(float)60000.0, 2, "Casado", 10, "Administrador", "Oficina 01", "Drahi", nacimiento);
-						Altice.getInstance().getPersonas().add(mainAdmin);
-						alticeWrite.writeObject(Altice.getInstance());
-						altice2.close();
-						alticeWrite.close();
-					} catch (FileNotFoundException e1) {
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-					}
-				} catch (IOException e) {
-					
-					
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}*/
-				
+			
 				try {
 					Login frame = new Login();
 					frame.setVisible(true);

@@ -28,6 +28,7 @@ public class Altice implements Serializable{
 		Empleado mainAdmin = new Empleado("admin", "Patrick", "Woerden", "123-456-7890", "1234", 
 				(float)60000.0, 2, "Casado", 10, "Administrador", "Oficina 01", "Drahi", nacimiento);
 		personas.add(mainAdmin);
+		
 	}
 	
 	//GetInstance
