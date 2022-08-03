@@ -39,6 +39,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 public class RealizarVenta extends JDialog {
 
@@ -385,8 +388,12 @@ public class RealizarVenta extends JDialog {
 				JButton btnFacturar = new JButton("Facturar");
 				btnFacturar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						Date fechaNacimiento = new Date();
+						fechaNacimiento.setDate(Integer.parseInt(spnDia.getValue().toString()));
+						fechaNacimiento.setMonth(cbxMes.getSelectedIndex());
+						fechaNacimiento.setYear(Integer.parseInt(spnYear.getValue().toString())-1900);
 						if(!carrito.isEmpty()) {
-							if(validarDatosCliente()) {
+							if(validarDatosCliente() && !validarMayorEdad(fechaNacimiento)) {
 						Cliente auxCliente = Altice.getInstance().buscarClienteByCedula(txtCedula.getText());
 						Date fecNac = new Date(1, 1, 1);
 						fecNac.setDate(Integer.parseInt(spnDia.getValue().toString()));
@@ -478,6 +485,20 @@ public class RealizarVenta extends JDialog {
 		}
 		cargartxtPrecio();
 		
+	}
+	
+	private boolean validarMayorEdad(Date fechaNacimiento) {
+		boolean validar = false;
+		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate fechaNac = LocalDate.parse(fechaNacimiento.getDate()+"/"+(fechaNacimiento.getMonth()+1)+"/"+(fechaNacimiento.getYear()+1900), fmt);
+		LocalDate ahora = LocalDate.now();
+		
+		Period periodo = Period.between(fechaNac, ahora);
+		
+		if (periodo.getYears() >= 18)
+			validar = true;
+		
+		return validar;
 	}
 
 	private static void cargartxtPrecio() {

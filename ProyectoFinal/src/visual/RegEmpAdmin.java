@@ -26,6 +26,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import javax.swing.event.ChangeListener;
@@ -342,7 +345,11 @@ public class RegEmpAdmin extends JDialog {
 				btnRegistrar.addActionListener(new ActionListener() {
 					@SuppressWarnings("deprecation")
 					public void actionPerformed(ActionEvent e) {
-						if (validarDatos()) {
+						Date fechaNacimiento = new Date();
+						fechaNacimiento.setDate(Integer.parseInt(spnDia.getValue().toString()));
+						fechaNacimiento.setMonth(cbxMes.getSelectedIndex());
+						fechaNacimiento.setYear(Integer.parseInt(spnYear.getValue().toString())-1900);
+						if (validarDatos(fechaNacimiento)) {
 							if(rbAdministrador.isSelected()) {
 								Date fecNac = new Date(1, 1, 1);
 								fecNac.setDate(Integer.parseInt(spnDia.getValue().toString()));
@@ -387,7 +394,13 @@ public class RegEmpAdmin extends JDialog {
 		cbxMes.setSelectedIndex(fechaActual.getMonth());
 	}
 	
-	private boolean validarDatos() {
+	private boolean validarDatos(Date fechaNacimiento) {
+		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate fechaNac = LocalDate.parse(fechaNacimiento.getDate()+"/"+(fechaNacimiento.getMonth()+1)+"/"+(fechaNacimiento.getYear()+1900), fmt);
+		LocalDate ahora = LocalDate.now();
+		
+		Period periodo = Period.between(fechaNac, ahora);
+		
 		if (txtCedula.getText().equalsIgnoreCase("") || txtNombre.getText().equalsIgnoreCase("") || txtApellido.getText().equalsIgnoreCase("") || txtDireccion.getText().equalsIgnoreCase("") || txtTelefono.getText().equalsIgnoreCase("") || txtContraseña.getText().equalsIgnoreCase("") || txtPuestoTrabajo.getText().equalsIgnoreCase("")) {
 			JOptionPane.showMessageDialog(null, "Debe rellenar todos los espacios en blanco.", "Advertencia", JOptionPane.WARNING_MESSAGE);
 			return false;
@@ -407,7 +420,13 @@ public class RegEmpAdmin extends JDialog {
 			JOptionPane.showMessageDialog(null, "¡Teléfono ya existente!", "Advertencia", JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
-
+		
+		if (periodo.getYears() < 18) {
+			JOptionPane.showMessageDialog(null, "¡Empleado debe ser mayor de edad!", "Advertencia", JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+			
+		
 		
 		return true;
 	}

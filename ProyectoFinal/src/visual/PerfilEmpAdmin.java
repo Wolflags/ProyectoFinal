@@ -212,7 +212,7 @@ public class PerfilEmpAdmin extends JDialog {
 			
 			cbxTipo = new JComboBox();
 			cbxTipo.setEnabled(false);
-			cbxTipo.setModel(new DefaultComboBoxModel(new String[] {"Admin", "Empleado"}));
+			cbxTipo.setModel(new DefaultComboBoxModel(new String[] {"Administrador", "Empleado"}));
 			cbxTipo.setBounds(402, 77, 230, 20);
 			cbxTipo.setSelectedItem(auxEmpleado.getTipoEmpleado());
 			panelInfoEmpleado.add(cbxTipo);
@@ -258,7 +258,7 @@ public class PerfilEmpAdmin extends JDialog {
 		panelBotones.setLayout(null);
 		
 		JLabel lblImagenLogo = new JLabel("");
-		if(auxEmpleado.getTipoEmpleado().equalsIgnoreCase("Admin")) {
+		if(auxEmpleado.getTipoEmpleado().equalsIgnoreCase("Administrador")) {
 			lblImagenLogo.setIcon(new ImageIcon(PerfilEmpAdmin.class.getResource("/media/imgAdmin128px.png")));
 		}
 		else {
