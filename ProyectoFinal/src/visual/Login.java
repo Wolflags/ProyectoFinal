@@ -25,12 +25,20 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.Date;
 
 public class Login extends JFrame {
@@ -47,7 +55,39 @@ public class Login extends JFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-			
+				FileInputStream empresa;
+				FileOutputStream empresa2;
+				ObjectInputStream empresaRead;
+				ObjectOutputStream empresaWrite;
+				try {
+					empresa = new FileInputStream ("empresa.dat");
+					empresaRead = new ObjectInputStream(empresa);
+					Altice temp = (Altice)empresaRead.readObject();
+					Altice.setInstance(temp);
+					empresa.close();
+					empresaRead.close();
+				} catch (FileNotFoundException e) {
+					try {
+						empresa2 = new  FileOutputStream("empresa.dat");
+						empresaWrite = new ObjectOutputStream(empresa2);
+						Date nacimiento = new Date();
+						Empleado mainAdmin = new Empleado("admin", "Patrick", "Woerden", "123-456-7890", "1234", 
+								(float)60000.0, 2, "Casado", 10, "Administrador", "Oficina 01", "Drahi", nacimiento);
+						Altice.getInstance().insertarPersona(mainAdmin);
+						empresaWrite.writeObject(Altice.getInstance());
+						empresa2.close();
+						empresaWrite.close();
+					} catch (FileNotFoundException e1) {
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+					}
+				} catch (IOException e) {
+					
+					
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				try {
 					Login frame = new Login();
 					frame.setVisible(true);
@@ -62,6 +102,25 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				 FileOutputStream empresa2;
+	                ObjectOutputStream empresaWrite;
+	                try {
+	                    empresa2 = new  FileOutputStream("empresa.dat");
+	                    empresaWrite = new ObjectOutputStream(empresa2);
+	                    empresaWrite.writeObject(Altice.getInstance());
+	                } catch (FileNotFoundException e1) {
+	                    // TODO Auto-generated catch block
+	                    e1.printStackTrace();
+	                } catch (IOException e1) {
+	                    // TODO Auto-generated catch block
+	                    e1.printStackTrace();
+	                }
+				
+			}
+		});
 		
 		setTitle("Altice");
 		setResizable(false);

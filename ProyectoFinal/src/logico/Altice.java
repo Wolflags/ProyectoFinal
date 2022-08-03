@@ -24,9 +24,9 @@ public class Altice implements Serializable{
 		setServicios(new ArrayList<Servicio>());
 		facturas = new ArrayList<Factura>();
 		Date nacimiento = new Date();
-		Empleado mainAdmin = new Empleado("admin", "Patrick", "Woerden", "123-456-7890", "1234", 
+		/*Empleado mainAdmin = new Empleado("admin", "Patrick", "Woerden", "123-456-7890", "1234", 
 				(float)60000.0, 2, "Casado", 10, "Administrador", "Oficina 01", "Drahi", nacimiento);
-		personas.add(mainAdmin);
+		personas.add(mainAdmin);*/
 		
 	}
 	
