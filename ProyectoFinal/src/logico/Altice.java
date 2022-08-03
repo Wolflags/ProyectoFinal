@@ -9,7 +9,6 @@ public class Altice implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 	//Atributos
 	private transient ArrayList<Persona> personas;
 	private transient ArrayList<Plan> planes;

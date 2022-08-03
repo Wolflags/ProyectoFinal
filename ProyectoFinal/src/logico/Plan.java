@@ -8,7 +8,6 @@ public class Plan implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 	private String idplan;
 	private String nombre;
 	private String numero;

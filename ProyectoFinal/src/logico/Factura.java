@@ -8,7 +8,6 @@ public class Factura implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 	private String codigo;
 	private Date fecha;
 	private float subtotal;

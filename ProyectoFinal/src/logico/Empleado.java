@@ -7,7 +7,6 @@ public class Empleado extends Persona implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 	//Atributos
 	private String password;
 	private float salario;

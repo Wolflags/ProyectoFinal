@@ -6,7 +6,6 @@ public class Minutos extends Servicio implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 	//Atributos
 	private int cantMins;
 	private String tipo;
