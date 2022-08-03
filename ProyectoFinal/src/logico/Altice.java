@@ -15,6 +15,7 @@ public class Altice implements Serializable{
 	private  ArrayList<Servicio> servicios;
 	private  ArrayList<Factura> facturas;
 	private  static Altice alti = null;
+	private int genIdServicio;
 	
 	//Constructor
 	private Altice() {
@@ -24,6 +25,7 @@ public class Altice implements Serializable{
 		setServicios(new ArrayList<Servicio>());
 		facturas = new ArrayList<Factura>();
 		Date nacimiento = new Date();
+		this.genIdServicio = 1;
 		/*Empleado mainAdmin = new Empleado("admin", "Patrick", "Woerden", "123-456-7890", "1234", 
 				(float)60000.0, 2, "Casado", 10, "Administrador", "Oficina 01", "Drahi", nacimiento);
 		personas.add(mainAdmin);*/
@@ -48,7 +50,10 @@ public class Altice implements Serializable{
 	public ArrayList<Factura> getFacturas() {
 		return facturas;
 	}
-	
+	public int getGenIdServicio() {
+		return genIdServicio;
+	}
+
 	//Metodos
 	public Cliente buscarClienteByCedula(String cedula) {
 		Cliente aux = null;
@@ -115,6 +120,11 @@ public class Altice implements Serializable{
 	
 	public void insertarPersona(Persona persona) {
 		personas.add(persona);
+	}
+	
+	public void insertarServicio(Servicio servicio) {
+		servicios.add(servicio);
+		genIdServicio++;
 	}
 	
 	public void cancelarEmpleado(String cedula) {

@@ -316,8 +316,7 @@ public class RegistrarServicio extends JDialog {
 							auxServicio = new Television(txtCodigo.getText(), txtDescripcion.getText(), Integer.parseInt(spn_diasVigencia.getValue().toString()), autocobro, Integer.parseInt(spn_cantCanales.getValue().toString()),cmbTipoTv.getSelectedItem().toString());
 						}
 						if(auxServicio!=null){
-						Altice.getInstance().getServicios().add(auxServicio);
-						Servicio.genIdServicio++;
+						Altice.getInstance().insertarServicio(auxServicio);
 						JOptionPane.showMessageDialog(null, "Registro existoso.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
 						clear();
 						}
@@ -367,7 +366,7 @@ public class RegistrarServicio extends JDialog {
 	
 
 	private void cargar() {
-		txtCodigo.setText("S-"+Servicio.genIdServicio);
+		txtCodigo.setText("S-" + Integer.toString(Altice.getInstance().getGenIdServicio()));
 		
 	}
 }

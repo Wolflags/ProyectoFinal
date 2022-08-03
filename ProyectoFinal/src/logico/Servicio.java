@@ -11,7 +11,7 @@ public abstract class Servicio implements Serializable{
 	protected String descripcion;
 	protected int duracion;
 	protected boolean autocobro;
-	public static int genIdServicio = 1;
+	public int genIdServicio;
 	
 	public Servicio(String codigo, String descripcion, int duracion, boolean autocobro) {
 		super();
@@ -19,6 +19,7 @@ public abstract class Servicio implements Serializable{
 		this.duracion = duracion;
 		this.autocobro = autocobro;
 		this.codigo = codigo;
+		this.genIdServicio = 1;
 	}
 	public String getCodigo() {
 		return codigo;
@@ -40,6 +41,9 @@ public abstract class Servicio implements Serializable{
 	}
 	public void setAutocobro(boolean autocobro) {
 		this.autocobro = autocobro;
+	}
+	public int getGenIdServicio() {
+		return genIdServicio;
 	}
 	
 	public abstract float getPrecio();
