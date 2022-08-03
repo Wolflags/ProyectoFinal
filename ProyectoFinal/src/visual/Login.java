@@ -121,7 +121,6 @@ public class Login extends JFrame {
 				
 			}
 		});
-		
 		setTitle("Altice");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

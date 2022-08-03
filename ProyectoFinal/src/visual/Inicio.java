@@ -38,6 +38,26 @@ public class Inicio extends JFrame {
 	private Dimension dim;
 	private Date hoy;
 	public Inicio(Empleado empleado) {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				 FileOutputStream empresa2;
+	                ObjectOutputStream empresaWrite;
+	                try {
+	                    empresa2 = new  FileOutputStream("empresa.dat");
+	                    empresaWrite = new ObjectOutputStream(empresa2);
+	                    empresaWrite.writeObject(Altice.getInstance());
+	                } catch (FileNotFoundException e1) {
+	                    // TODO Auto-generated catch block
+	                    e1.printStackTrace();
+	                } catch (IOException e1) {
+	                    // TODO Auto-generated catch block
+	                    e1.printStackTrace();
+	                }
+				
+			}
+		});
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			@Override

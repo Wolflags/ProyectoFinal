@@ -10,11 +10,11 @@ public class Altice implements Serializable{
 	 * 
 	 */
 	//Atributos
-	private transient ArrayList<Persona> personas;
-	private transient ArrayList<Plan> planes;
-	private transient ArrayList<Servicio> servicios;
-	private transient ArrayList<Factura> facturas;
-	private transient static Altice alti = null;
+	private  ArrayList<Persona> personas;
+	private  ArrayList<Plan> planes;
+	private  ArrayList<Servicio> servicios;
+	private  ArrayList<Factura> facturas;
+	private  static Altice alti = null;
 	
 	//Constructor
 	private Altice() {
