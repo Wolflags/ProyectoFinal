@@ -331,7 +331,7 @@ public class Inicio extends JFrame {
 		
 		JButton btnReporte1 = new JButton("     Primer reporte");
 		btnReporte1.setToolTipText("Cantidad de ventas por plan");
-		btnReporte1.setIcon(null);
+		btnReporte1.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgReportePrimero32px.png")));
 		btnReporte1.setHorizontalAlignment(SwingConstants.LEFT);
 		btnReporte1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -346,7 +346,7 @@ public class Inicio extends JFrame {
 		JButton btnReporte2 = new JButton("     Segundo reporte");
 		btnReporte2.setToolTipText("Cantidad de dinero que deber\u00EDa haber generado vs cantidad de dinero real");
 		btnReporte2.setHorizontalAlignment(SwingConstants.LEADING);
-		btnReporte2.setIcon(null);
+		btnReporte2.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgReporteSegundo32px.png")));
 		btnReporte2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//ABRIR REPORTE 2
@@ -357,6 +357,7 @@ public class Inicio extends JFrame {
 		panelReportes.add(btnReporte2);
 		
 		JButton btnReporte3 = new JButton("     Tercer reporte");
+		btnReporte3.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgReporteTercero32px.png")));
 		btnReporte3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				TercerReporte tercerReporte = new TercerReporte();

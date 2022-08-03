@@ -26,6 +26,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 public class PrimerReporte extends JDialog {
 
@@ -51,9 +52,10 @@ public class PrimerReporte extends JDialog {
 	 * Create the dialog.
 	 */
 	public PrimerReporte() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(PrimerReporte.class.getResource("/media/imgReporte32px.png")));
 		setResizable(false);
 		setModal(true);
-		setTitle("Ventas Por Planes");
+		setTitle("Reporte No. 1 - Cantidad de ventas por plan");
 		setBounds(100, 100, 815, 410);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
@@ -86,6 +88,7 @@ public class PrimerReporte extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton btnRegresar = new JButton("Regresar");
+				btnRegresar.setBackground(Color.WHITE);
 				btnRegresar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();
