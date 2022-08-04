@@ -12,13 +12,21 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import logico.Altice;
+import logico.Cliente;
+import logico.Empleado;
 import logico.Factura;
+import logico.Internet;
 import logico.Plan;
+import logico.Servicio;
+import logico.Television;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -33,6 +41,7 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
+import javax.swing.ScrollPaneConstants;
 
 public class ListadoPlanes extends JDialog {
 
@@ -49,15 +58,46 @@ public class ListadoPlanes extends JDialog {
 	private JRadioButton rbPrecio;
 	private JPanel panelContenido;
 	private JPanel panelServicios;
-	private JCheckBox ckbxInternet;
-	private JCheckBox ckbxMinutos;
-	private JCheckBox ckbxTelevision;
+	private JLabel lblSeleccioneServicio;
+	private JComboBox cbxTipoServicio;
+	private JPanel panelPrecio;
+	private JLabel lblOrden;
+	private JComboBox cbxOrden;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
+			Date hoy = new Date();
+			Servicio s1 = null;
+			Servicio s2 = null;
+			Servicio s3 = null;
+			s1 = new Internet("S-1", "Desc1", 50, 100, "Móvil");
+			s2 = new Television("S-2", "Desc2", 150, "Hogar");
+			s3 = new Internet("S-3", "Desc3", 100, 200, "Hogar");
+			Altice.getInstance().getServicios().add(s1);
+			Altice.getInstance().getServicios().add(s2);
+			Altice.getInstance().getServicios().add(s3);
+			ArrayList<Servicio> serviciosEjemplo = new ArrayList<Servicio>();
+			serviciosEjemplo.add(null);
+			serviciosEjemplo.add(null);
+			serviciosEjemplo.add(null);
+			serviciosEjemplo.set(0, s1);
+			serviciosEjemplo.set(2, s2);
+			Cliente c1 = new Cliente("123", "Leonardo", "La Zurza II", "8299741202", "Tejada", hoy);
+			Altice.getInstance().insertarPersona(c1);
+			Empleado e1 = new Empleado("402", "Marlon", "La Zurza", "829", "1234", (float)50000, 0, "Soltero", 5, "Administrador", "Oficina 1", "Tejada", hoy);
+			//serviciosEjemplo.set(2, s2);
+			Plan p1 = new Plan("1234", "Ejemplo", serviciosEjemplo, (float)2300);
+			Plan p2 = new Plan("5555", "Ejemplo2", serviciosEjemplo, (float)1200);
+			Plan p3 = new Plan("6666", "Ejemplo3", serviciosEjemplo, (float)2000);
+			Factura f1 = new Factura("F-1", hoy, (float)3400, e1, c1, p1);
+			c1.getMisFacturas().add(f1);
+			Altice.getInstance().getFacturas().add(f1);
+			Altice.getInstance().getPlanes().add(p2);
+			Altice.getInstance().getPlanes().add(p1);
+			Altice.getInstance().getPlanes().add(p3);
 			ListadoPlanes dialog = new ListadoPlanes();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
@@ -89,7 +129,8 @@ public class ListadoPlanes extends JDialog {
 			panelContenido.setLayout(null);
 			{
 				JScrollPane scrollPane = new JScrollPane();
-				scrollPane.setBounds(2, 68, 623, 402);
+				scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				scrollPane.setBounds(10, 68, 607, 487);
 				panelContenido.add(scrollPane);
 				{
 					table = new JTable();
@@ -106,7 +147,7 @@ public class ListadoPlanes extends JDialog {
 					});
 					table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 					model = new DefaultTableModel();
-					String[] headers = {"Código", "Nombre", "Cantidad de servicios", "Precio", "Estado"};
+					String[] headers = {"Código", "Nombre", "Cantidad de servicios", "Precio"};
 					model.setColumnIdentifiers(headers);
 					table.setModel(model);
 					scrollPane.setViewportView(table);
@@ -119,21 +160,40 @@ public class ListadoPlanes extends JDialog {
 				panelContenido.add(panelServicios);
 				panelServicios.setLayout(null);
 				
-				ckbxInternet = new JCheckBox("Internet");
-				ckbxInternet.setSelected(true);
-				ckbxInternet.setBounds(55, 7, 122, 23);
-				panelServicios.add(ckbxInternet);
+				lblSeleccioneServicio = new JLabel("Seleccione tipo de servicio:");
+				lblSeleccioneServicio.setBounds(151, 11, 168, 14);
+				panelServicios.add(lblSeleccioneServicio);
 				
-				ckbxMinutos = new JCheckBox("Minutos");
-				ckbxMinutos.setSelected(true);
-				ckbxMinutos.setBounds(232, 7, 122, 23);
-				panelServicios.add(ckbxMinutos);
-				
-				ckbxTelevision = new JCheckBox("Televisi\u00F3n");
-				ckbxTelevision.setSelected(true);
-				ckbxTelevision.setBounds(409, 7, 122, 23);
-				panelServicios.add(ckbxTelevision);
+				cbxTipoServicio = new JComboBox();
+				cbxTipoServicio.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						loadPlanes();
+					}
+				});
+				cbxTipoServicio.setModel(new DefaultComboBoxModel(new String[] {"Internet", "Minutos", "Televisi\u00F3n"}));
+				cbxTipoServicio.setBounds(311, 8, 176, 20);
+				panelServicios.add(cbxTipoServicio);
 			}
+			
+			panelPrecio = new JPanel();
+			panelPrecio.setVisible(false);
+			panelPrecio.setBounds(20, 21, 586, 36);
+			panelContenido.add(panelPrecio);
+			panelPrecio.setLayout(null);
+			
+			lblOrden = new JLabel("Orden:");
+			lblOrden.setBounds(151, 11, 168, 14);
+			panelPrecio.add(lblOrden);
+			
+			cbxOrden = new JComboBox();
+			cbxOrden.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					loadPlanes();
+				}
+			});
+			cbxOrden.setModel(new DefaultComboBoxModel(new String[] {"Ascendente", "Descendente"}));
+			cbxOrden.setBounds(270, 8, 176, 20);
+			panelPrecio.add(cbxOrden);
 			
 			JPanel panelFiltros = new JPanel();
 			panelFiltros.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Filtros", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -148,6 +208,9 @@ public class ListadoPlanes extends JDialog {
 						rbServicios.setSelected(false);
 						rbPrecio.setSelected(false);
 						panelContenido.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Todos los planes", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+						panelServicios.setVisible(false);
+						panelPrecio.setVisible(false);
+						loadPlanes();
 					}
 				}
 			});
@@ -162,6 +225,9 @@ public class ListadoPlanes extends JDialog {
 						rbTodos.setSelected(false);
 						rbPrecio.setSelected(false);
 						panelContenido.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Planes por servicio", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+						panelServicios.setVisible(true);
+						panelPrecio.setVisible(false);
+						loadPlanes();
 					}
 				}
 			});
@@ -175,6 +241,9 @@ public class ListadoPlanes extends JDialog {
 						rbServicios.setSelected(false);
 						rbTodos.setSelected(false);
 						panelContenido.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Planes por precio ", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+						panelPrecio.setVisible(true);
+						panelServicios.setVisible(false);
+						loadPlanes();
 					}
 				}
 			});
@@ -223,15 +292,60 @@ public class ListadoPlanes extends JDialog {
 				row[1] = plan.getNombre().toString();
 				row[2] = Integer.toString(plan.cantServicios());
 				row[3] = df.format(plan.getPrecio());
-				if(plan.isEstado()) {
-					row[4] = "Vigente";
-				}
-				else {
-					row[4] = "Cancelado";
-				}
 				model.addRow(row);
 			}
 		}
-		
+		if(rbServicios.isSelected()) {
+			panelServicios.setVisible(true);
+			model.setRowCount(0);
+			row = new Object[model.getColumnCount()];
+			for (Plan plan : Altice.getInstance().getPlanes()) {
+				if(planContiene(plan, cbxTipoServicio.getSelectedIndex())) {
+					row[0] = plan.getIdplan().toString();
+					row[1] = plan.getNombre().toString();
+					row[2] = Integer.toString(plan.cantServicios());
+					row[3] = df.format(plan.getPrecio());
+					model.addRow(row);
+				}
+			}
+		}
+		if(rbPrecio.isSelected()) {
+			ArrayList<Plan> planesOrdenados = new ArrayList<Plan>();
+			for(Plan plan : Altice.getInstance().getPlanes()) {
+				planesOrdenados.add(plan);
+			}
+			if(cbxOrden.getSelectedIndex() == 0) {
+				model.setRowCount(0);
+				row = new Object[model.getColumnCount()];
+				Collections.sort(planesOrdenados);
+				for (int i = planesOrdenados.size()-1; i >= 0; i--) {
+					row[0] = planesOrdenados.get(i).getIdplan().toString();
+					row[1] = planesOrdenados.get(i).getNombre().toString();
+					row[2] = Integer.toString(planesOrdenados.get(i).cantServicios());
+					row[3] = df.format(planesOrdenados.get(i).getPrecio());
+					model.addRow(row);
+				}
+			}
+			if(cbxOrden.getSelectedIndex() == 1) {
+				model.setRowCount(0);
+				row = new Object[model.getColumnCount()];
+				Collections.sort(planesOrdenados);
+				for (Plan plan : planesOrdenados) {
+					row[0] = plan.getIdplan().toString();
+					row[1] = plan.getNombre().toString();
+					row[2] = Integer.toString(plan.cantServicios());
+					row[3] = df.format(plan.getPrecio());
+					model.addRow(row);
+				}
+			}
+		}
+	}
+	
+	private boolean planContiene(Plan plan, int indice) {
+		boolean contiene = false;
+		if(plan.getMisServicios().get(indice) != null) {
+			contiene = true;
+		}
+		return contiene;
 	}
 }

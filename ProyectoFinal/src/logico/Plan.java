@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Plan implements Serializable{
+public class Plan implements Serializable, Comparable<Plan>{
 	/**
 	 * 
 	 */
@@ -60,6 +60,19 @@ public class Plan implements Serializable{
 			}
 		}
 		return cant;
+	}
+	
+	@Override
+	public int compareTo(Plan e) {
+		if(e.getPrecio() < precio) {
+			return -1;
+		}
+		else if(e.getPrecio() > precio){
+			return 0;
+		}
+		else {
+			return 1;
+		}
 	}
 
 }
