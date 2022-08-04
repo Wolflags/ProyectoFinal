@@ -46,7 +46,7 @@ public class DetallesFactura extends JDialog {
 	private Factura auxFactura = null;
 
 	/**
-	 * Launch the application.
+	 * Launch the application./
 	 */
 	public static void main(String[] args) {
 		try {
@@ -170,7 +170,7 @@ public class DetallesFactura extends JDialog {
 			}
 			{
 				JLabel lblPlan = new JLabel("Plan:");
-				lblPlan.setBounds(10, 91, 61, 14);
+				lblPlan.setBounds(10, 122, 61, 14);
 				panel.add(lblPlan);
 			}
 			{
@@ -178,7 +178,7 @@ public class DetallesFactura extends JDialog {
 				txtPlan.setText(auxFactura.getPlan().getNombre());
 				txtPlan.setEditable(false);
 				txtPlan.setColumns(10);
-				txtPlan.setBounds(81, 88, 230, 20);
+				txtPlan.setBounds(81, 119, 230, 20);
 				panel.add(txtPlan);
 			}
 			{
@@ -195,7 +195,7 @@ public class DetallesFactura extends JDialog {
 			}
 			{
 				JLabel lblEstado = new JLabel("Estado:");
-				lblEstado.setBounds(10, 122, 61, 14);
+				lblEstado.setBounds(10, 91, 61, 14);
 				panel.add(lblEstado);
 			}
 			{
@@ -208,7 +208,7 @@ public class DetallesFactura extends JDialog {
 				}
 				txtEstado.setEditable(false);
 				txtEstado.setColumns(10);
-				txtEstado.setBounds(81, 119, 230, 20);
+				txtEstado.setBounds(81, 88, 230, 20);
 				panel.add(txtEstado);
 			}
 		}
@@ -224,6 +224,17 @@ public class DetallesFactura extends JDialog {
 						dispose();
 					}
 				});
+				{
+					JButton btnDetallesPlan = new JButton("Detalles de plan");
+					buttonPane.add(btnDetallesPlan);
+					btnDetallesPlan.setBackground(Color.WHITE);
+					btnDetallesPlan.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent arg0) {
+							DetallesPlan detPlan = new DetallesPlan(auxFactura.getPlan());
+							detPlan.setVisible(true);
+						}
+					});
+				}
 				btnCancelar.setBackground(Color.WHITE);
 				btnCancelar.setActionCommand("Cancel");
 				buttonPane.add(btnCancelar);
