@@ -10,7 +10,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import logico.Altice;
+import logico.Cliente;
 import logico.Empleado;
+import logico.Factura;
+import logico.Persona;
+import logico.Plan;
+
 import java.awt.Toolkit;
 import java.util.Date;
 import java.awt.Color;
@@ -28,6 +33,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.awt.event.ActionEvent;
 import javax.swing.JTabbedPane;
 import java.awt.event.MouseAdapter;
@@ -116,9 +124,9 @@ public class Inicio extends JFrame {
 				btnListadoPlanes.setHorizontalAlignment(SwingConstants.LEFT);
 				btnListadoPlanes.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						RegistrarPlan regPlan = new RegistrarPlan();
-						regPlan.setVisible(true);
-						regPlan.setModal(true);
+						ListadoPlanes lisPlan = new ListadoPlanes();
+						lisPlan.setVisible(true);
+						lisPlan.setModal(true);
 					}
 				});
 				btnListadoPlanes.setBackground(Color.WHITE);
@@ -265,6 +273,70 @@ public class Inicio extends JFrame {
 			panelFacturacion.add(btnRealizarVenta);
 			{
 				JButton btnGenerarFactura = new JButton("     Generar factura");
+				btnGenerarFactura.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						for (Persona cliente : Altice.getInstance().getPersonas()) {
+							if(cliente instanceof Cliente) {
+								for (Plan plan : ((Cliente) cliente).getMisPlanes()) {
+									if(plan.isEstado()) {
+										
+										Factura ultimaFactura = null;
+										Factura ultimaFacturaPagada = null;
+										for (Factura factura : ((Cliente) cliente).getMisFacturas()) {
+											if(factura.getPlan().equals(plan)) {
+												ultimaFactura = factura;
+												if(factura.isEstado()) {
+													ultimaFacturaPagada = factura;
+												}
+											}
+										}
+										
+								 Date fechaUltimaFactura = ultimaFactura.getFecha();
+										
+										DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+								        String dia = String.format("%02d", fechaUltimaFactura.getDate());
+								        String mes = String.format("%02d", fechaUltimaFactura.getMonth()+1);
+								        String year = String.format("%04d", fechaUltimaFactura.getYear()+1900);
+								       
+								        LocalDate fechaFac = LocalDate.parse(dia+"/"+mes+"/"+year, fmt);
+								        LocalDate ahora = LocalDate.now();
+								       
+								        Period periodoFechaUltimaFactura = Period.between(fechaFac, ahora);
+								        
+								 Date fechaUltimaFacturaPagada = ultimaFacturaPagada.getFecha();
+								
+								        dia = String.format("%02d", fechaUltimaFacturaPagada.getDate());
+								        mes = String.format("%02d", fechaUltimaFacturaPagada.getMonth()+1);
+								        year = String.format("%04d", fechaUltimaFacturaPagada.getYear()+1900);
+								       
+								        fechaFac = LocalDate.parse(dia+"/"+mes+"/"+year, fmt);
+								        ahora = LocalDate.now();
+								       
+								        Period periodoFechaUltimaFacturaPagada = Period.between(fechaFac, ahora);
+										
+								        if(periodoFechaUltimaFacturaPagada.getMonths()>=4) {
+								        	plan.setEstado(false);
+								        }else {
+								        	if(periodoFechaUltimaFactura.getMonths()>=1) {
+								        		
+								        		fechaUltimaFactura.setMonth((fechaUltimaFactura.getMonth()+1)%12);
+								        		Factura auxFactura = new Factura("F-"+Altice.getInstance().getGenIdFactura(), fechaUltimaFactura, ultimaFactura.getSubtotal(), ultimaFactura.getEmpleado(), ultimaFactura.getCliente(), plan);
+								        		Altice.getInstance().getGenIdFactura();
+								        		auxFactura.setEstado(false);
+								        		((Cliente) cliente).getMisFacturas().add(auxFactura);
+								        		Altice.getInstance().getFacturas().add(auxFactura);
+								        	}
+								        }
+								        
+								        
+										
+										
+									}
+								}
+							}
+						}
+					}
+				});
 				btnGenerarFactura.setHorizontalAlignment(SwingConstants.LEFT);
 				btnGenerarFactura.setBackground(Color.WHITE);
 				btnGenerarFactura.setBounds(29, 163, 205, 45);

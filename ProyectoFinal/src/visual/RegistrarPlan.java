@@ -302,13 +302,13 @@ public class RegistrarPlan extends JDialog {
 
 		if(lastSelected==0) {
 			Internet auxint = (Internet) selected;
-			txtInternet.setText(selected.getCodigo()+" || "+auxint.getCantMB()+"MB"+" || "+auxint.getVelocidad()+"Mbps"+" || "+auxint.getDuracion()+" Dias"+" || "+selected.getPrecio());
+			txtInternet.setText(selected.getCodigo()+" || "+auxint.getCantMB()+"MB"+" || "+auxint.getVelocidad()+"Mbps"+" || "+selected.getPrecio());
 		}else if(lastSelected==1) {
 			Minutos auxmins = (Minutos) selected;
-			txtMinutos.setText(selected.getCodigo()+" || "+auxmins.getCantMins()+" Minutos"+" || "+auxmins.getDuracion()+" Dias"+" || "+selected.getPrecio());
+			txtMinutos.setText(selected.getCodigo()+" || "+auxmins.getCantMins()+" Minutos"+" || "+selected.getPrecio());
 		}else if(lastSelected==2) {
 			Television auxtv = (Television) selected;
-			txtTelevision.setText(selected.getCodigo()+" || "+auxtv.getCantCanales()+" Canales"+" || "+auxtv.getDuracion()+" Dias"+" || "+selected.getPrecio());
+			txtTelevision.setText(selected.getCodigo()+" || "+auxtv.getCantCanales()+" Canales"+" || "+selected.getPrecio());
 		}
 		cargarPrecio();
 

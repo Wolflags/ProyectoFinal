@@ -396,7 +396,11 @@ public class RegEmpAdmin extends JDialog {
 	
 	private boolean validarDatos(Date fechaNacimiento) {
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		LocalDate fechaNac = LocalDate.parse(fechaNacimiento.getDate()+"/"+(fechaNacimiento.getMonth()+1)+"/"+(fechaNacimiento.getYear()+1900), fmt);
+		String dia = String.format("%02d", fechaNacimiento.getDate());
+		String mes = String.format("%02d", fechaNacimiento.getMonth()+1);
+		String year = String.format("%04d", fechaNacimiento.getYear()+1900);
+		
+		LocalDate fechaNac = LocalDate.parse(dia+"/"+mes+"/"+year, fmt);
 		LocalDate ahora = LocalDate.now();
 		
 		Period periodo = Period.between(fechaNac, ahora);

@@ -12,8 +12,8 @@ public class Internet extends Servicio implements Serializable{
 	private String tipo;
 	
 	//Constructor
-	public Internet(String codigo, String descripcion, int duracion, boolean autocobro, int velocidad, int cantMB, String tipo) {
-		super(codigo, descripcion, duracion, autocobro);
+	public Internet(String codigo, String descripcion,  int velocidad, int cantMB, String tipo) {
+		super(codigo, descripcion);
 		this.velocidad = velocidad;
 		this.cantMB = cantMB;
 		this.tipo = tipo;

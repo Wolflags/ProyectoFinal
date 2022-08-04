@@ -54,9 +54,9 @@ public class DetallesFactura extends JDialog {
 			Servicio s1 = null;
 			Servicio s2 = null;
 			Servicio s3 = null;
-			s1 = new Internet("S-1", "Desc1", 30, true, 50, 100, "Móvil");
-			s2 = new Television("S-2", "Desc2", 15, false, 150, "Hogar");
-			s3 = new Internet("S-3", "Desc3", 20, true, 100, 200, "Hogar");
+			s1 = new Internet("S-1", "Desc1", 50, 100, "Móvil");
+			s2 = new Television("S-2", "Desc2", 150, "Hogar");
+			s3 = new Internet("S-3", "Desc3", 100, 200, "Hogar");
 			Altice.getInstance().getServicios().add(s1);
 			Altice.getInstance().getServicios().add(s2);
 			Altice.getInstance().getServicios().add(s3);

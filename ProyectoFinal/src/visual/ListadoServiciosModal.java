@@ -187,14 +187,6 @@ public class ListadoServiciosModal extends JDialog {
 				}else {
 					row[1]="Television";
 				}
-				if(servicio.getDuracion()==30) {
-					row[2]="Mensual";
-				}else if(servicio.getDuracion()==365) {
-					row[2]="Anual";
-				}else {
-					row[2]="Agotable";
-				}
-				row[3]=servicio.getDuracion();
 				row[4]=servicio.getPrecio();
 				if(servicio instanceof Internet) {
 				model.addRow(row);
@@ -214,14 +206,6 @@ public class ListadoServiciosModal extends JDialog {
 						}else {
 							row[1]="Television";
 						}
-						if(servicio.getDuracion()==30) {
-							row[2]="Mensual";
-						}else if(servicio.getDuracion()==365) {
-							row[2]="Anual";
-						}else {
-							row[2]="Agotable";
-						}
-						row[3]=servicio.getDuracion();
 						row[4]=servicio.getPrecio();
 						if(servicio instanceof Internet) {
 							model.addRow(row);
@@ -244,14 +228,6 @@ public class ListadoServiciosModal extends JDialog {
 				}else {
 					row[1]="Television";
 				}
-				if(servicio.getDuracion()==30) {
-					row[2]="Mensual";
-				}else if(servicio.getDuracion()==365) {
-					row[2]="Anual";
-				}else {
-					row[2]="Agotable";
-				}
-				row[3]=servicio.getDuracion();
 				row[4]=servicio.getPrecio();
 				if(servicio instanceof Minutos) {
 				model.addRow(row);
@@ -271,14 +247,6 @@ public class ListadoServiciosModal extends JDialog {
 						}else {
 							row[1]="Television";
 						}
-						if(servicio.getDuracion()==30) {
-							row[2]="Mensual";
-						}else if(servicio.getDuracion()==365) {
-							row[2]="Anual";
-						}else {
-							row[2]="Agotable";
-						}
-						row[3]=servicio.getDuracion();
 						row[4]=servicio.getPrecio();
 						if(servicio instanceof Minutos) {
 							model.addRow(row);
@@ -301,14 +269,6 @@ public class ListadoServiciosModal extends JDialog {
 				}else {
 					row[1]="Television";
 				}
-				if(servicio.getDuracion()==30) {
-					row[2]="Mensual";
-				}else if(servicio.getDuracion()==365) {
-					row[2]="Anual";
-				}else {
-					row[2]="Agotable";
-				}
-				row[3]=servicio.getDuracion();
 				row[4]=servicio.getPrecio();
 				if(servicio instanceof Television) {
 				model.addRow(row);
@@ -329,14 +289,6 @@ public class ListadoServiciosModal extends JDialog {
 						}else {
 							row[1]="Television";
 						}
-						if(servicio.getDuracion()==30) {
-							row[2]="Mensual";
-						}else if(servicio.getDuracion()==365) {
-							row[2]="Anual";
-						}else {
-							row[2]="Agotable";
-						}
-						row[3]=servicio.getDuracion();
 						row[4]=servicio.getPrecio();
 						if(servicio instanceof Television) {
 							model.addRow(row);

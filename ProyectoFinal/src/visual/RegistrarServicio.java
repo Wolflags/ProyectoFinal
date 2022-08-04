@@ -43,15 +43,12 @@ public class RegistrarServicio extends JDialog {
 	private JRadioButton rdbInternet;
 	private JRadioButton rdbMinutos;
 	private JRadioButton rdbTelevision;
-	private JSpinner spn_diasVigencia;
 	private JSpinner spn_velocidad;
 	private JComboBox cmbTipoMinutos;
 	private JSpinner spn_cantMin;
 	private JComboBox cmbTipoTv;
 	private JSpinner spn_cantCanales;
-	private JComboBox cmbTipoFac;
 	private JTextArea txtDescripcion;
-	private boolean autocobro = true;
 
 	/**
 	 * Launch the application.
@@ -83,7 +80,7 @@ public class RegistrarServicio extends JDialog {
 		});
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		setModal(true);
-		setTitle("RegistrarServicio");
+		setTitle("Registrar Servicio");
 		setResizable(false);
 		setBounds(100, 100, 472, 456);
 		setLocationRelativeTo(null);
@@ -99,12 +96,12 @@ public class RegistrarServicio extends JDialog {
 			panel.setLayout(null);
 			
 			JLabel lblNewLabel = new JLabel("C\u00F3digo:");
-			lblNewLabel.setBounds(21, 24, 56, 14);
+			lblNewLabel.setBounds(10, 24, 56, 14);
 			panel.add(lblNewLabel);
 			
 			txtCodigo = new JTextField();
 			txtCodigo.setEditable(false);
-			txtCodigo.setBounds(21, 44, 116, 20);
+			txtCodigo.setBounds(10, 44, 118, 20);
 			panel.add(txtCodigo);
 			txtCodigo.setColumns(10);
 			
@@ -118,37 +115,6 @@ public class RegistrarServicio extends JDialog {
 			
 			txtDescripcion = new JTextArea();
 			scrollPane.setViewportView(txtDescripcion);
-			
-			JLabel lblNewLabel_3 = new JLabel("Tipo de facturaci\u00F3n:");
-			lblNewLabel_3.setBounds(158, 24, 134, 14);
-			panel.add(lblNewLabel_3);
-			
-			spn_diasVigencia = new JSpinner();
-			spn_diasVigencia.setModel(new SpinnerNumberModel(30, 30, 30, 1));
-			cmbTipoFac = new JComboBox();
-			cmbTipoFac.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-						if(cmbTipoFac.getSelectedIndex()==0) {
-						spn_diasVigencia.setModel(new SpinnerNumberModel(30, 30, 30, 1));
-						}else if(cmbTipoFac.getSelectedIndex()==1) {
-						spn_diasVigencia.setModel(new SpinnerNumberModel(365, 365, 365, 1));
-						}else {
-						spn_diasVigencia.setModel(new SpinnerNumberModel(1, 1, null, 1));
-						}
-				}
-			});
-			cmbTipoFac.setEditable(true);
-			cmbTipoFac.setModel(new DefaultComboBoxModel(new String[] {"Mensual", "Anual", "Agotable"}));
-			cmbTipoFac.setBounds(158, 44, 134, 20);
-			panel.add(cmbTipoFac);
-			
-			
-			spn_diasVigencia.setBounds(313, 44, 109, 20);
-			panel.add(spn_diasVigencia);
-			
-			JLabel lblNewLabel_4 = new JLabel("Dias vigencia:");
-			lblNewLabel_4.setBounds(313, 24, 109, 14);
-			panel.add(lblNewLabel_4);
 			
 			
 		}
@@ -305,15 +271,13 @@ public class RegistrarServicio extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 						if(txtDescripcion.getText().length()>5) {
 						Servicio auxServicio = null;
-						if(cmbTipoFac.getSelectedIndex()==2) {
-							autocobro=false;
-						}
+						
 						if(rdbInternet.isSelected()) {
-							auxServicio = new Internet(txtCodigo.getText(), txtDescripcion.getText(), Integer.parseInt(spn_diasVigencia.getValue().toString()), autocobro, Integer.parseInt(spn_velocidad.getValue().toString()), Integer.parseInt(spn_cantMb.getValue().toString()), cmbTipoInternet.getSelectedItem().toString());							
+							auxServicio = new Internet(txtCodigo.getText(), txtDescripcion.getText(),  Integer.parseInt(spn_velocidad.getValue().toString()), Integer.parseInt(spn_cantMb.getValue().toString()), cmbTipoInternet.getSelectedItem().toString());							
 						}else if(rdbMinutos.isSelected()) {
-							auxServicio = new Minutos(txtCodigo.getText(), txtDescripcion.getText(), Integer.parseInt(spn_diasVigencia.getValue().toString()), autocobro, Integer.parseInt(spn_cantMin.getValue().toString()),cmbTipoMinutos.getSelectedItem().toString());
+							auxServicio = new Minutos(txtCodigo.getText(), txtDescripcion.getText(),  Integer.parseInt(spn_cantMin.getValue().toString()),cmbTipoMinutos.getSelectedItem().toString());
 						}else if(rdbTelevision.isSelected()) {
-							auxServicio = new Television(txtCodigo.getText(), txtDescripcion.getText(), Integer.parseInt(spn_diasVigencia.getValue().toString()), autocobro, Integer.parseInt(spn_cantCanales.getValue().toString()),cmbTipoTv.getSelectedItem().toString());
+							auxServicio = new Television(txtCodigo.getText(), txtDescripcion.getText(),  Integer.parseInt(spn_cantCanales.getValue().toString()),cmbTipoTv.getSelectedItem().toString());
 						}
 						if(auxServicio!=null){
 						Altice.getInstance().insertarServicio(auxServicio);
@@ -328,9 +292,6 @@ public class RegistrarServicio extends JDialog {
 					private void clear() {
 						txtDescripcion.setText("");
 						cargar();
-						cmbTipoFac.setSelectedIndex(0);
-						spn_diasVigencia.setModel(new SpinnerNumberModel(30, 30, 30, 1));
-						autocobro=false;
 						rdbInternet.setSelected(true);
 						rdbMinutos.setSelected(false);
 						rdbTelevision.setSelected(false);

@@ -11,8 +11,8 @@ public class Television extends Servicio implements Serializable{
 	private String tipo;
 	
 	//Constructor
-	public Television(String codigo, String descripcion, int duracion, boolean autocobro, int cantCanales, String tipo) {
-		super(codigo, descripcion, duracion, autocobro);
+	public Television(String codigo, String descripcion, int cantCanales, String tipo) {
+		super(codigo, descripcion);
 		this.cantCanales = cantCanales;
 		this.tipo = tipo;
 	}
