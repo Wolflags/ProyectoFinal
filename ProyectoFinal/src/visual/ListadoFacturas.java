@@ -14,6 +14,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 import logico.Altice;
@@ -51,6 +53,7 @@ public class ListadoFacturas extends JDialog {
 	private JTextField txtClienteEncontrado;
 	private JButton btnVerCliente;
 	private JButton btnMarcar;
+	private JButton btnBuscar;
 
 	/**
 	 * Launch the application.
@@ -119,9 +122,31 @@ public class ListadoFacturas extends JDialog {
 				txtCedulaCliente.setBounds(257, 28, 200, 20);
 				panelBuscar.add(txtCedulaCliente);
 				txtCedulaCliente.setColumns(10);
+				txtCedulaCliente.getDocument().addDocumentListener(new DocumentListener() {
+					  public void changedUpdate(DocumentEvent e) {
+					    cambio();
+					  }
+					  public void removeUpdate(DocumentEvent e) {
+					    cambio();
+					  }
+					  public void insertUpdate(DocumentEvent e) {
+					    cambio();
+					  }
+					  public void cambio() {
+					     if (txtCedulaCliente.getText().toString().length() > 0){
+					    	 btnBuscar.setEnabled(true);
+					     }
+					     else {
+					    	 btnBuscar.setEnabled(false);
+					     }
+					  }
+					});
 			}
+			
+			
 			{
-				JButton btnBuscar = new JButton("Buscar");
+				btnBuscar = new JButton("Buscar");
+				btnBuscar.setEnabled(false);
 				btnBuscar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(Altice.getInstance().buscarClienteByCedula(txtCedulaCliente.getText().toString()) != null) {
