@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import logico.Altice;
+import logico.Empleado;
 import logico.Internet;
 import logico.Minutos;
 import logico.Servicio;
@@ -41,11 +42,12 @@ public class ListadoServiciosModal extends JDialog {
 	private Servicio selected = null;
 	private String ini = "";
 	private JButton btnDetalles;
+	private Empleado auxEmpleado = null;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		try {
 			ListadoServiciosModal dialog = new ListadoServiciosModal(0);
 			dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -53,12 +55,13 @@ public class ListadoServiciosModal extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	/**
 	 * Create the dialog.
 	 */
-	public ListadoServiciosModal(int tipo) {
+	public ListadoServiciosModal(int tipo, Empleado empleado) {
+		auxEmpleado = empleado;
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
@@ -144,7 +147,7 @@ public class ListadoServiciosModal extends JDialog {
 					btnDetalles.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							if(selected!=null) {
-								DetallesServicio detServ = new DetallesServicio(selected);
+								DetallesServicio detServ = new DetallesServicio(selected, auxEmpleado);
 								detServ.setVisible(true);
 								detServ.setModal(true);
 							}

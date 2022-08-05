@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import logico.Altice;
+import logico.Empleado;
 import logico.Internet;
 import logico.Minutos;
 import logico.Plan;
@@ -46,11 +47,12 @@ public class RegistrarPlan extends JDialog {
 	private static int lastSelected = -1;
 	private static JCheckBox cbxTelevision;
 	private static JCheckBox cbxMinutos;
+	private Empleado auxEmpleado = null;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		try {
 			RegistrarPlan dialog = new RegistrarPlan();
 			dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -58,12 +60,13 @@ public class RegistrarPlan extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	/**
 	 * Create the dialog.
 	 */
-	public RegistrarPlan() {
+	public RegistrarPlan(Empleado empleado) {
+		auxEmpleado = empleado;
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -122,7 +125,7 @@ public class RegistrarPlan extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				if(cbxInternet.isSelected()) {
 					lastSelected=0;
-					ListadoServiciosModal lisServM = new ListadoServiciosModal(0);
+					ListadoServiciosModal lisServM = new ListadoServiciosModal(0, auxEmpleado);
 					lisServM.setVisible(true);
 					lisServM.setModal(true);
 				}else {
@@ -139,7 +142,7 @@ public class RegistrarPlan extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				if(cbxMinutos.isSelected()) {
 					lastSelected=1;
-					ListadoServiciosModal lisServM = new ListadoServiciosModal(1);
+					ListadoServiciosModal lisServM = new ListadoServiciosModal(1, auxEmpleado);
 					lisServM.setVisible(true);
 					lisServM.setModal(true);
 				}else {
@@ -156,7 +159,7 @@ public class RegistrarPlan extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				if(cbxTelevision.isSelected()) {
 					lastSelected=2;
-					ListadoServiciosModal lisServM = new ListadoServiciosModal(2);
+					ListadoServiciosModal lisServM = new ListadoServiciosModal(2, auxEmpleado);
 					lisServM.setVisible(true);
 					lisServM.setModal(true);
 				}else {

@@ -109,7 +109,7 @@ public class Inicio extends JFrame {
 				btnRegistrarPlan.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgAgregarPlan32px.png")));
 				btnRegistrarPlan.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						RegistrarPlan regPlan = new RegistrarPlan();
+						RegistrarPlan regPlan = new RegistrarPlan(auxEmpleado);
 						regPlan.setVisible(true);
 						regPlan.setModal(true);
 					}
@@ -117,6 +117,9 @@ public class Inicio extends JFrame {
 				btnRegistrarPlan.setBackground(Color.WHITE);
 				btnRegistrarPlan.setBounds(30, 54, 205, 45);
 				panelPlanes.add(btnRegistrarPlan);
+				if(auxEmpleado.getTipoEmpleado().equalsIgnoreCase("Empleado")) {
+					btnRegistrarPlan.setEnabled(false);
+				}
 			}
 			{
 				JButton btnListadoPlanes = new JButton("     Listado de planes");
@@ -124,7 +127,7 @@ public class Inicio extends JFrame {
 				btnListadoPlanes.setHorizontalAlignment(SwingConstants.LEFT);
 				btnListadoPlanes.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ListadoPlanes lisPlan = new ListadoPlanes();
+						ListadoPlanes lisPlan = new ListadoPlanes(auxEmpleado);
 						lisPlan.setVisible(true);
 						lisPlan.setModal(true);
 					}
@@ -160,6 +163,9 @@ public class Inicio extends JFrame {
 				btnRegistrarEmpleado.setBackground(Color.WHITE);
 				btnRegistrarEmpleado.setBounds(30, 54, 205, 45);
 				panelPersonal.add(btnRegistrarEmpleado);
+				if(auxEmpleado.getTipoEmpleado().equalsIgnoreCase("Empleado")) {
+					btnRegistrarEmpleado.setEnabled(false);
+				}
 			}
 			{
 				JButton btnListadoEmpleados = new JButton("     Listado de empleados");
@@ -167,7 +173,7 @@ public class Inicio extends JFrame {
 				btnListadoEmpleados.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgListadoEmpleados32px.png")));
 				btnListadoEmpleados.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						ListadoEmpleados listEmpleados = new ListadoEmpleados();
+						ListadoEmpleados listEmpleados = new ListadoEmpleados(auxEmpleado);
 						listEmpleados.setVisible(true);
 					}
 				});
@@ -195,7 +201,7 @@ public class Inicio extends JFrame {
 				btnListadoClientes.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgListadoClientes32px.png")));
 				btnListadoClientes.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ListadoClientes listClientes = new ListadoClientes();
+						ListadoClientes listClientes = new ListadoClientes(auxEmpleado);
 						listClientes.setVisible(true);
 					}
 				});
@@ -249,7 +255,7 @@ public class Inicio extends JFrame {
 				btnListadoFacturas.setHorizontalAlignment(SwingConstants.LEFT);
 				btnListadoFacturas.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ListadoFacturas listFacturas = new ListadoFacturas();
+						ListadoFacturas listFacturas = new ListadoFacturas(auxEmpleado, null);
 						listFacturas.setVisible(true);
 					}
 				});
@@ -375,6 +381,9 @@ public class Inicio extends JFrame {
 				btnNuevoServicio.setBackground(Color.WHITE);
 				btnNuevoServicio.setBounds(30, 54, 205, 45);
 				panelServicios.add(btnNuevoServicio);
+				if(auxEmpleado.getTipoEmpleado().equalsIgnoreCase("Empleado")) {
+					btnNuevoServicio.setEnabled(false);
+				}
 			}
 			{
 				JButton btnListadoDeServicios = new JButton("     Listado de servicios");
@@ -382,7 +391,7 @@ public class Inicio extends JFrame {
 				btnListadoDeServicios.setHorizontalAlignment(SwingConstants.LEFT);
 				btnListadoDeServicios.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ListadoServicios lisServ = new ListadoServicios();
+						ListadoServicios lisServ = new ListadoServicios(auxEmpleado);
 						lisServ.setVisible(true);
 						lisServ.setModal(true);
 					}
@@ -487,7 +496,7 @@ public class Inicio extends JFrame {
 			btnVerMiPerfil.setForeground(Color.LIGHT_GRAY);
 			btnVerMiPerfil.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					PerfilEmpAdmin perEmpAdm = new PerfilEmpAdmin(auxEmpleado);
+					PerfilEmpAdmin perEmpAdm = new PerfilEmpAdmin(auxEmpleado, auxEmpleado);
 					perEmpAdm.setVisible(true);
 				}
 			});

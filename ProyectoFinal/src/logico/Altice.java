@@ -261,8 +261,22 @@ public class Altice implements Serializable{
 		}
 		return aux;
 	}
+	
 	public static float formatearDecimales(Float numero, Integer numeroDecimales) {
 	    return (float) (Math.round(numero * Math.pow(10, numeroDecimales)) / Math.pow(10, numeroDecimales));
+	}
+	
+	public float dineroClientePendiente(String cedula) {
+		float dineroPendiente = 0;
+		Cliente aux = buscarClienteByCedula(cedula);
+		if(aux != null) {
+			for(Factura factura : aux.getMisFacturas()) {
+				if(!factura.isEstado()) {
+					dineroPendiente += factura.getSubtotal();
+				}
+			}
+		}
+		return dineroPendiente;
 	}
 	
 }

@@ -44,11 +44,12 @@ public class DetallesFactura extends JDialog {
 	private JTextField txtPlan;
 	private JTextField txtEstado;
 	private Factura auxFactura = null;
+	private Empleado auxEmpleado = null;
 
 	/**
 	 * Launch the application./
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		try {
 			Date hoy = new Date();
 			Servicio s1 = null;
@@ -78,12 +79,13 @@ public class DetallesFactura extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	/**
 	 * Create the dialog.
 	 */
-	public DetallesFactura(Factura factura) {
+	public DetallesFactura(Factura factura, Empleado empleado) {
+		auxEmpleado = empleado;
 		setIconImage(Toolkit.getDefaultToolkit().getImage(DetallesFactura.class.getResource("/media/imgFactura64px.png")));
 		auxFactura = factura;
 		df.setRoundingMode(RoundingMode.CEILING);
@@ -230,7 +232,7 @@ public class DetallesFactura extends JDialog {
 					btnDetallesPlan.setBackground(Color.WHITE);
 					btnDetallesPlan.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
-							DetallesPlan detPlan = new DetallesPlan(auxFactura.getPlan());
+							DetallesPlan detPlan = new DetallesPlan(auxFactura.getPlan(), auxEmpleado);
 							detPlan.setVisible(true);
 						}
 					});

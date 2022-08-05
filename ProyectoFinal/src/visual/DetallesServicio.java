@@ -8,6 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import logico.Empleado;
 import logico.Internet;
 import logico.Minutos;
 import logico.Servicio;
@@ -33,6 +34,7 @@ public class DetallesServicio extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private Servicio auxServicio = null;
+	private Empleado auxEmpleado = null;
 	private JTextField txtCodigo;
 	private JTextField txtDescripcion;
 	private JSpinner spnCantCanales;
@@ -52,7 +54,7 @@ public class DetallesServicio extends JDialog {
 	 * Launch the application.
 	 */
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		Television s1 = new Television("S-1", "Esta es la descripcion", 150, "Cable");
 		Internet s2 = new Internet("S-2", "Esta es la descripcion 2", 40, 15000, "Internet Móvil");
 		Minutos s3 = new Minutos("S-3", "Esta es la descripcion 3", 200, "Minutos Hogar");
@@ -63,12 +65,13 @@ public class DetallesServicio extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	/**
 	 * Create the dialog////
 	 */
-	public DetallesServicio(Servicio servicio) {
+	public DetallesServicio(Servicio servicio, Empleado empleado) {
+		auxEmpleado = empleado;
 		auxServicio = servicio;
 		if(auxServicio instanceof Television) {
 			setIconImage(Toolkit.getDefaultToolkit().getImage(DetallesServicio.class.getResource("/media/imgTelevision128px.png")));
@@ -123,6 +126,9 @@ public class DetallesServicio extends JDialog {
 				btnModificar.setBackground(Color.WHITE);
 				btnModificar.setBounds(18, 198, 161, 50);
 				panelBotones.add(btnModificar);
+				if(auxEmpleado.getTipoEmpleado().equalsIgnoreCase("Empleado")) {
+					btnModificar.setEnabled(false);
+				}
 			}
 		}
 		{

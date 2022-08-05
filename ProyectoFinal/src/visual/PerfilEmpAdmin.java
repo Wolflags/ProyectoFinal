@@ -29,6 +29,7 @@ public class PerfilEmpAdmin extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private Empleado auxEmpleado = null;
+	private Empleado auxEmpleadoActual = null;
 	private JTextField txtNombre;
 	private JTextField txtCedula;
 	private JTextField txtApellidos;
@@ -46,7 +47,7 @@ public class PerfilEmpAdmin extends JDialog {
 	private JButton btnAplicar;
 	private JComboBox cbxEstado;
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		try {
 			PerfilEmpAdmin dialog = new PerfilEmpAdmin((Empleado)Altice.getInstance().getPersonas().get(0));
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -54,10 +55,11 @@ public class PerfilEmpAdmin extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
-	public PerfilEmpAdmin(Empleado empleado) {
+	public PerfilEmpAdmin(Empleado empleado, Empleado empleadoActual) {
 		auxEmpleado = empleado;
+		auxEmpleadoActual = empleadoActual;
 		setTitle("Perfil de " + auxEmpleado.getTipoEmpleado());
 		setResizable(false);
 		setModal(true);
@@ -251,11 +253,11 @@ public class PerfilEmpAdmin extends JDialog {
 			panelInfoEmpleado.add(cbxEstado);
 		}
 		
-		JPanel panelBotones = new JPanel();
-		panelBotones.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelBotones.setBounds(10, 11, 197, 311);
-		contentPanel.add(panelBotones);
-		panelBotones.setLayout(null);
+		JPanel panelModificar = new JPanel();
+		panelModificar.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelModificar.setBounds(10, 11, 197, 311);
+		contentPanel.add(panelModificar);
+		panelModificar.setLayout(null);
 		
 		JLabel lblImagenLogo = new JLabel("");
 		if(auxEmpleado.getTipoEmpleado().equalsIgnoreCase("Administrador")) {
@@ -266,7 +268,7 @@ public class PerfilEmpAdmin extends JDialog {
 		}
 		lblImagenLogo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblImagenLogo.setBounds(32, 27, 133, 143);
-		panelBotones.add(lblImagenLogo);
+		panelModificar.add(lblImagenLogo);
 		
 		btnModificar = new JButton("     Modificar");
 		btnModificar.addActionListener(new ActionListener() {
@@ -280,7 +282,10 @@ public class PerfilEmpAdmin extends JDialog {
 		btnModificar.setIcon(new ImageIcon(PerfilEmpAdmin.class.getResource("/media/imgModificar32px.png")));
 		btnModificar.setHorizontalAlignment(SwingConstants.LEADING);
 		btnModificar.setBounds(18, 198, 161, 50);
-		panelBotones.add(btnModificar);
+		panelModificar.add(btnModificar);
+		if(auxEmpleadoActual.getTipoEmpleado().equalsIgnoreCase("Empleado")){
+			btnModificar.setEnabled(false);
+		}
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));

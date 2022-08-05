@@ -36,6 +36,7 @@ public class ListadoClientes extends JDialog {
 	private static Object[] row;
 	private Cliente selected = null;
 	private Cliente auxCliente = null;
+	private Empleado auxEmpleado = null;
 	private JButton btnVerCliente;
 	private JTextField txtNombre;
 	private ArrayList<Persona> clientes;
@@ -43,7 +44,7 @@ public class ListadoClientes extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		try {
 			ListadoClientes dialog = new ListadoClientes();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -51,12 +52,13 @@ public class ListadoClientes extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	/**
 	 * Create the dialog.
 	 */
-	public ListadoClientes() {
+	public ListadoClientes(Empleado empleado) {
+		auxEmpleado = empleado;
 		clientes = new ArrayList<Persona>();
 		setResizable(false);
 		setTitle("Listado de clientes");
@@ -128,7 +130,7 @@ public class ListadoClientes extends JDialog {
 				btnVerCliente = new JButton("Ver cliente");
 				btnVerCliente.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						PerfilCliente perCliente = new PerfilCliente(selected);
+						PerfilCliente perCliente = new PerfilCliente(selected, auxEmpleado);
 						perCliente.setVisible(true);
 					}
 				});

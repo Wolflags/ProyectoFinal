@@ -52,6 +52,7 @@ public class ListadoPlanes extends JDialog {
 	private static DefaultTableModel model;
 	private static Object[] row;
 	private Plan selected = null;
+	private Empleado auxEmpleado = null;
 	private JButton btnVerPlan;
 	private JRadioButton rbTodos;
 	private JRadioButton rbServicios;
@@ -67,7 +68,7 @@ public class ListadoPlanes extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		try {
 			Date hoy = new Date();
 			Servicio s1 = null;
@@ -104,12 +105,13 @@ public class ListadoPlanes extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	/**
 	 * Create the dialog.
 	 */
-	public ListadoPlanes() {
+	public ListadoPlanes(Empleado empleado) {
+		auxEmpleado = empleado;
 		df.setRoundingMode(RoundingMode.CEILING);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ListadoPlanes.class.getResource("/media/imgListadoPlanes32px.png")));
 		setTitle("Listado de planes");
@@ -259,7 +261,7 @@ public class ListadoPlanes extends JDialog {
 				btnVerPlan = new JButton("Ver plan");
 				btnVerPlan.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						DetallesPlan detPlan = new DetallesPlan(selected);
+						DetallesPlan detPlan = new DetallesPlan(selected, auxEmpleado);
 						detPlan.setVisible(true);
 					}
 				});

@@ -55,11 +55,12 @@ public class ListadoEmpleados extends JDialog {
 	private Persona selected;
 	private JButton btnSeleccionar;
 	private ArrayList<Persona> empleados;
+	private Empleado auxEmpleado = null;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		try {
 			ListadoEmpleados dialog = new ListadoEmpleados();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -67,12 +68,13 @@ public class ListadoEmpleados extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	/**
 	 * Create the dialog.
 	 */
-	public ListadoEmpleados() {
+	public ListadoEmpleados(Empleado empleado) {
+		auxEmpleado = empleado;
 		empleados = new ArrayList<Persona>();
 		initArrayList(empleados);
 		setResizable(false);
@@ -351,7 +353,7 @@ public class ListadoEmpleados extends JDialog {
 				btnSeleccionar = new JButton("Seleccionar");
 				btnSeleccionar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						PerfilEmpAdmin perfEmp = new PerfilEmpAdmin((Empleado) selected);
+						PerfilEmpAdmin perfEmp = new PerfilEmpAdmin((Empleado) selected, auxEmpleado);
 						perfEmp.setVisible(true);
 						perfEmp.setModal(true);
 					}

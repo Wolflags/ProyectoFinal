@@ -54,6 +54,8 @@ public class ListadoFacturas extends JDialog {
 	private static Object[] row;
 	private Factura selected = null;
 	private Cliente auxCliente = null;
+	private Empleado auxEmpleado = null;
+	private Cliente buscado = null;
 	private JButton btnVerFactura;
 	private JTextField txtClienteEncontrado;
 	private JButton btnVerCliente;
@@ -63,7 +65,7 @@ public class ListadoFacturas extends JDialog {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		try {
 			Date hoy = new Date();
 			Servicio s1 = null;
@@ -94,12 +96,14 @@ public class ListadoFacturas extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	/**
 	 * Create the dialog.
 	 */
-	public ListadoFacturas() {
+	public ListadoFacturas(Empleado empleado, Cliente cliente) {
+		auxEmpleado = empleado;
+		auxCliente = cliente;
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ListadoFacturas.class.getResource("/media/imgListadoFacturas32px.png")));
 		df.setRoundingMode(RoundingMode.CEILING);
 		setTitle("Listado de facturas");
@@ -133,7 +137,6 @@ public class ListadoFacturas extends JDialog {
 				}
 				
 				txtCedulaCliente = new JFormattedTextField(formatterced);
-				
 				txtCedulaCliente.setBounds(257, 28, 200, 20);
 				panelBuscar.add(txtCedulaCliente);
 				txtCedulaCliente.setColumns(10);
@@ -165,9 +168,9 @@ public class ListadoFacturas extends JDialog {
 				btnBuscar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(Altice.getInstance().buscarClienteByCedula(txtCedulaCliente.getText().toString()) != null) {
-							auxCliente = Altice.getInstance().buscarClienteByCedula(txtCedulaCliente.getText().toString());
-							loadFacturas();
-							txtClienteEncontrado.setText(auxCliente.getNombre() + " " + auxCliente.getApellido());
+							buscado = Altice.getInstance().buscarClienteByCedula(txtCedulaCliente.getText().toString());
+							loadFacturas(buscado.getMisFacturas());
+							txtClienteEncontrado.setText(buscado.getNombre() + " " + buscado.getApellido());
 							btnVerCliente.setEnabled(true);
 						}
 						else {
@@ -196,7 +199,13 @@ public class ListadoFacturas extends JDialog {
 				btnVerCliente = new JButton("Ver cliente");
 				btnVerCliente.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						PerfilCliente perCliente = new PerfilCliente(auxCliente);
+						PerfilCliente perCliente;
+						if(auxCliente != null) {
+							perCliente = new PerfilCliente(auxCliente, auxEmpleado);
+						}
+						else {
+							perCliente = new PerfilCliente(buscado, auxEmpleado);
+						}
 						perCliente.setVisible(true);
 					}
 				});
@@ -266,7 +275,12 @@ public class ListadoFacturas extends JDialog {
 								selected.setEstado(true);
 								btnMarcar.setText("Marcar no pagada");
 							}
-							loadFacturas();
+							if(auxCliente != null) {
+								loadFacturas(auxCliente.getMisFacturas());
+							}
+							else {
+								loadFacturas(buscado.getMisFacturas());
+							}
 						}else {
 							
 						}
@@ -275,12 +289,12 @@ public class ListadoFacturas extends JDialog {
 				});
 				btnMarcar.setEnabled(false);
 				buttonPane.add(btnMarcar);
-			}
+			}	
 			{
 				btnVerFactura = new JButton("Ver factura");
 				btnVerFactura.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						DetallesFactura detFactura = new DetallesFactura(selected);
+						DetallesFactura detFactura = new DetallesFactura(selected, auxEmpleado);
 						detFactura.setVisible(true);
 					}
 				});
@@ -289,6 +303,15 @@ public class ListadoFacturas extends JDialog {
 				btnVerFactura.setActionCommand("OK");
 				buttonPane.add(btnVerFactura);
 				getRootPane().setDefaultButton(btnVerFactura);
+			}
+			{
+				if(auxCliente != null) {
+					txtCedulaCliente.setEditable(false);
+					txtCedulaCliente.setText(auxCliente.getCedula());
+					txtClienteEncontrado.setText(auxCliente.getNombre() + " " + auxCliente.getApellido());
+					btnBuscar.setEnabled(false);
+					loadFacturas(auxCliente.getMisFacturas());
+				}
 			}
 			{
 				JButton btnCancelar = new JButton("Cancelar");
@@ -303,12 +326,12 @@ public class ListadoFacturas extends JDialog {
 			}
 		}
 	}
-	private void loadFacturas() {
+	private void loadFacturas(ArrayList<Factura> facturas) {
 		btnMarcar.setEnabled(false);
 		btnVerFactura.setEnabled(false);
 		model.setRowCount(0);
 		row = new Object[model.getColumnCount()];
-		for (Factura factura : auxCliente.getMisFacturas()) {
+		for (Factura factura : facturas) {
 			row[0] = factura.getCodigo().toString();
 			row[1] = factura.getPlan().getNombre().toString();
 			row[2] = factura.getEmpleado().getNombre() + " " +factura.getEmpleado().getApellido();

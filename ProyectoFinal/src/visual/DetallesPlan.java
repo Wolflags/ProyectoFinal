@@ -14,6 +14,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import logico.Altice;
+import logico.Empleado;
 import logico.Internet;
 import logico.Minutos;
 import logico.Plan;
@@ -76,11 +77,12 @@ public class DetallesPlan extends JDialog {
 	private JButton btnModificar;
 	private JButton btnAgregarServicio;
 	private String modo;
+	private Empleado auxEmpleado = null;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		try {
 			Servicio s1 = null;
 			Servicio s2 = null;
@@ -104,12 +106,13 @@ public class DetallesPlan extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	/**
 	 * Create the dialog.///
 	 */
-	public DetallesPlan(Plan plan) {
+	public DetallesPlan(Plan plan, Empleado empleado) {
+		auxEmpleado = empleado;
 		setIconImage(Toolkit.getDefaultToolkit().getImage(DetallesPlan.class.getResource("/media/imgPlan32px.png")));
 		auxPlan = plan;
 		setTitle("Detalles del plan");
@@ -143,6 +146,9 @@ public class DetallesPlan extends JDialog {
 				btnModificar.setBackground(Color.WHITE);
 				btnModificar.setBounds(23, 229, 201, 50);
 				panelBotones.add(btnModificar);
+				if(auxEmpleado.getTipoEmpleado().equalsIgnoreCase("Empleado")) {
+					btnModificar.setEnabled(false);
+				}
 			}
 			
 			btnAgregarServicio = new JButton("     Agregar servicio");
@@ -161,6 +167,9 @@ public class DetallesPlan extends JDialog {
 			btnAgregarServicio.setBackground(Color.WHITE);
 			btnAgregarServicio.setBounds(23, 290, 201, 50);
 			panelBotones.add(btnAgregarServicio);
+			if(auxEmpleado.getTipoEmpleado().equalsIgnoreCase("Empleado")) {
+				btnAgregarServicio.setEnabled(false);
+			}
 			
 			lblImagenInternet = new JLabel("");
 			if(auxPlan.getMisServicios().get(0) != null) {
@@ -291,7 +300,7 @@ public class DetallesPlan extends JDialog {
 			btnVerServicioInternet = new JButton("Ver servicio");
 			btnVerServicioInternet.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					DetallesServicio detServicio = new DetallesServicio(auxPlan.getMisServicios().get(0));
+					DetallesServicio detServicio = new DetallesServicio(auxPlan.getMisServicios().get(0), auxEmpleado);
 					detServicio.setVisible(true);
 				}
 			});
@@ -303,7 +312,7 @@ public class DetallesPlan extends JDialog {
 			btnVerServicioMinutos = new JButton("Ver servicio");
 			btnVerServicioMinutos.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					DetallesServicio detServicio = new DetallesServicio(auxPlan.getMisServicios().get(1));
+					DetallesServicio detServicio = new DetallesServicio(auxPlan.getMisServicios().get(1), auxEmpleado);
 					detServicio.setVisible(true);
 				}
 			});
@@ -315,7 +324,7 @@ public class DetallesPlan extends JDialog {
 			btnVerServicioTelevision = new JButton("Ver servicio");
 			btnVerServicioTelevision.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					DetallesServicio detServicio = new DetallesServicio(auxPlan.getMisServicios().get(2));
+					DetallesServicio detServicio = new DetallesServicio(auxPlan.getMisServicios().get(2), auxEmpleado);
 					detServicio.setVisible(true);
 				}
 			});
@@ -490,7 +499,7 @@ public class DetallesPlan extends JDialog {
 								}
 								JOptionPane.showMessageDialog(null, "Operación exitosa", "Información", JOptionPane.INFORMATION_MESSAGE);
 								dispose();
-								DetallesPlan detPlan = new DetallesPlan(auxPlan);
+								DetallesPlan detPlan = new DetallesPlan(auxPlan, auxEmpleado);
 								detPlan.setVisible(true);
 							}
 							else {
@@ -500,7 +509,7 @@ public class DetallesPlan extends JDialog {
 						if(modo.equalsIgnoreCase("Modificar")) {
 							auxPlan.setNombre(txtNombre.getText().toString());
 							JOptionPane.showMessageDialog(null, "Operación exitosa", "Información", JOptionPane.INFORMATION_MESSAGE);
-							DetallesPlan detPlan = new DetallesPlan(auxPlan);
+							DetallesPlan detPlan = new DetallesPlan(auxPlan, auxEmpleado);
 							detPlan.setVisible(true);
 						}
 					}
