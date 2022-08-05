@@ -64,7 +64,7 @@ public class RealizarVenta extends JDialog {
 	private static Object[] row;
 	private JScrollPane spPlanes;
 	private static Plan selected;
-	
+
 	public static ArrayList<Plan> carrito =  new ArrayList<Plan>();
 	private JButton btnRemover;
 
@@ -94,7 +94,7 @@ public class RealizarVenta extends JDialog {
 				if(opc==0) {
 					dispose();
 				}else {
-					
+
 				}
 			}
 		});
@@ -108,40 +108,40 @@ public class RealizarVenta extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		
+
 		JPanel panel_InfoCliente = new JPanel();
 		panel_InfoCliente.setBorder(new TitledBorder(null, "Informaci\u00F3n del Cliente", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_InfoCliente.setBounds(12, 13, 578, 192);
 		contentPanel.add(panel_InfoCliente);
 		panel_InfoCliente.setLayout(null);
-		
+
 		JLabel lblNewLabel = new JLabel("C\u00E9dula:");
 		lblNewLabel.setBounds(79, 30, 44, 16);
 		panel_InfoCliente.add(lblNewLabel);
-		
+
 		MaskFormatter formatterced = null;
-		
+
 		try {
 			formatterced = new MaskFormatter("###-#######-#");
 		} catch (ParseException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-		
+
 		txtCedula = new JFormattedTextField(formatterced);
 		txtCedula.setBounds(135, 27, 170, 22);
 		panel_InfoCliente.add(txtCedula);
 		txtCedula.setColumns(10);
-		
+
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				if (txtCedula.getText().equalsIgnoreCase("")||txtCedula.getText().charAt(12)==' ') {
 					JOptionPane.showMessageDialog(null, "Introduzca una cédula válida.", "Información", JOptionPane.INFORMATION_MESSAGE);
 				}else {
 					Cliente cliente = Altice.getInstance().buscarClienteByCedula(txtCedula.getText());
-					
+
 					if (cliente == null) {
 						String temced = txtCedula.getText();
 						clear();
@@ -156,7 +156,7 @@ public class RealizarVenta extends JDialog {
 						spPlanes.setEnabled(true);
 						btnAnnadirPlan.setEnabled(true);
 					}else {
-						
+
 						txtNombre.setText(cliente.getNombre());
 						txtApellido.setText(cliente.getApellido());
 						txtTelefono.setText(cliente.getTelefono());
@@ -178,40 +178,40 @@ public class RealizarVenta extends JDialog {
 							clear();
 						}
 					}
-					
+
 				}
 			}
 
 			private boolean validarClienteNoDebe(Cliente cliente) {
 				boolean hacer = true;
 				if(!cliente.getMisFacturas().isEmpty()&&cliente!=null) {
-				for (Factura factura: cliente.getMisFacturas()) {
-					if(!factura.isEstado()) {
-						hacer=false;
+					for (Factura factura: cliente.getMisFacturas()) {
+						if(!factura.isEstado()) {
+							hacer=false;
+						}
 					}
 				}
-				}
-				
+
 				return hacer;
 			}
 		});
 		btnBuscar.setBounds(336, 26, 97, 25);
 		panel_InfoCliente.add(btnBuscar);
-		
+
 		JLabel lblNombre = new JLabel("Nombre:");
 		lblNombre.setBounds(76, 70, 50, 16);
 		panel_InfoCliente.add(lblNombre);
-		
+
 		txtNombre = new JTextField();
 		txtNombre.setEditable(false);
 		txtNombre.setColumns(10);
 		txtNombre.setBounds(135, 67, 170, 22);
 		panel_InfoCliente.add(txtNombre);
-		
+
 		JLabel lblTelfono = new JLabel("Tel\u00E9fono:");
 		lblTelfono.setBounds(325, 110, 108, 16);
 		panel_InfoCliente.add(lblTelfono);
-		
+
 		MaskFormatter formatter = null;
 		try {
 			formatter = new MaskFormatter("(###) ###-####");
@@ -219,43 +219,43 @@ public class RealizarVenta extends JDialog {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-        txtTelefono = new JFormattedTextField(formatter);
+		txtTelefono = new JFormattedTextField(formatter);
 		txtTelefono.setEditable(false);
 		txtTelefono.setColumns(10);
 		txtTelefono.setBounds(389, 107, 170, 22);
 		panel_InfoCliente.add(txtTelefono);
-		
+
 		JLabel lblDireccin = new JLabel("Direcci\u00F3n:");
 		lblDireccin.setBounds(69, 150, 57, 16);
 		panel_InfoCliente.add(lblDireccin);
-		
+
 		txtDireccion = new JTextField();
 		txtDireccion.setEditable(false);
 		txtDireccion.setColumns(10);
 		txtDireccion.setBounds(135, 147, 424, 22);
 		panel_InfoCliente.add(txtDireccion);
-		
+
 		JLabel lblApellido = new JLabel("Apellido:");
 		lblApellido.setBounds(326, 70, 50, 16);
 		panel_InfoCliente.add(lblApellido);
-		
+
 		txtApellido = new JTextField();
 		txtApellido.setEditable(false);
 		txtApellido.setColumns(10);
 		txtApellido.setBounds(389, 67, 170, 22);
 		panel_InfoCliente.add(txtApellido);
-		
+
 		JLabel lblFechaDeNacimiento = new JLabel("Fec. de Nacimiento:");
 		lblFechaDeNacimiento.setBounds(12, 110, 114, 16);
 		panel_InfoCliente.add(lblFechaDeNacimiento);
-		
+
 		spnDia = new JSpinner();
 		spnDia.setEnabled(false);
 		spnDiaModel = new SpinnerNumberModel(fechaActual.getDate() ,1 ,31 ,1);
 		spnDia.setModel(spnDiaModel);
 		spnDia.setBounds(135, 107, 41, 22);
 		panel_InfoCliente.add(spnDia);
-		
+
 		cbxMes = new JComboBox();
 		cbxMes.setEnabled(false);
 		cbxMes.addActionListener(new ActionListener() {
@@ -285,14 +285,14 @@ public class RealizarVenta extends JDialog {
 						spnDiaModel.setMaximum(28);
 					}
 				}
-				
+
 			}
 		});
 		cbxMes.setModel(new DefaultComboBoxModel(new String[] {"Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"}));
 		cbxMes.setSelectedIndex(fechaActual.getMonth());
 		cbxMes.setBounds(188, 107, 50, 22);
 		panel_InfoCliente.add(cbxMes);
-		
+
 		spnYear = new JSpinner();
 		spnYear.setEnabled(false);
 		spnYear.addChangeListener(new ChangeListener() {
@@ -315,47 +315,47 @@ public class RealizarVenta extends JDialog {
 		spnYear.setModel(new SpinnerNumberModel(2022, 1900, 2022, 1));
 		spnYear.setBounds(249, 107, 56, 22);
 		panel_InfoCliente.add(spnYear);
-		
+
 		JPanel panel_SelPlanes = new JPanel();
 		panel_SelPlanes.setBorder(new TitledBorder(null, "Selecci\u00F3n de Planes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_SelPlanes.setBounds(12, 214, 578, 261);
 		contentPanel.add(panel_SelPlanes);
 		panel_SelPlanes.setLayout(null);
-		
+
 		btnAnnadirPlan = new JButton("A\u00F1adir");
 		btnAnnadirPlan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListadoPlanesModal lisMod = new ListadoPlanesModal();
 				lisMod.setVisible(true);
 				lisMod.setModal(true);
-				
+
 			}
 		});
 		btnAnnadirPlan.setBounds(10, 203, 89, 23);
 		panel_SelPlanes.add(btnAnnadirPlan);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("Precio Total:");
 		lblNewLabel_1.setBounds(360, 206, 73, 16);
 		panel_SelPlanes.add(lblNewLabel_1);
-		
+
 		txtPrecioTotal = new JTextField();
 		txtPrecioTotal.setEditable(false);
 		txtPrecioTotal.setBounds(452, 203, 116, 22);
 		panel_SelPlanes.add(txtPrecioTotal);
 		txtPrecioTotal.setColumns(10);
-		
+
 		spPlanes = new JScrollPane();
 		spPlanes.setBounds(10, 23, 558, 169);
 		panel_SelPlanes.add(spPlanes);
-		
+
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				int index = table.getSelectedRow();
 				if(index>=0) {
-				selected=carrito.get(index);
-				btnRemover.setEnabled(true);
+					selected=carrito.get(index);
+					btnRemover.setEnabled(true);
 				}
 			}
 		});
@@ -364,15 +364,15 @@ public class RealizarVenta extends JDialog {
 		model.setColumnIdentifiers(headers);
 		table.setModel(model);
 		spPlanes.setViewportView(table);
-		
+
 		btnRemover = new JButton("Remover");
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int index = table.getSelectedRow();
 				if(index>=0) {
-				carrito.remove(index);
-				cargarPlanesSel();
-				btnRemover.setEnabled(false);
+					carrito.remove(index);
+					cargarPlanesSel();
+					btnRemover.setEnabled(false);
 				}
 			}
 		});
@@ -393,29 +393,37 @@ public class RealizarVenta extends JDialog {
 						fechaNacimiento.setMonth(cbxMes.getSelectedIndex());
 						fechaNacimiento.setYear(Integer.parseInt(spnYear.getValue().toString())-1900);
 						if(!carrito.isEmpty()) {
-							if(validarDatosCliente() && !validarMayorEdad(fechaNacimiento)) {
-						Cliente auxCliente = Altice.getInstance().buscarClienteByCedula(txtCedula.getText());
-						Date fecNac = new Date(1, 1, 1);
-						fecNac.setDate(Integer.parseInt(spnDia.getValue().toString()));
-						fecNac.setMonth(cbxMes.getSelectedIndex());
-						fecNac.setYear(Integer.parseInt(spnYear.getValue().toString())-1900);
-						if(auxCliente==null) {
-							auxCliente = new Cliente(txtCedula.getText(), txtNombre.getText(), txtDireccion.getText(), txtTelefono.getText(), txtApellido.getText(), fecNac);
-							Altice.getInstance().getPersonas().add(auxCliente);
-						}
-						for (Plan plan : carrito) {
-							Factura auxFac = new Factura("F-"+Altice.getInstance().getGenIdFactura(), new Date(), plan.getPrecio(), empleado, auxCliente, plan);
-							Altice.getInstance().insertarFactura(auxFac);;
-							Altice.getInstance().buscarClienteByCedula(txtCedula.getText()).getMisFacturas().add(auxFac);
-							Altice.getInstance().buscarClienteByCedula(txtCedula.getText()).getMisPlanes().add(auxFac.getPlan());
-						}
-						JOptionPane.showMessageDialog(null, "Registro existoso.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
-						carrito = new ArrayList<Plan>();
-						clear();
+							if(validarMayorEdad(fechaNacimiento)) {
+								if(validarDatosCliente()) {
+								Cliente auxCliente = Altice.getInstance().buscarClienteByCedula(txtCedula.getText());
+								Date fecNac = new Date(1, 1, 1);
+								fecNac.setDate(Integer.parseInt(spnDia.getValue().toString()));
+								fecNac.setMonth(cbxMes.getSelectedIndex());
+								fecNac.setYear(Integer.parseInt(spnYear.getValue().toString())-1900);
+								if(auxCliente==null) {
+									auxCliente = new Cliente(txtCedula.getText(), txtNombre.getText(), txtDireccion.getText(), txtTelefono.getText(), txtApellido.getText(), fecNac);
+									Altice.getInstance().getPersonas().add(auxCliente);
+								}
+								for (Plan plan : carrito) {
+									Date auxDate = new Date();
+									auxDate.setMonth(6);
+									Factura auxFac = new Factura("F-"+Altice.getInstance().getGenIdFactura(), auxDate, plan.getPrecio(), empleado, auxCliente, plan);
+									Altice.getInstance().insertarFactura(auxFac);;
+									Altice.getInstance().buscarClienteByCedula(txtCedula.getText()).getMisFacturas().add(auxFac);
+									Altice.getInstance().buscarClienteByCedula(txtCedula.getText()).getMisPlanes().add(auxFac.getPlan());
+								}
+								JOptionPane.showMessageDialog(null, "Registro existoso.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+								carrito = new ArrayList<Plan>();
+								clear();
+							}else {
+								JOptionPane.showMessageDialog(null, "Introduzca los datos del cliente correctamente.", "Advertencia", JOptionPane.WARNING_MESSAGE);
 							}
-					}else {
-						JOptionPane.showMessageDialog(null, "Debe seleccionar al menos un plan.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-					}
+							}else {
+								JOptionPane.showMessageDialog(null, "Fecha de nacimiento debe ser mayor a 18!", "Advertencia", JOptionPane.WARNING_MESSAGE);
+							}
+						}else {
+							JOptionPane.showMessageDialog(null, "Debe seleccionar al menos un plan.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+						}
 					}
 					//
 					//
@@ -469,12 +477,12 @@ public class RealizarVenta extends JDialog {
 			cargarPlanesSel();
 		}
 	}
-	
+
 	public static void cargarPlanesSel() {
-		
+
 		model.setRowCount(0);
 		row = new Object[model.getColumnCount()];
-		
+
 		for (Plan plan : carrito) {
 			row[0]=plan.getIdplan();
 			row[1]=plan.getNombre();
@@ -483,24 +491,24 @@ public class RealizarVenta extends JDialog {
 			model.addRow(row);
 		}
 		cargartxtPrecio();
-		
+
 	}
-	
+
 	private boolean validarMayorEdad(Date fechaNacimiento) {
 		boolean validar = false;
 		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		String dia = String.format("%02d", fechaNacimiento.getDate());
 		String mes = String.format("%02d", fechaNacimiento.getMonth()+1);
 		String year = String.format("%04d", fechaNacimiento.getYear()+1900);
-		
+
 		LocalDate fechaNac = LocalDate.parse(dia+"/"+mes+"/"+year, fmt);
 		LocalDate ahora = LocalDate.now();
-		
+
 		Period periodo = Period.between(fechaNac, ahora);
-		
+
 		if (periodo.getYears() >= 18)
 			validar = true;
-		
+
 		return validar;
 	}
 

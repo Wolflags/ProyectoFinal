@@ -261,8 +261,12 @@ public class Altice implements Serializable{
 		}
 		return aux;
 	}
+	public static float formatearDecimales(Float numero, Integer numeroDecimales) {
+	    return (float) (Math.round(numero * Math.pow(10, numeroDecimales)) / Math.pow(10, numeroDecimales));
+	}
 	
 }
+
 
 
 

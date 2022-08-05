@@ -128,7 +128,7 @@ public class ListadoPlanesModal extends JDialog {
 						}
 						txtTelefono = new JFormattedTextField(formatter);
 						int opc = JOptionPane.showConfirmDialog(null, txtTelefono,"Numero de telefono para el plan",JOptionPane.OK_CANCEL_OPTION);
-						while(((txtTelefono.getText().charAt(1)==' ')&&opc==0)||Altice.getInstance().buscarTelefonoExisteEnPlanes(txtTelefono.getText())&&opc==0) {
+						while(((txtTelefono.getText().charAt(1)==' ')&&opc==0)&&opc==0) {
 							JOptionPane.showMessageDialog(null, "El número que intentas registrar no está disponible!",
 								      "Número Inválido!", JOptionPane.ERROR_MESSAGE);
 						opc = JOptionPane.showConfirmDialog(null, txtTelefono,"Numero de telefono para el plan",JOptionPane.OK_CANCEL_OPTION);

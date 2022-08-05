@@ -6,17 +6,20 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 import logico.Altice;
 import logico.Cliente;
@@ -36,6 +39,8 @@ import java.awt.Color;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 
@@ -43,7 +48,7 @@ public class ListadoFacturas extends JDialog {
 
 	private static DecimalFormat df = new DecimalFormat("#.##");
 	private final JPanel contentPanel = new JPanel();
-	private JTextField txtCedulaCliente;
+	private JFormattedTextField txtCedulaCliente;
 	private JTable table;
 	private static DefaultTableModel model;
 	private static Object[] row;
@@ -118,7 +123,17 @@ public class ListadoFacturas extends JDialog {
 				panelBuscar.add(lblCedulaCliente);
 			}
 			{
-				txtCedulaCliente = new JTextField();
+				MaskFormatter formatterced = null;
+				
+				try {
+					formatterced = new MaskFormatter("###-#######-#");
+				} catch (ParseException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				
+				txtCedulaCliente = new JFormattedTextField(formatterced);
+				
 				txtCedulaCliente.setBounds(257, 28, 200, 20);
 				panelBuscar.add(txtCedulaCliente);
 				txtCedulaCliente.setColumns(10);
@@ -241,15 +256,21 @@ public class ListadoFacturas extends JDialog {
 				btnMarcar.setBackground(Color.WHITE);
 				btnMarcar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(selected.isEstado() == true) {
-							selected.setEstado(false);
-							btnMarcar.setText("Marcar pagada");
+						int opc = JOptionPane.showConfirmDialog(null,"Está seguro que desea cambiar el estado de esta factura?","Advertencia",JOptionPane.YES_NO_OPTION);
+						if(opc==0) {
+							if(selected.isEstado() == true) {
+								selected.setEstado(false);
+								btnMarcar.setText("Marcar pagada");
+							}
+							else {
+								selected.setEstado(true);
+								btnMarcar.setText("Marcar no pagada");
+							}
+							loadFacturas();
+						}else {
+							
 						}
-						else {
-							selected.setEstado(true);
-							btnMarcar.setText("Marcar no pagada");
-						}
-						loadFacturas();
+						
 					}
 				});
 				btnMarcar.setEnabled(false);

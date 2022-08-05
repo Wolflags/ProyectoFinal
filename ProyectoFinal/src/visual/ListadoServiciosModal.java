@@ -92,7 +92,7 @@ public class ListadoServiciosModal extends JDialog {
 					}
 				});
 				model = new DefaultTableModel();
-				String[] headers = {"Código","Tipo de servicio","Tipo de facturación","Dias Vigencia","Precio"};
+				String[] headers = {"Código","Tipo de servicio","Descripción", "Precio"};
 				model.setColumnIdentifiers(headers);
 				table.setModel(model);
 				scrollPane.setViewportView(table);
@@ -187,7 +187,8 @@ public class ListadoServiciosModal extends JDialog {
 				}else {
 					row[1]="Television";
 				}
-				row[4]=servicio.getPrecio();
+				row[2]=servicio.getDescripcion();
+				row[3]=servicio.getPrecio();
 				if(servicio instanceof Internet) {
 				model.addRow(row);
 				}
@@ -206,7 +207,8 @@ public class ListadoServiciosModal extends JDialog {
 						}else {
 							row[1]="Television";
 						}
-						row[4]=servicio.getPrecio();
+						row[2]=servicio.getDescripcion();
+						row[3]=servicio.getPrecio();
 						if(servicio instanceof Internet) {
 							model.addRow(row);
 							}
@@ -228,7 +230,8 @@ public class ListadoServiciosModal extends JDialog {
 				}else {
 					row[1]="Television";
 				}
-				row[4]=servicio.getPrecio();
+				row[2]=servicio.getDescripcion();
+				row[3]=servicio.getPrecio();
 				if(servicio instanceof Minutos) {
 				model.addRow(row);
 				}
@@ -247,7 +250,8 @@ public class ListadoServiciosModal extends JDialog {
 						}else {
 							row[1]="Television";
 						}
-						row[4]=servicio.getPrecio();
+						row[2]=servicio.getDescripcion();
+						row[3]=servicio.getPrecio();
 						if(servicio instanceof Minutos) {
 							model.addRow(row);
 							}
@@ -269,7 +273,8 @@ public class ListadoServiciosModal extends JDialog {
 				}else {
 					row[1]="Television";
 				}
-				row[4]=servicio.getPrecio();
+				row[2]=servicio.getDescripcion();
+				row[3]=servicio.getPrecio();
 				if(servicio instanceof Television) {
 				model.addRow(row);
 				
@@ -289,7 +294,8 @@ public class ListadoServiciosModal extends JDialog {
 						}else {
 							row[1]="Television";
 						}
-						row[4]=servicio.getPrecio();
+						row[2]=servicio.getDescripcion();
+						row[3]=servicio.getPrecio();
 						if(servicio instanceof Television) {
 							model.addRow(row);
 							}

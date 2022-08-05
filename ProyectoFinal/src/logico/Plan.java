@@ -74,5 +74,41 @@ public class Plan implements Serializable, Comparable<Plan>{
 			return 1;
 		}
 	}
+	public float cantidadDineroGenerado() {
+		float cantidad = 0;
+		
+		for (Factura factura: Altice.getInstance().getFacturas()) {
+			if(factura.getPlan().getIdplan().equalsIgnoreCase(getIdplan())) {
+				if(factura.isEstado()) {
+					cantidad+=factura.getPlan().getPrecio();
+				}
+			}
+		}
+		return cantidad;
+	}
+	public int cantidadServiciosPorPlan() {
+		
+			int cantidad = 0;
+			for (Servicio servicio: getMisServicios()) {
+				if (servicio != null) {
+					cantidad++;
+				}
+			}
+			
+			return cantidad;
+		
+	}
+	public float cantidadDineroDebioGenerar() {
+		float cantidad = 0;
+		
+		for (Factura factura: Altice.getInstance().getFacturas()) {
+			if(factura.getPlan().getIdplan().equalsIgnoreCase(getIdplan())) {
+				
+					cantidad+=factura.getPlan().getPrecio();
+				
+			}
+		}
+		return cantidad;
+	}
 
 }

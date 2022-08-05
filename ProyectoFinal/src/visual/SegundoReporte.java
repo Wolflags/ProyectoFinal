@@ -1,46 +1,38 @@
 package visual;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import logico.Altice;
-import logico.Factura;
 import logico.Plan;
-import logico.Servicio;
 
-import javax.swing.UIManager;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.JTable;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Toolkit;
-
-public class TercerReporte extends JDialog {
+public class SegundoReporte extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
 	private static DefaultTableModel model;
 	private Object[] row;
-
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			TercerReporte dialog = new TercerReporte();
+			SegundoReporte dialog = new SegundoReporte();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -51,7 +43,7 @@ public class TercerReporte extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public TercerReporte() {
+	public SegundoReporte() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(TercerReporte.class.getResource("/media/imgReporte32px.png")));
 		setResizable(false);
 		setModal(true);
@@ -78,7 +70,7 @@ public class TercerReporte extends JDialog {
 		
 		table = new JTable();
 		model = new DefaultTableModel();
-		String[] headers = {"ID", "Nombre", "Cantidad de Servicios", "Ganancias Generadas", "Precio"};  
+		String[] headers = {"ID", "Nombre", "Precio", "Ganancias esperadas", "Ganancias generadas"};  
 		model.setColumnIdentifiers(headers);
 		table.setModel(model);
 		scrollPane.setViewportView(table);
@@ -109,16 +101,14 @@ public class TercerReporte extends JDialog {
 			if (plan.getNumero().equalsIgnoreCase("0")) {
 				row[0] = plan.getIdplan();
 				row[1] = plan.getNombre();
-				row[2] = Integer.valueOf(plan.cantidadServiciosPorPlan()).toString();
-				row[3] = Float.valueOf(plan.cantidadDineroGenerado());
-				row[4] = Float.valueOf(plan.getPrecio()).toString();
+				row[2] = Altice.formatearDecimales(plan.getPrecio(), 2);
+				row[3] = Float.valueOf(plan.cantidadDineroDebioGenerar());
+				row[4] = Float.valueOf(plan.cantidadDineroGenerado());
 				model.addRow(row);
 			}
 		}
 		return;
+		
 	}
-	
-	
-	
-	
+
 }

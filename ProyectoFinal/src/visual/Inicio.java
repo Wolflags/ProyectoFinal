@@ -319,12 +319,17 @@ public class Inicio extends JFrame {
 								        }else {
 								        	if(periodoFechaUltimaFactura.getMonths()>=1) {
 								        		
-								        		fechaUltimaFactura.setMonth((fechaUltimaFactura.getMonth()+1)%12);
-								        		Factura auxFactura = new Factura("F-"+Altice.getInstance().getGenIdFactura(), fechaUltimaFactura, ultimaFactura.getSubtotal(), ultimaFactura.getEmpleado(), ultimaFactura.getCliente(), plan);
-								        		Altice.getInstance().getGenIdFactura();
+								        		
+								        		Date auxFecha2= fechaUltimaFactura;
+								        		int auxMes = fechaUltimaFactura.getMonth();
+								        		fechaUltimaFactura = new Date();
+								        		auxFecha2.setMonth((auxMes+1)%12);
+								        		Factura auxFactura = new Factura("F-"+Altice.getInstance().getGenIdFactura(), auxFecha2, ultimaFactura.getSubtotal(), ultimaFactura.getEmpleado(), ultimaFactura.getCliente(), plan);
+								        		
+								        		
 								        		auxFactura.setEstado(false);
 								        		((Cliente) cliente).getMisFacturas().add(auxFactura);
-								        		Altice.getInstance().getFacturas().add(auxFactura);
+								        		Altice.getInstance().insertarFactura(auxFactura);
 								        	}
 								        }
 								        
@@ -421,7 +426,8 @@ public class Inicio extends JFrame {
 		btnReporte2.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgReporteSegundo32px.png")));
 		btnReporte2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//ABRIR REPORTE 2
+				SegundoReporte segundoReporte = new SegundoReporte();
+				segundoReporte.setVisible(true);
 			}
 		});
 		btnReporte2.setBackground(Color.WHITE);
@@ -450,6 +456,19 @@ public class Inicio extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro que quiere cerrar sesión?");
 					if(opcion == 0) {
+						FileOutputStream empresa2;
+	                    ObjectOutputStream empresaWrite;
+	                    try {
+	                        empresa2 = new  FileOutputStream("altice.mrj");
+	                        empresaWrite = new ObjectOutputStream(empresa2);
+	                        empresaWrite.writeObject(Altice.getInstance());
+	                    } catch (FileNotFoundException e1) {
+	                        // TODO Auto-generated catch block
+	                        e1.printStackTrace();
+	                    } catch (IOException e1) {
+	                        // TODO Auto-generated catch block
+	                        e1.printStackTrace();
+	                    }
 						dispose();
 						Login login = new Login();
 						login.setVisible(true);
