@@ -42,6 +42,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.awt.Color;
 
 public class RealizarVenta extends JDialog {
 
@@ -134,6 +135,7 @@ public class RealizarVenta extends JDialog {
 		txtCedula.setColumns(10);
 
 		btnBuscar = new JButton("Buscar");
+		btnBuscar.setBackground(Color.WHITE);
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -323,6 +325,7 @@ public class RealizarVenta extends JDialog {
 		panel_SelPlanes.setLayout(null);
 
 		btnAnnadirPlan = new JButton("A\u00F1adir");
+		btnAnnadirPlan.setBackground(Color.WHITE);
 		btnAnnadirPlan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ListadoPlanesModal lisMod = new ListadoPlanesModal();
@@ -366,6 +369,7 @@ public class RealizarVenta extends JDialog {
 		spPlanes.setViewportView(table);
 
 		btnRemover = new JButton("Remover");
+		btnRemover.setBackground(Color.WHITE);
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int index = table.getSelectedRow();
@@ -386,6 +390,7 @@ public class RealizarVenta extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton btnFacturar = new JButton("Facturar");
+				btnFacturar.setBackground(Color.WHITE);
 				btnFacturar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						Date fechaNacimiento = new Date();
@@ -466,6 +471,7 @@ public class RealizarVenta extends JDialog {
 			}
 			{
 				JButton btnCancelar = new JButton("Cancelar");
+				btnCancelar.setBackground(Color.WHITE);
 				btnCancelar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();

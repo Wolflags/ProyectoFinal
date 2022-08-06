@@ -117,7 +117,7 @@ public class ListadoPlanes extends JDialog {
 		setTitle("Listado de planes");
 		setResizable(false);
 		setModal(true);
-		setBounds(100, 100, 950, 650);
+		setBounds(100, 100, 900, 500);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -126,13 +126,13 @@ public class ListadoPlanes extends JDialog {
 		{
 			panelContenido = new JPanel();
 			panelContenido.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Todos los planes", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-			panelContenido.setBounds(296, 11, 627, 566);
+			panelContenido.setBounds(215, 11, 669, 416);
 			contentPanel.add(panelContenido);
 			panelContenido.setLayout(null);
 			{
 				JScrollPane scrollPane = new JScrollPane();
 				scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-				scrollPane.setBounds(10, 68, 607, 487);
+				scrollPane.setBounds(10, 68, 649, 337);
 				panelContenido.add(scrollPane);
 				{
 					table = new JTable();
@@ -199,7 +199,7 @@ public class ListadoPlanes extends JDialog {
 			
 			JPanel panelFiltros = new JPanel();
 			panelFiltros.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Filtros", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-			panelFiltros.setBounds(10, 11, 276, 566);
+			panelFiltros.setBounds(10, 11, 195, 416);
 			contentPanel.add(panelFiltros);
 			panelFiltros.setLayout(null);
 			
@@ -217,7 +217,7 @@ public class ListadoPlanes extends JDialog {
 				}
 			});
 			rbTodos.setSelected(true);
-			rbTodos.setBounds(38, 124, 109, 23);
+			rbTodos.setBounds(28, 86, 109, 23);
 			panelFiltros.add(rbTodos);
 			
 			rbServicios = new JRadioButton("Por servicios");
@@ -233,7 +233,7 @@ public class ListadoPlanes extends JDialog {
 					}
 				}
 			});
-			rbServicios.setBounds(38, 271, 109, 23);
+			rbServicios.setBounds(28, 195, 109, 23);
 			panelFiltros.add(rbServicios);
 			
 			rbPrecio = new JRadioButton("Por precio");
@@ -249,7 +249,7 @@ public class ListadoPlanes extends JDialog {
 					}
 				}
 			});
-			rbPrecio.setBounds(38, 418, 109, 23);
+			rbPrecio.setBounds(28, 304, 109, 23);
 			panelFiltros.add(rbPrecio);
 			loadPlanes();
 		}

@@ -31,6 +31,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Color;
+import java.awt.Toolkit;
 
 public class ListadoServiciosModal extends JDialog {
 
@@ -61,6 +63,7 @@ public class ListadoServiciosModal extends JDialog {
 	 * Create the dialog.
 	 */
 	public ListadoServiciosModal(int tipo, Empleado empleado) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ListadoServiciosModal.class.getResource("/media/imgListadoServicios32px.png")));
 		auxEmpleado = empleado;
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -134,6 +137,7 @@ public class ListadoServiciosModal extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Seleccionar");
+				okButton.setBackground(Color.WHITE);
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						RegistrarPlan.selected=selected;
@@ -143,6 +147,7 @@ public class ListadoServiciosModal extends JDialog {
 				});
 				{
 					btnDetalles = new JButton("Detalles");
+					btnDetalles.setBackground(Color.WHITE);
 					btnDetalles.setEnabled(false);
 					btnDetalles.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
@@ -161,6 +166,7 @@ public class ListadoServiciosModal extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setBackground(Color.WHITE);
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						RegistrarPlan.setCancel(tipo);

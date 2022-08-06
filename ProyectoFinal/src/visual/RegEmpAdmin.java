@@ -342,6 +342,7 @@ public class RegEmpAdmin extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton btnRegistrar = new JButton("Registrar");
+				btnRegistrar.setBackground(Color.WHITE);
 				btnRegistrar.addActionListener(new ActionListener() {
 					@SuppressWarnings("deprecation")
 					public void actionPerformed(ActionEvent e) {
@@ -382,6 +383,7 @@ public class RegEmpAdmin extends JDialog {
 			}
 			{
 				JButton btnCancelar = new JButton("Cancelar");
+				btnCancelar.setBackground(Color.WHITE);
 				btnCancelar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();

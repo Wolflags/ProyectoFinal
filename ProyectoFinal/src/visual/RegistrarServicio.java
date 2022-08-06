@@ -267,6 +267,7 @@ public class RegistrarServicio extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Registrar");
+				okButton.setBackground(Color.WHITE);
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(txtDescripcion.getText().length()>5) {
@@ -313,6 +314,7 @@ public class RegistrarServicio extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setBackground(Color.WHITE);
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						dispose();

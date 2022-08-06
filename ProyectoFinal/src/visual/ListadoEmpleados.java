@@ -122,7 +122,6 @@ public class ListadoEmpleados extends JDialog {
 		txtNombre.setColumns(10);
 		
 		JScrollPane spPorNombre = new JScrollPane();
-		spPorNombre.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		spPorNombre.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		spPorNombre.setBounds(12, 60, 639, 319);
 		panel_ListNombre.add(spPorNombre);
@@ -144,6 +143,7 @@ public class ListadoEmpleados extends JDialog {
 		spPorNombre.setViewportView(tablePorNombre);
 		
 		btnBuscar = new JButton("Buscar");
+		btnBuscar.setBackground(Color.WHITE);
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				empleados.removeAll(empleados);
@@ -199,7 +199,6 @@ public class ListadoEmpleados extends JDialog {
 		panel_ListEstado.add(cbxEstado);
 		
 		JScrollPane spPorEstado = new JScrollPane();
-		spPorEstado.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		spPorEstado.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		spPorEstado.setBounds(12, 60, 639, 319);
 		panel_ListEstado.add(spPorEstado);
@@ -256,7 +255,6 @@ public class ListadoEmpleados extends JDialog {
 		panel_ListTipo.add(cbxTipo);
 		
 		JScrollPane spPorTipo = new JScrollPane();
-		spPorTipo.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		spPorTipo.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		spPorTipo.setBounds(12, 60, 639, 319);
 		panel_ListTipo.add(spPorTipo);
@@ -278,7 +276,7 @@ public class ListadoEmpleados extends JDialog {
 		spPorTipo.setViewportView(tablePorTipo);
 		
 		JPanel panel_Filtro = new JPanel();
-		panel_Filtro.setBorder(new TitledBorder(null, "Filtro", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_Filtro.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Filtros", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel_Filtro.setBounds(12, 13, 195, 392);
 		contentPanel.add(panel_Filtro);
 		panel_Filtro.setLayout(null);
@@ -302,7 +300,7 @@ public class ListadoEmpleados extends JDialog {
 			}
 		});
 		rbPorNombre.setSelected(true);
-		rbPorNombre.setBounds(8, 130, 127, 25);
+		rbPorNombre.setBounds(28, 79, 127, 25);
 		panel_Filtro.add(rbPorNombre);
 		
 		rbPorTipo = new JRadioButton("Por Tipo");
@@ -322,7 +320,7 @@ public class ListadoEmpleados extends JDialog {
 				}
 			}
 		});
-		rbPorTipo.setBounds(8, 185, 127, 25);
+		rbPorTipo.setBounds(28, 183, 127, 25);
 		panel_Filtro.add(rbPorTipo);
 		
 		rbPorEstado = new JRadioButton("Por Estado");
@@ -342,7 +340,7 @@ public class ListadoEmpleados extends JDialog {
 				}
 			}
 		});
-		rbPorEstado.setBounds(8, 240, 127, 25);
+		rbPorEstado.setBounds(28, 287, 127, 25);
 		panel_Filtro.add(rbPorEstado);
 		{
 			JPanel buttonPane = new JPanel();
@@ -351,6 +349,7 @@ public class ListadoEmpleados extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnSeleccionar = new JButton("Seleccionar");
+				btnSeleccionar.setBackground(Color.WHITE);
 				btnSeleccionar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						PerfilEmpAdmin perfEmp = new PerfilEmpAdmin((Empleado) selected, auxEmpleado);
@@ -365,6 +364,7 @@ public class ListadoEmpleados extends JDialog {
 			}
 			{
 				JButton btnCancelar = new JButton("Cancelar");
+				btnCancelar.setBackground(Color.WHITE);
 				btnCancelar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();

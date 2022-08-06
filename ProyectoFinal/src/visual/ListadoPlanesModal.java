@@ -32,6 +32,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
+import java.awt.Color;
 
 public class ListadoPlanesModal extends JDialog {
 
@@ -117,6 +118,7 @@ public class ListadoPlanesModal extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton btnSeleccionar = new JButton("Seleccionar");
+				btnSeleccionar.setBackground(Color.WHITE);
 				btnSeleccionar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						MaskFormatter formatter = null;
@@ -149,6 +151,7 @@ public class ListadoPlanesModal extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setBackground(Color.WHITE);
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}

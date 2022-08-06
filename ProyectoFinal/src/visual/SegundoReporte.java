@@ -47,7 +47,7 @@ public class SegundoReporte extends JDialog {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(TercerReporte.class.getResource("/media/imgReporte32px.png")));
 		setResizable(false);
 		setModal(true);
-		setTitle("Reporte No. 3 - Cantidad de dinero por plan");
+		setTitle("Reporte No. 2 - Cantidad de dinero que deber\u00EDa haber generado vs cantidad de dinero real");
 		setBounds(100, 100, 815, 410);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
@@ -62,7 +62,6 @@ public class SegundoReporte extends JDialog {
 		panel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(12, 30, 750, 272);
 		panel.add(scrollPane);

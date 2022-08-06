@@ -27,6 +27,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Color;
+import java.awt.Toolkit;
 
 public class ListadoClientes extends JDialog {
 
@@ -58,6 +60,7 @@ public class ListadoClientes extends JDialog {
 	 * Create the dialog.
 	 */
 	public ListadoClientes(Empleado empleado) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ListadoClientes.class.getResource("/media/imgListadoClientes32px.png")));
 		auxEmpleado = empleado;
 		clientes = new ArrayList<Persona>();
 		setResizable(false);
@@ -128,6 +131,7 @@ public class ListadoClientes extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnVerCliente = new JButton("Ver cliente");
+				btnVerCliente.setBackground(Color.WHITE);
 				btnVerCliente.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						PerfilCliente perCliente = new PerfilCliente(selected, auxEmpleado);
@@ -141,6 +145,7 @@ public class ListadoClientes extends JDialog {
 			}
 			{
 				JButton btnCancelar = new JButton("Cancelar");
+				btnCancelar.setBackground(Color.WHITE);
 				btnCancelar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();

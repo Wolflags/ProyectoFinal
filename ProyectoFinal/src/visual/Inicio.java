@@ -93,14 +93,14 @@ public class Inicio extends JFrame {
 		{
 			JPanel panelPlanes = new JPanel();
 			panelPlanes.setBackground(Color.LIGHT_GRAY);
-			panelPlanes.setBounds(547, 250, 265, 183);
+			panelPlanes.setBounds(106, 250, 331, 165);
 			contentPanel.add(panelPlanes);
 			panelPlanes.setLayout(null);
 			{
 				JLabel lblPlanes = new JLabel("PLANES");
 				lblPlanes.setFont(new Font("Tahoma", Font.BOLD, 14));
 				lblPlanes.setHorizontalAlignment(SwingConstants.CENTER);
-				lblPlanes.setBounds(78, 11, 109, 32);
+				lblPlanes.setBounds(111, 11, 109, 32);
 				panelPlanes.add(lblPlanes);
 			}
 			{
@@ -115,7 +115,7 @@ public class Inicio extends JFrame {
 					}
 				});
 				btnRegistrarPlan.setBackground(Color.WHITE);
-				btnRegistrarPlan.setBounds(30, 54, 205, 45);
+				btnRegistrarPlan.setBounds(42, 54, 247, 45);
 				panelPlanes.add(btnRegistrarPlan);
 				if(auxEmpleado.getTipoEmpleado().equalsIgnoreCase("Empleado")) {
 					btnRegistrarPlan.setEnabled(false);
@@ -133,7 +133,7 @@ public class Inicio extends JFrame {
 					}
 				});
 				btnListadoPlanes.setBackground(Color.WHITE);
-				btnListadoPlanes.setBounds(30, 110, 205, 45);
+				btnListadoPlanes.setBounds(42, 110, 247, 45);
 				panelPlanes.add(btnListadoPlanes);
 			}
 		}
@@ -141,13 +141,13 @@ public class Inicio extends JFrame {
 			JPanel panelPersonal = new JPanel();
 			panelPersonal.setLayout(null);
 			panelPersonal.setBackground(Color.LIGHT_GRAY);
-			panelPersonal.setBounds(139, 250, 265, 165);
+			panelPersonal.setBounds(514, 250, 331, 165);
 			contentPanel.add(panelPersonal);
 			{
 				JLabel lblPersonal = new JLabel("PERSONAL");
 				lblPersonal.setHorizontalAlignment(SwingConstants.CENTER);
 				lblPersonal.setFont(new Font("Tahoma", Font.BOLD, 14));
-				lblPersonal.setBounds(78, 11, 109, 32);
+				lblPersonal.setBounds(111, 11, 109, 32);
 				panelPersonal.add(lblPersonal);
 			}
 			{
@@ -161,7 +161,7 @@ public class Inicio extends JFrame {
 					}
 				});
 				btnRegistrarEmpleado.setBackground(Color.WHITE);
-				btnRegistrarEmpleado.setBounds(30, 54, 205, 45);
+				btnRegistrarEmpleado.setBounds(42, 54, 247, 45);
 				panelPersonal.add(btnRegistrarEmpleado);
 				if(auxEmpleado.getTipoEmpleado().equalsIgnoreCase("Empleado")) {
 					btnRegistrarEmpleado.setEnabled(false);
@@ -178,7 +178,7 @@ public class Inicio extends JFrame {
 					}
 				});
 				btnListadoEmpleados.setBackground(Color.WHITE);
-				btnListadoEmpleados.setBounds(30, 110, 205, 45);
+				btnListadoEmpleados.setBounds(42, 110, 247, 45);
 				panelPersonal.add(btnListadoEmpleados);
 			}
 		}
@@ -186,13 +186,13 @@ public class Inicio extends JFrame {
 			JPanel panelClientes = new JPanel();
 			panelClientes.setLayout(null);
 			panelClientes.setBackground(Color.LIGHT_GRAY);
-			panelClientes.setBounds(953, 250, 265, 124);
+			panelClientes.setBounds(514, 426, 331, 111);
 			contentPanel.add(panelClientes);
 			{
 				JLabel lblClientes = new JLabel("CLIENTES");
 				lblClientes.setHorizontalAlignment(SwingConstants.CENTER);
 				lblClientes.setFont(new Font("Tahoma", Font.BOLD, 14));
-				lblClientes.setBounds(78, 11, 109, 32);
+				lblClientes.setBounds(111, 11, 109, 32);
 				panelClientes.add(lblClientes);
 			}
 			{
@@ -206,7 +206,7 @@ public class Inicio extends JFrame {
 					}
 				});
 				btnListadoClientes.setBackground(Color.WHITE);
-				btnListadoClientes.setBounds(30, 54, 205, 45);
+				btnListadoClientes.setBounds(42, 54, 247, 45);
 				panelClientes.add(btnListadoClientes);
 			}
 		}
@@ -219,6 +219,7 @@ public class Inicio extends JFrame {
 		}
 		{
 			JLabel lblBienvenida = new JLabel("");
+			lblBienvenida.setHorizontalAlignment(SwingConstants.RIGHT);
 			lblBienvenida.setForeground(Color.LIGHT_GRAY);
 			lblBienvenida.setFont(new Font("Tahoma", Font.BOLD, 14));
 			if(hoy.getHours() >= 6 && hoy.getHours() < 12) {
@@ -233,20 +234,20 @@ public class Inicio extends JFrame {
 			if(hoy.getHours() >= 0 && hoy.getHours() < 6) {
 				lblBienvenida.setText("¡BUENAS NOCHES, " + auxEmpleado.getNombre().toUpperCase() + "!");
 			}
-			lblBienvenida.setBounds(328, 47, 600, 34);
+			lblBienvenida.setBounds(417, 47, 600, 34);
 			contentPanel.add(lblBienvenida);
 		}
 		{
 			JPanel panelFacturacion = new JPanel();
 			panelFacturacion.setLayout(null);
 			panelFacturacion.setBackground(Color.LIGHT_GRAY);
-			panelFacturacion.setBounds(139, 457, 265, 219);
+			panelFacturacion.setBounds(106, 426, 331, 219);
 			contentPanel.add(panelFacturacion);
 			{
 				JLabel lblFacturacion = new JLabel("FACTURACI\u00D3N");
 				lblFacturacion.setHorizontalAlignment(SwingConstants.CENTER);
 				lblFacturacion.setFont(new Font("Tahoma", Font.BOLD, 14));
-				lblFacturacion.setBounds(62, 11, 140, 32);
+				lblFacturacion.setBounds(95, 11, 140, 32);
 				panelFacturacion.add(lblFacturacion);
 			}
 			{
@@ -260,7 +261,7 @@ public class Inicio extends JFrame {
 					}
 				});
 				btnListadoFacturas.setBackground(Color.WHITE);
-				btnListadoFacturas.setBounds(29, 109, 205, 45);
+				btnListadoFacturas.setBounds(42, 109, 247, 45);
 				panelFacturacion.add(btnListadoFacturas);
 			}
 			
@@ -275,10 +276,11 @@ public class Inicio extends JFrame {
 				}
 			});
 			btnRealizarVenta.setBackground(Color.WHITE);
-			btnRealizarVenta.setBounds(29, 53, 205, 45);
+			btnRealizarVenta.setBounds(42, 53, 247, 45);
 			panelFacturacion.add(btnRealizarVenta);
 			{
 				JButton btnGenerarFactura = new JButton("     Generar factura");
+				btnGenerarFactura.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgGenerarFactura.png")));
 				btnGenerarFactura.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						for (Persona cliente : Altice.getInstance().getPersonas()) {
@@ -350,7 +352,7 @@ public class Inicio extends JFrame {
 				});
 				btnGenerarFactura.setHorizontalAlignment(SwingConstants.LEFT);
 				btnGenerarFactura.setBackground(Color.WHITE);
-				btnGenerarFactura.setBounds(29, 163, 205, 45);
+				btnGenerarFactura.setBounds(42, 163, 247, 45);
 				panelFacturacion.add(btnGenerarFactura);
 			}
 		}
@@ -358,13 +360,13 @@ public class Inicio extends JFrame {
 			JPanel panelServicios = new JPanel();
 			panelServicios.setLayout(null);
 			panelServicios.setBackground(Color.LIGHT_GRAY);
-			panelServicios.setBounds(547, 457, 265, 183);
+			panelServicios.setBounds(920, 250, 331, 165);
 			contentPanel.add(panelServicios);
 			{
 				JLabel lblServicios = new JLabel("SERVICIOS");
 				lblServicios.setHorizontalAlignment(SwingConstants.CENTER);
 				lblServicios.setFont(new Font("Tahoma", Font.BOLD, 14));
-				lblServicios.setBounds(78, 11, 109, 32);
+				lblServicios.setBounds(111, 11, 109, 32);
 				panelServicios.add(lblServicios);
 			}
 			{
@@ -379,7 +381,7 @@ public class Inicio extends JFrame {
 					}
 				});
 				btnNuevoServicio.setBackground(Color.WHITE);
-				btnNuevoServicio.setBounds(30, 54, 205, 45);
+				btnNuevoServicio.setBounds(42, 54, 247, 45);
 				panelServicios.add(btnNuevoServicio);
 				if(auxEmpleado.getTipoEmpleado().equalsIgnoreCase("Empleado")) {
 					btnNuevoServicio.setEnabled(false);
@@ -398,7 +400,7 @@ public class Inicio extends JFrame {
 				});
 				
 				btnListadoDeServicios.setBackground(Color.WHITE);
-				btnListadoDeServicios.setBounds(30, 110, 205, 45);
+				btnListadoDeServicios.setBounds(42, 110, 247, 45);
 				panelServicios.add(btnListadoDeServicios);
 			}
 		}
@@ -406,13 +408,13 @@ public class Inicio extends JFrame {
 		JPanel panelReportes = new JPanel();
 		panelReportes.setLayout(null);
 		panelReportes.setBackground(Color.LIGHT_GRAY);
-		panelReportes.setBounds(953, 398, 265, 242);
+		panelReportes.setBounds(920, 426, 331, 219);
 		contentPanel.add(panelReportes);
 		
 		JLabel lblReportes = new JLabel("REPORTES");
 		lblReportes.setHorizontalAlignment(SwingConstants.CENTER);
 		lblReportes.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblReportes.setBounds(78, 11, 109, 32);
+		lblReportes.setBounds(111, 11, 109, 32);
 		panelReportes.add(lblReportes);
 		
 		JButton btnReporte1 = new JButton("     Primer reporte");
@@ -426,7 +428,7 @@ public class Inicio extends JFrame {
 			}
 		});
 		btnReporte1.setBackground(Color.WHITE);
-		btnReporte1.setBounds(30, 54, 205, 45);
+		btnReporte1.setBounds(42, 53, 247, 45);
 		panelReportes.add(btnReporte1);
 		
 		JButton btnReporte2 = new JButton("     Segundo reporte");
@@ -440,7 +442,7 @@ public class Inicio extends JFrame {
 			}
 		});
 		btnReporte2.setBackground(Color.WHITE);
-		btnReporte2.setBounds(30, 110, 205, 45);
+		btnReporte2.setBounds(42, 109, 247, 45);
 		panelReportes.add(btnReporte2);
 		
 		JButton btnReporte3 = new JButton("     Tercer reporte");
@@ -454,7 +456,7 @@ public class Inicio extends JFrame {
 		btnReporte3.setToolTipText("Cantidad de dinero por plan");
 		btnReporte3.setHorizontalAlignment(SwingConstants.LEADING);
 		btnReporte3.setBackground(Color.WHITE);
-		btnReporte3.setBounds(30, 166, 205, 45);
+		btnReporte3.setBounds(42, 163, 247, 45);
 		panelReportes.add(btnReporte3);
 		{
 			JButton btnCerrarSesion = new JButton("     Cerrar sesi\u00F3n");
@@ -504,13 +506,6 @@ public class Inicio extends JFrame {
 			btnVerMiPerfil.setBackground(Color.DARK_GRAY);
 			btnVerMiPerfil.setBounds(1027, 47, 191, 42);
 			contentPanel.add(btnVerMiPerfil);
-		}
-		{
-			JButton btnNewButton = new JButton("New button");
-			btnNewButton.setVisible(false);
-			btnNewButton.setEnabled(false);
-			btnNewButton.setBounds(10, 653, 89, 23);
-			contentPanel.add(btnNewButton);
 		}
 	}
 }

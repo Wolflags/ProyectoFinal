@@ -222,6 +222,7 @@ public class RegistrarPlan extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Crear Plan");
+				okButton.setBackground(Color.WHITE);
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						if(txtNombre.getText().length()>3) {
@@ -287,6 +288,7 @@ public class RegistrarPlan extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setBackground(Color.WHITE);
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						dispose();

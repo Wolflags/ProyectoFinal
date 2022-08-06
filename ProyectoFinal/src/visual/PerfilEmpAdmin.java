@@ -24,6 +24,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.Toolkit;
 
 public class PerfilEmpAdmin extends JDialog {
 
@@ -58,6 +59,7 @@ public class PerfilEmpAdmin extends JDialog {
 	}*/
 
 	public PerfilEmpAdmin(Empleado empleado, Empleado empleadoActual) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(PerfilEmpAdmin.class.getResource("/media/imgVerPerfil32px.png")));
 		auxEmpleado = empleado;
 		auxEmpleadoActual = empleadoActual;
 		setTitle("Perfil de " + auxEmpleado.getTipoEmpleado());

@@ -34,6 +34,7 @@ import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Color;
 
 public class ListadoServicios extends JDialog {
 
@@ -154,6 +155,7 @@ public class ListadoServicios extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			
 			btnVerDetalles = new JButton("Ver detalles");
+			btnVerDetalles.setBackground(Color.WHITE);
 			btnVerDetalles.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					DetallesServicio DetServ = new DetallesServicio(selected, auxEmpleado);
@@ -165,6 +167,7 @@ public class ListadoServicios extends JDialog {
 			buttonPane.add(btnVerDetalles);
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setBackground(Color.WHITE);
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();

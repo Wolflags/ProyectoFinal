@@ -70,7 +70,6 @@ public class PrimerReporte extends JDialog {
 		panel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(12, 30, 750, 272);
 		panel.add(scrollPane);

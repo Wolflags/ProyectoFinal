@@ -40,6 +40,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Date;
+import java.awt.Toolkit;
 
 public class Login extends JFrame {
 
@@ -102,6 +103,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/media/imgLogoPequeno.jpg")));
 		
 		setTitle("Altice");
 		setResizable(false);
