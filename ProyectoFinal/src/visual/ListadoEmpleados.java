@@ -130,6 +130,8 @@ public class ListadoEmpleados extends JDialog {
 		tablePorNombre.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if (((Empleado) empleado).getTipoEmpleado().equalsIgnoreCase("Empleado"))
+					return;
 				int index = tablePorNombre.getSelectedRow();
 				if (index >= 0) {
 					String cedula = tablePorNombre.getValueAt(index, 0).toString();
@@ -184,6 +186,8 @@ public class ListadoEmpleados extends JDialog {
 		tablePorEstado.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if (((Empleado) empleado).getTipoEmpleado().equalsIgnoreCase("Empleado"))
+					return;
 				int index = tablePorEstado.getSelectedRow();
 				if (index >= 0) {
 					String cedula = tablePorEstado.getValueAt(index, 0).toString();
@@ -240,6 +244,8 @@ public class ListadoEmpleados extends JDialog {
 		tablePorTipo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if (((Empleado) empleado).getTipoEmpleado().equalsIgnoreCase("Empleado"))
+					return;
 				int index = tablePorTipo.getSelectedRow();
 				if (index >= 0) {
 					String cedula = tablePorTipo.getValueAt(index, 0).toString();
