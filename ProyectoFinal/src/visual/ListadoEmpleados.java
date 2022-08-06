@@ -51,7 +51,6 @@ public class ListadoEmpleados extends JDialog {
 	private JPanel panel_ListNombre;
 	private JPanel panel_ListTipo;
 	private JPanel panel_ListEstado;
-	private JButton btnBuscar;
 	private Persona selected;
 	private JButton btnSeleccionar;
 	private ArrayList<Persona> empleados;
@@ -77,6 +76,7 @@ public class ListadoEmpleados extends JDialog {
 		auxEmpleado = empleado;
 		empleados = new ArrayList<Persona>();
 		initArrayList(empleados);
+		
 		setResizable(false);
 		setTitle("Listado de empleados");
 		setBounds(100, 100, 900, 500);
@@ -142,29 +142,6 @@ public class ListadoEmpleados extends JDialog {
 		tablePorNombre.setModel(model);
 		spPorNombre.setViewportView(tablePorNombre);
 		
-		btnBuscar = new JButton("Buscar");
-		btnBuscar.setBackground(Color.WHITE);
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				empleados.removeAll(empleados);
-				btnSeleccionar.setEnabled(false);
-				
-				if (txtNombre.getText().equalsIgnoreCase("")) {
-					initArrayList(empleados);
-					loadEmpleados(empleados);
-					return;
-				}
-				
-				empleados.addAll(Altice.getInstance().buscarTodosEmpleadoByNombre(txtNombre.getText()));
-				if (!empleados.isEmpty()) {
-					loadEmpleados(empleados);
-				}else {
-					JOptionPane.showMessageDialog(null, "Empleados no encontrados.", "Información", JOptionPane.INFORMATION_MESSAGE);
-				}
-			}
-		});
-		btnBuscar.setBounds(343, 26, 97, 25);
-		panel_ListNombre.add(btnBuscar);
 		panel_ListEstado.setBorder(new TitledBorder(null, "Listado Por Estado", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_ListEstado.setBounds(219, 13, 663, 392);
 		contentPanel.add(panel_ListEstado);
@@ -281,6 +258,8 @@ public class ListadoEmpleados extends JDialog {
 		contentPanel.add(panel_Filtro);
 		panel_Filtro.setLayout(null);
 		
+		loadEmpleados(empleados);
+		
 		rbPorNombre = new JRadioButton("Por Nombre");
 		rbPorNombre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -317,6 +296,7 @@ public class ListadoEmpleados extends JDialog {
 					btnSeleccionar.setEnabled(false);
 					cbxTipo.setSelectedIndex(0);
 					initArrayList(empleados);
+
 				}
 			}
 		});
@@ -355,6 +335,7 @@ public class ListadoEmpleados extends JDialog {
 						PerfilEmpAdmin perfEmp = new PerfilEmpAdmin((Empleado) selected, auxEmpleado);
 						perfEmp.setVisible(true);
 						perfEmp.setModal(true);
+						loadEmpleados(empleados);
 					}
 				});
 				btnSeleccionar.setEnabled(false);
@@ -374,7 +355,6 @@ public class ListadoEmpleados extends JDialog {
 				buttonPane.add(btnCancelar);
 			}
 		}
-		loadEmpleados(empleados);
 	}
 	
 	//Iniciar ArrayList<Persona> empleados con los empleados Activos/Contratados de Altice

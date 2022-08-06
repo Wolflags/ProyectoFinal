@@ -189,6 +189,9 @@ public class Altice implements Serializable{
 		ArrayList<Persona> empleados = new ArrayList<Persona>();
 		String nombreCompleto = "";
 		for (Persona empleado : personas) {
+			if (empleado.getCedula().equalsIgnoreCase("admin")) {
+				continue;
+			}
 			if (empleado instanceof Empleado ) {
 				nombreCompleto = empleado.getNombre()+" "+empleado.getApellido();
 				if(nombreCompleto.substring(0, nombre.length()).equalsIgnoreCase(nombre)) {
