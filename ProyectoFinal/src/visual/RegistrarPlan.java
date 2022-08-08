@@ -32,6 +32,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JSpinner;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
 
 public class RegistrarPlan extends JDialog {
 
@@ -63,6 +64,7 @@ public class RegistrarPlan extends JDialog {
 	 * Create the dialog.
 	 */
 	public RegistrarPlan(Empleado empleado) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrarPlan.class.getResource("/media/imgAgregarPlan32px.png")));
 		auxEmpleado = empleado;
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {

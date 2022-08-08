@@ -39,6 +39,7 @@ import logico.Empleado;
 import logico.Persona;
 
 import javax.swing.event.ChangeEvent;
+import java.awt.Toolkit;
 
 public class RegEmpAdmin extends JDialog {
 
@@ -82,6 +83,7 @@ public class RegEmpAdmin extends JDialog {
 	 */
 	@SuppressWarnings("deprecation")
 	public RegEmpAdmin() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RegEmpAdmin.class.getResource("/media/imgAgregarEmpleado32px.png")));
 		fechaActual = new Date();
 		setTitle("Registrar Empleado");
 		setBounds(100, 100, 451, 694);

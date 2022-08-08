@@ -34,6 +34,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Toolkit;
 
 public class ListadoClientes extends JDialog {
 
@@ -66,6 +67,7 @@ public class ListadoClientes extends JDialog {
 	 * Create the dialog.
 	 */
 	public ListadoClientes(Empleado empleado) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ListadoClientes.class.getResource("/media/imgListadoClientes32px.png")));
 		auxEmpleado = empleado;
 		clientes = new ArrayList<Cliente>();
 		initArrayList(clientes);

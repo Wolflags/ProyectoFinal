@@ -44,6 +44,7 @@ import java.time.Month;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.awt.Color;
+import java.awt.Toolkit;
 
 public class RealizarVenta extends JDialog {
 
@@ -88,6 +89,7 @@ public class RealizarVenta extends JDialog {
 	 * @param empleado 
 	 */
 	public RealizarVenta(Empleado empleado) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RealizarVenta.class.getResource("/media/imgRealizarVenta32px.png")));
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			@Override

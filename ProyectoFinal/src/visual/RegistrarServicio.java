@@ -32,6 +32,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.Toolkit;
 
 public class RegistrarServicio extends JDialog {
 
@@ -67,6 +68,7 @@ public class RegistrarServicio extends JDialog {
 	 * Create the dialog.
 	 */
 	public RegistrarServicio() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrarServicio.class.getResource("/media/imgAgregarServicio32pxB.png")));
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
