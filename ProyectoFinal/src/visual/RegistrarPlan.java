@@ -49,9 +49,6 @@ public class RegistrarPlan extends JDialog {
 	private static JCheckBox cbxMinutos;
 	private Empleado auxEmpleado = null;
 
-	/**
-	 * Launch the application.
-	 */
 	/*public static void main(String[] args) {
 		try {
 			RegistrarPlan dialog = new RegistrarPlan();
@@ -215,6 +212,9 @@ public class RegistrarPlan extends JDialog {
 		txtPrecio.setBounds(140, 190, 162, 20);
 		panel_1.add(txtPrecio);
 		txtPrecio.setColumns(10);
+		
+		cargarInicio();
+		
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -332,6 +332,11 @@ public class RegistrarPlan extends JDialog {
 		}
 		cargarPrecio();
 
+	}
+	
+	private void cargarInicio() {
+		selected = null;
+		lastSelected = -1;
 	}
 
 	private static void cargarPrecio() {

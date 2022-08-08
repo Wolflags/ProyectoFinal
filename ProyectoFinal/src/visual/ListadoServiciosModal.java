@@ -63,6 +63,7 @@ public class ListadoServiciosModal extends JDialog {
 	 * Create the dialog.
 	 */
 	public ListadoServiciosModal(int tipo, Empleado empleado) {
+		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ListadoServiciosModal.class.getResource("/media/imgListadoServicios32px.png")));
 		auxEmpleado = empleado;
 		addWindowListener(new WindowAdapter() {
