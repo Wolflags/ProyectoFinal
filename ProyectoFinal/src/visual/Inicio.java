@@ -66,7 +66,7 @@ public class Inicio extends JFrame {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();
                     }
-    				int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro que quiere cerrar sesión?");
+    				int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro que quiere cerrar sesión?", "Advertencia", JOptionPane.YES_NO_OPTION);
     				if(opcion == 0) {
     					dispose();
     					Login login = new Login();
@@ -465,7 +465,8 @@ public class Inicio extends JFrame {
 			btnCerrarSesion.setForeground(Color.LIGHT_GRAY);
 			btnCerrarSesion.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro que quiere cerrar sesión?");
+					int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro que quiere cerrar sesión?", "Advertencia", JOptionPane.YES_NO_OPTION);
+					
 					if(opcion == 0) {
 						FileOutputStream empresa2;
 	                    ObjectOutputStream empresaWrite;
