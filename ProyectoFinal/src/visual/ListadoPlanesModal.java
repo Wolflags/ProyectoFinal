@@ -62,6 +62,7 @@ public class ListadoPlanesModal extends JDialog {
 	 * Create the dialog.
 	 */
 	public ListadoPlanesModal() {
+		setTitle("Seleccionar Plan");
 		setModal(true);
 		setResizable(false);
 		setBounds(100, 100, 825, 493);
@@ -151,6 +152,11 @@ public class ListadoPlanesModal extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						dispose();
+					}
+				});
 				cancelButton.setBackground(Color.WHITE);
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);

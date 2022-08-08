@@ -328,9 +328,9 @@ public class Inicio extends JFrame {
 								        	if(periodoFechaUltimaFactura.getMonths()>=1) {
 								        		
 								        		
-								        		Date auxFecha2= fechaUltimaFactura;
-								        		int auxMes = fechaUltimaFactura.getMonth();
-								        		fechaUltimaFactura = new Date();
+								        		Date auxFecha2= new Date();
+								        		auxFecha2 = (Date) fechaUltimaFactura.clone();
+								        		int auxMes = auxFecha2.getMonth();
 								        		auxFecha2.setMonth((auxMes+1)%12);
 								        		Factura auxFactura = new Factura("F-"+Altice.getInstance().getGenIdFactura(), auxFecha2, ultimaFactura.getSubtotal(), ultimaFactura.getEmpleado(), ultimaFactura.getCliente(), plan);
 								        		
