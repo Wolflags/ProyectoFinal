@@ -40,6 +40,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.awt.Color;
@@ -410,9 +411,8 @@ public class RealizarVenta extends JDialog {
 									Altice.getInstance().getPersonas().add(auxCliente);
 								}
 								for (Plan plan : carrito) {
-									Date auxDate = new Date();
-									auxDate.setMonth(6);
-									Factura auxFac = new Factura("F-"+Altice.getInstance().getGenIdFactura(), auxDate, plan.getPrecio(), empleado, auxCliente, plan);
+									LocalDate ahora = LocalDate.of(2022, Month.JULY, 8);
+									Factura auxFac = new Factura("F-"+Altice.getInstance().getGenIdFactura(), ahora, plan.getPrecio(), empleado, auxCliente, plan);
 									Altice.getInstance().insertarFactura(auxFac);;
 									Altice.getInstance().buscarClienteByCedula(txtCedula.getText()).getMisFacturas().add(auxFac);
 									Altice.getInstance().buscarClienteByCedula(txtCedula.getText()).getMisPlanes().add(auxFac.getPlan());

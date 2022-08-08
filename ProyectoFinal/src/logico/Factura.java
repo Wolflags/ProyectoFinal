@@ -1,6 +1,7 @@
 package logico;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -9,14 +10,14 @@ public class Factura implements Serializable{
 	 * 
 	 */
 	private String codigo;
-	private Date fecha;
+	private LocalDate fecha;
 	private float subtotal;
 	private Persona empleado;
 	private Persona cliente;
 	private Plan plan;
 	private boolean estado;
 	
-	public Factura(String codigo, Date fecha, float subtotal, Persona empleado, Persona cliente, Plan plan) {
+	public Factura(String codigo, LocalDate fecha, float subtotal, Persona empleado, Persona cliente, Plan plan) {
 		super();
 		this.codigo = codigo;
 		this.fecha = fecha;
@@ -32,10 +33,10 @@ public class Factura implements Serializable{
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
-	public Date getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
-	public void setFecha(Date fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 	public float getSubtotal() {

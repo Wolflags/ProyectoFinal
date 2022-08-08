@@ -138,7 +138,7 @@ public class DetallesFactura extends JDialog {
 			}
 			{
 				txtFecha = new JTextField();
-				txtFecha.setText(auxFactura.getFecha().getDay() + "/" + (auxFactura.getFecha().getMonth() + 1) + "/" + (auxFactura.getFecha().getYear() + 1900));
+				txtFecha.setText(auxFactura.getFecha().getDayOfMonth() + "/" + (auxFactura.getFecha().getMonthValue()) + "/" + (auxFactura.getFecha().getYear()));
 				txtFecha.setEditable(false);
 				txtFecha.setColumns(10);
 				txtFecha.setBounds(408, 26, 230, 20);

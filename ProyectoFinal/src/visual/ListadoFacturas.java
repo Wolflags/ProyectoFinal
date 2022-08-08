@@ -336,7 +336,7 @@ public class ListadoFacturas extends JDialog {
 			row[1] = factura.getPlan().getNombre().toString();
 			row[2] = factura.getEmpleado().getNombre() + " " +factura.getEmpleado().getApellido();
 			row[3] = df.format(factura.getSubtotal());
-			row[4] = factura.getFecha().getDay() + "/" + (factura.getFecha().getMonth() + 1) + "/" + (factura.getFecha().getYear() + 1900);
+			row[4] = factura.getFecha().getDayOfMonth() + "/" + (factura.getFecha().getMonthValue()) + "/" + (factura.getFecha().getYear());
 			if(factura.isEstado()) {
 				row[5] = "Pagada";
 			}

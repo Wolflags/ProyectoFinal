@@ -33,6 +33,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -302,29 +304,20 @@ public class Inicio extends JFrame {
 											}
 										}
 										
-								 Date fechaUltimaFactura = ultimaFactura.getFecha();
-										
-										DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-								        String dia = String.format("%02d", fechaUltimaFactura.getDate());
-								        String mes = String.format("%02d", fechaUltimaFactura.getMonth()+1);
-								        String year = String.format("%04d", fechaUltimaFactura.getYear()+1900);
+								
 								       
-								        LocalDate fechaFac = LocalDate.parse(dia+"/"+mes+"/"+year, fmt);
+								        LocalDate fechaFac = ultimaFactura.getFecha();
 								        LocalDate ahora = LocalDate.now();
 								       
 								        Period periodoFechaUltimaFactura = Period.between(fechaFac, ahora);
 								        
-								 Date fechaUltimaFacturaPagada = ultimaFacturaPagada.getFecha();
 								
-								        dia = String.format("%02d", fechaUltimaFacturaPagada.getDate());
-								        mes = String.format("%02d", fechaUltimaFacturaPagada.getMonth()+1);
-								        year = String.format("%04d", fechaUltimaFacturaPagada.getYear()+1900);
 								       
-								        fechaFac = LocalDate.parse(dia+"/"+mes+"/"+year, fmt);
+								        fechaFac = ultimaFacturaPagada.getFecha();
 								        ahora = LocalDate.now();
 								        Date auxDate3 = new Date();
 								        auxDate3.setDate(ahora.getDayOfMonth());
-								        auxDate3.setMonth(ahora.getMonthValue());
+								        auxDate3.setMonth((ahora.getMonthValue())-1);
 								        auxDate3.setYear(ahora.getYear()-1900);
 								        Period periodoFechaUltimaFacturaPagada = Period.between(fechaFac, ahora);
 										
@@ -332,11 +325,9 @@ public class Inicio extends JFrame {
 								        	plan.setEstado(false);
 								        }else {
 								        	if(periodoFechaUltimaFactura.getMonths()>=1) {
-								        		
-								        		
-								        		
-								        		Factura auxFactura = new Factura("F-"+Altice.getInstance().getGenIdFactura(), new Date(), ultimaFactura.getSubtotal(), ultimaFactura.getEmpleado(), ultimaFactura.getCliente(), plan);
-								        		System.out.println(auxFactura.getFecha().getDay()+"/"+auxFactura.getFecha().getMonth()+"/"+auxFactura.getFecha().getYear());
+								        		System.out.println("B"+ahora.getDayOfMonth()+"/"+ahora.getMonthValue()+"/"+ahora.getYear()+"/");
+												}  
+								        		Factura auxFactura = new Factura("F-"+Altice.getInstance().getGenIdFactura(), ahora, ultimaFactura.getSubtotal(), ultimaFactura.getEmpleado(), ultimaFactura.getCliente(), plan);
 								        		
 								        		
 								        		auxFactura.setEstado(false);
@@ -353,7 +344,8 @@ public class Inicio extends JFrame {
 								}
 							}
 						}
-					}
+					
+			
 				});
 				btnGenerarFactura.setHorizontalAlignment(SwingConstants.LEFT);
 				btnGenerarFactura.setBackground(Color.WHITE);
