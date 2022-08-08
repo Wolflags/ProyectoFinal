@@ -288,6 +288,7 @@ public class Inicio extends JFrame {
 				btnGenerarFactura.setIcon(new ImageIcon(Inicio.class.getResource("/media/imgGenerarFactura.png")));
 				btnGenerarFactura.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
+						JOptionPane.showMessageDialog(null, "Generacion exitosa.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
 						for (Persona cliente : Altice.getInstance().getPersonas()) {
 							if(cliente instanceof Cliente) {
 								for (Plan plan : ((Cliente) cliente).getMisPlanes()) {
@@ -333,7 +334,7 @@ public class Inicio extends JFrame {
 								        		auxFactura.setEstado(false);
 								        		((Cliente) cliente).getMisFacturas().add(auxFactura);
 								        		Altice.getInstance().insertarFactura(auxFactura);
-								        		JOptionPane.showMessageDialog(null, "Generacion exitosa.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+								        		
 								        	}
 								        }
 								        

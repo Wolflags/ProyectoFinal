@@ -49,7 +49,7 @@ public class RealizarVenta extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private Date fechaActual;
-	private JFormattedTextField txtCedula;
+	public static JFormattedTextField txtCedula;
 	private JTextField txtNombre;
 	private JFormattedTextField txtTelefono;
 	private JTextField txtDireccion;
@@ -185,18 +185,7 @@ public class RealizarVenta extends JDialog {
 				}
 			}
 
-			private boolean validarClienteNoDebe(Cliente cliente) {
-				boolean hacer = true;
-				if(!cliente.getMisFacturas().isEmpty()&&cliente!=null) {
-					for (Factura factura: cliente.getMisFacturas()) {
-						if(!factura.isEstado()) {
-							hacer=false;
-						}
-					}
-				}
-
-				return hacer;
-			}
+			
 		});
 		btnBuscar.setBounds(336, 26, 97, 25);
 		panel_InfoCliente.add(btnBuscar);
@@ -329,9 +318,51 @@ public class RealizarVenta extends JDialog {
 		btnAnnadirPlan.setBackground(Color.WHITE);
 		btnAnnadirPlan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListadoPlanesModal lisMod = new ListadoPlanesModal();
-				lisMod.setVisible(true);
-				lisMod.setModal(true);
+				if (txtCedula.getText().equalsIgnoreCase("")||txtCedula.getText().charAt(12)==' ') {
+					JOptionPane.showMessageDialog(null, "Introduzca una cédula válida.", "Información", JOptionPane.INFORMATION_MESSAGE);
+				}else {
+					Cliente cliente = Altice.getInstance().buscarClienteByCedula(txtCedula.getText());
+
+					if (cliente == null) {
+						String temced = txtCedula.getText();
+						txtCedula.setText(temced);
+						txtNombre.setEditable(true);
+						txtApellido.setEditable(true);
+						txtTelefono.setEditable(true);
+						txtDireccion.setEditable(true);
+						spnDia.setEnabled(true);
+						spnYear.setEnabled(true);
+						cbxMes.setEnabled(true);
+						spPlanes.setEnabled(true);
+						btnAnnadirPlan.setEnabled(true);
+					}else {
+
+						txtNombre.setText(cliente.getNombre());
+						txtApellido.setText(cliente.getApellido());
+						txtTelefono.setText(cliente.getTelefono());
+						txtDireccion.setText(cliente.getDireccion());
+						spnDia.setValue(cliente.getFechaNacimiento().getDate());
+						cbxMes.setSelectedIndex(cliente.getFechaNacimiento().getMonth());
+						spnYear.setValue(cliente.getFechaNacimiento().getYear()+1900);
+						spPlanes.setEnabled(true);
+						btnAnnadirPlan.setEnabled(true);
+						txtNombre.setEditable(false);
+						txtApellido.setEditable(false);
+						txtTelefono.setEditable(false);
+						txtDireccion.setEditable(false);
+						spnDia.setEnabled(false);
+						spnYear.setEnabled(false);
+						cbxMes.setEnabled(false);
+						if(!validarClienteNoDebe(cliente)) {
+							JOptionPane.showMessageDialog(null, "El cliente tiene deudas pendientes!.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+							clear();
+						}
+					}
+					ListadoPlanesModal lisMod = new ListadoPlanesModal();
+					lisMod.setVisible(true);
+					lisMod.setModal(true);
+				}
+				
 
 			}
 		});
@@ -524,6 +555,18 @@ public class RealizarVenta extends JDialog {
 			precio+=plan.getPrecio();
 		}
 		txtPrecioTotal.setText(""+precio);
+	}
+	private boolean validarClienteNoDebe(Cliente cliente) {
+		boolean hacer = true;
+		if(!cliente.getMisFacturas().isEmpty()&&cliente!=null) {
+			for (Factura factura: cliente.getMisFacturas()) {
+				if(!factura.isEstado()) {
+					hacer=false;
+				}
+			}
+		}
+
+		return hacer;
 	}
 
 	private void clear() {

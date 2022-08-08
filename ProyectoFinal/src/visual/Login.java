@@ -135,10 +135,33 @@ public class Login extends JFrame {
 		panelIniciarSesion.add(lblUsuario);
 		
 		txtUsuario = new JTextField();
+		txtUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(!txtUsuario.getText().equalsIgnoreCase("")) {
+					if(Altice.getInstance().validarClave(txtUsuario.getText().toString(), String.valueOf(passwordField.getPassword()))) {
+						auxEmpleado = Altice.getInstance().buscarEmpleadoByCedula(txtUsuario.getText().toString());
+						if(auxEmpleado.isEstado()) {
+							JOptionPane.showMessageDialog(null, "Inicio de sesión satisfactorio", "Información", JOptionPane.INFORMATION_MESSAGE);
+							Inicio inicio = new Inicio(auxEmpleado);
+							dispose();
+							inicio.setVisible(true);
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "Este usuario está cancelado", "Advertencia", JOptionPane.WARNING_MESSAGE);
+						}
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecto", "Advertencia", JOptionPane.WARNING_MESSAGE);
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Debe llenar todos los campos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
 		txtUsuario.setBounds(55, 91, 200, 20);
 		panelIniciarSesion.add(txtUsuario);
 		txtUsuario.setColumns(10);
-		txtUsuario.setText("Admin");
 		
 		JLabel lblPassword = new JLabel("Contrase\u00F1a:");
 		lblPassword.setBounds(55, 122, 79, 14);
@@ -180,9 +203,32 @@ public class Login extends JFrame {
 		panelIniciarSesion.add(btnIniciarSesion);
 		
 		passwordField = new JPasswordField();
+		passwordField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(!txtUsuario.getText().equalsIgnoreCase("")) {
+					if(Altice.getInstance().validarClave(txtUsuario.getText().toString(), String.valueOf(passwordField.getPassword()))) {
+						auxEmpleado = Altice.getInstance().buscarEmpleadoByCedula(txtUsuario.getText().toString());
+						if(auxEmpleado.isEstado()) {
+							JOptionPane.showMessageDialog(null, "Inicio de sesión satisfactorio", "Información", JOptionPane.INFORMATION_MESSAGE);
+							Inicio inicio = new Inicio(auxEmpleado);
+							dispose();
+							inicio.setVisible(true);
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "Este usuario está cancelado", "Advertencia", JOptionPane.WARNING_MESSAGE);
+						}
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecto", "Advertencia", JOptionPane.WARNING_MESSAGE);
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Debe llenar todos los campos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
 		passwordField.setBounds(55, 147, 200, 20);
 		panelIniciarSesion.add(passwordField);
-		passwordField.setText("1234");
 		
 		JLabel lblImagenContrasenaVisible = new JLabel("");
 		lblImagenContrasenaVisible.setIcon(new ImageIcon(Login.class.getResource("/media/imgVerClaveNo16px.png")));

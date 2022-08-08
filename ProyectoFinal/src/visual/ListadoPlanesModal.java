@@ -151,7 +151,7 @@ public class ListadoPlanesModal extends JDialog {
 						}
 						txtTelefono = new JFormattedTextField(formatter);
 						int opc = JOptionPane.showConfirmDialog(null, txtTelefono,"Numero de telefono para el plan",JOptionPane.OK_CANCEL_OPTION);
-						while(((txtTelefono.getText().charAt(1)==' ')&&opc==0)&&opc==0) {
+						while((((txtTelefono.getText().charAt(1)==' ')&&opc==0)&&opc==0)||!verificarNumeroEnUso()) {
 							JOptionPane.showMessageDialog(null, "El número que intentas registrar no está disponible!",
 									"Número Inválido!", JOptionPane.ERROR_MESSAGE);
 							opc = JOptionPane.showConfirmDialog(null, txtTelefono,"Numero de telefono para el plan",JOptionPane.OK_CANCEL_OPTION);
@@ -163,6 +163,24 @@ public class ListadoPlanesModal extends JDialog {
 							RealizarVenta.cargarPlanesSel();
 						}
 						dispose();
+					}
+
+					private boolean verificarNumeroEnUso() {
+						boolean hacer = true;
+						for (Persona persona : Altice.getInstance().getPersonas()) {
+							if(persona instanceof Cliente) {
+								if(persona!=Altice.getInstance().buscarClienteByCedula(RealizarVenta.txtCedula.getText())) {
+									for (Plan plan : ((Cliente) persona).getMisPlanes()) {
+										System.out.println(plan.getNumero()+"||"+txtTelefono.getText());
+										if(plan.getNumero().equalsIgnoreCase(txtTelefono.getText())) {
+											hacer = false;
+										}
+									}
+								}
+							}
+						}
+						
+						return hacer;
 					}
 				});
 				btnSeleccionar.setActionCommand("OK");
