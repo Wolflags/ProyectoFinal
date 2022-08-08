@@ -233,7 +233,7 @@ public class RegistrarPlan extends JDialog {
 
 								if(cbxInternet.isSelected()) {
 									String[] split = txtInternet.getText().split(" ");
-									auxServicios.add(0, Altice.getInstance().buscarServicioByCod(split[0]));
+									auxServicios.add(0, Altice.getInstance().buscarServicioByCodigo(split[0]));
 								}else
 								{
 									auxServicios.add(0, null);
@@ -241,14 +241,14 @@ public class RegistrarPlan extends JDialog {
 
 								if(cbxMinutos.isSelected()) {
 									String[] split = txtMinutos.getText().split(" ");
-									auxServicios.add(1, Altice.getInstance().buscarServicioByCod(split[0]));
+									auxServicios.add(1, Altice.getInstance().buscarServicioByCodigo(split[0]));
 								}else {
 									auxServicios.add(1, null);
 								}
 
 								if(cbxTelevision.isSelected()) {
 									String[] split = txtTelevision.getText().split(" ");
-									auxServicios.add(2, Altice.getInstance().buscarServicioByCod(split[0]));
+									auxServicios.add(2, Altice.getInstance().buscarServicioByCodigo(split[0]));
 								}else {
 									auxServicios.add(2, null);
 								}
@@ -338,20 +338,20 @@ public class RegistrarPlan extends JDialog {
 		float precio = 0;
 		if(cbxInternet.isSelected()) {
 			String[] split = txtInternet.getText().split(" ");
-			if(Altice.getInstance().buscarServicioByCod(split[0])!=null) {
-				precio = precio + Altice.getInstance().buscarServicioByCod(split[0]).getPrecio();
+			if(Altice.getInstance().buscarServicioByCodigo(split[0])!=null) {
+				precio = precio + Altice.getInstance().buscarServicioByCodigo(split[0]).getPrecio();
 			}
 		} 
 		if(cbxMinutos.isSelected()) {
 			String[] split = txtMinutos.getText().split(" ");
-			if(Altice.getInstance().buscarServicioByCod(split[0])!=null) {
-				precio = precio + Altice.getInstance().buscarServicioByCod(split[0]).getPrecio();
+			if(Altice.getInstance().buscarServicioByCodigo(split[0])!=null) {
+				precio = precio + Altice.getInstance().buscarServicioByCodigo(split[0]).getPrecio();
 			}
 		} 
 		if(cbxTelevision.isSelected()) {
 			String[] split = txtTelevision.getText().split(" ");
-			if(Altice.getInstance().buscarServicioByCod(split[0])!=null) {
-				precio = precio + Altice.getInstance().buscarServicioByCod(split[0]).getPrecio();
+			if(Altice.getInstance().buscarServicioByCodigo(split[0])!=null) {
+				precio = precio + Altice.getInstance().buscarServicioByCodigo(split[0]).getPrecio();
 			}
 		}
 		txtPrecio.setText(precio+"");

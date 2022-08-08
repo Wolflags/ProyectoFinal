@@ -46,7 +46,6 @@ import javax.swing.ScrollPaneConstants;
 public class ListadoPlanes extends JDialog {
 
 	private static DecimalFormat df = new DecimalFormat("#.##");
-	private Dimension dim;
 	private final JPanel contentPanel = new JPanel();
 	private JTable table;
 	private static DefaultTableModel model;
@@ -65,51 +64,6 @@ public class ListadoPlanes extends JDialog {
 	private JLabel lblOrden;
 	private JComboBox cbxOrden;
 
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		try {
-			Date hoy = new Date();
-			Servicio s1 = null;
-			Servicio s2 = null;
-			Servicio s3 = null;
-			s1 = new Internet("S-1", "Desc1", 50, 100, "Móvil");
-			s2 = new Television("S-2", "Desc2", 150, "Hogar");
-			s3 = new Internet("S-3", "Desc3", 100, 200, "Hogar");
-			Altice.getInstance().getServicios().add(s1);
-			Altice.getInstance().getServicios().add(s2);
-			Altice.getInstance().getServicios().add(s3);
-			ArrayList<Servicio> serviciosEjemplo = new ArrayList<Servicio>();
-			serviciosEjemplo.add(null);
-			serviciosEjemplo.add(null);
-			serviciosEjemplo.add(null);
-			serviciosEjemplo.set(0, s1);
-			serviciosEjemplo.set(2, s2);
-			Cliente c1 = new Cliente("123", "Leonardo", "La Zurza II", "8299741202", "Tejada", hoy);
-			Altice.getInstance().insertarPersona(c1);
-			Empleado e1 = new Empleado("402", "Marlon", "La Zurza", "829", "1234", (float)50000, 0, "Soltero", 5, "Administrador", "Oficina 1", "Tejada", hoy);
-			//serviciosEjemplo.set(2, s2);
-			Plan p1 = new Plan("1234", "Ejemplo", serviciosEjemplo, (float)2300);
-			Plan p2 = new Plan("5555", "Ejemplo2", serviciosEjemplo, (float)1200);
-			Plan p3 = new Plan("6666", "Ejemplo3", serviciosEjemplo, (float)2000);
-			Factura f1 = new Factura("F-1", hoy, (float)3400, e1, c1, p1);
-			c1.getMisFacturas().add(f1);
-			Altice.getInstance().getFacturas().add(f1);
-			Altice.getInstance().getPlanes().add(p2);
-			Altice.getInstance().getPlanes().add(p1);
-			Altice.getInstance().getPlanes().add(p3);
-			ListadoPlanes dialog = new ListadoPlanes();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}*/
-
-	/**
-	 * Create the dialog.
-	 */
 	public ListadoPlanes(Empleado empleado) {
 		auxEmpleado = empleado;
 		df.setRoundingMode(RoundingMode.CEILING);

@@ -156,10 +156,15 @@ public class Login extends JFrame {
 				if(!txtUsuario.getText().equalsIgnoreCase("")) {
 					if(Altice.getInstance().validarClave(txtUsuario.getText().toString(), String.valueOf(passwordField.getPassword()))) {
 						auxEmpleado = Altice.getInstance().buscarEmpleadoByCedula(txtUsuario.getText().toString());
-						JOptionPane.showMessageDialog(null, "Inicio de sesión satisfactorio", "Información", JOptionPane.INFORMATION_MESSAGE);
-						Inicio inicio = new Inicio(auxEmpleado);
-						dispose();
-						inicio.setVisible(true);
+						if(auxEmpleado.isEstado()) {
+							JOptionPane.showMessageDialog(null, "Inicio de sesión satisfactorio", "Información", JOptionPane.INFORMATION_MESSAGE);
+							Inicio inicio = new Inicio(auxEmpleado);
+							dispose();
+							inicio.setVisible(true);
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "Este usuario está cancelado", "Advertencia", JOptionPane.WARNING_MESSAGE);
+						}
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecto", "Advertencia", JOptionPane.WARNING_MESSAGE);

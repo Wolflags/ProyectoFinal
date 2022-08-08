@@ -81,20 +81,18 @@ public class Altice implements Serializable{
 		return aux;
 	}
 	
-	public Servicio buscarServicioByCod(String codServ) {
-		Servicio auxServ = null;
+	public Servicio buscarServicioByCodigo(String codigo) {
+		Servicio aux = null;
 		int i = 0;
 		boolean encontrado = false;
 		while(i < servicios.size() && !encontrado) {
-			
-				if(servicios.get(i).getCodigo().equalsIgnoreCase(codServ)) {
-					auxServ = servicios.get(i);
+				if(servicios.get(i).getCodigo().equalsIgnoreCase(codigo)) {
+					aux = servicios.get(i);
 					encontrado = true;
 				}
-			
 			i++;
 		}
-		return auxServ;
+		return aux;
 	}
 	
 	public Empleado buscarEmpleadoByCedula(String cedula) {
@@ -200,6 +198,23 @@ public class Altice implements Serializable{
 			}
 		}
 		return empleados;
+	}
+	
+	public ArrayList<Cliente> buscarTodosClientesByNombre(String nombre) {
+		ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+		String nombreCompleto = "";
+		for (Persona cliente : personas) {
+			if (cliente.getCedula().equalsIgnoreCase("admin")) {
+				continue;
+			}
+			if (cliente instanceof Cliente) {
+				nombreCompleto = cliente.getNombre()+" "+cliente.getApellido();
+				if(nombreCompleto.substring(0, nombre.length()).equalsIgnoreCase(nombre)) {
+					clientes.add((Cliente)cliente);
+				}
+			}
+		}
+		return clientes;
 	}
 
 	public Plan buscarPlanByCod(String codPlan) {

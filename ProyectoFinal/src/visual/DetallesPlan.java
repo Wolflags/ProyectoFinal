@@ -354,7 +354,7 @@ public class DetallesPlan extends JDialog {
 						int index = tableInternet.getSelectedRow();
 						if(index >= 0) {
 							String codigo = tableInternet.getValueAt(index, 0).toString();
-							selected = Altice.getInstance().buscarServicioByCod(codigo);
+							selected = Altice.getInstance().buscarServicioByCodigo(codigo);
 							btnAplicar.setEnabled(true);
 						}
 					}
@@ -387,7 +387,7 @@ public class DetallesPlan extends JDialog {
 						int index = tableMinutos.getSelectedRow();
 						if(index >= 0) {
 							String codigo = tableMinutos.getValueAt(index, 0).toString();
-							selected = Altice.getInstance().buscarServicioByCod(codigo);
+							selected = Altice.getInstance().buscarServicioByCodigo(codigo);
 							btnAplicar.setEnabled(true);
 						}
 					}
@@ -420,7 +420,7 @@ public class DetallesPlan extends JDialog {
 						int index = tableTelevision.getSelectedRow();
 						if(index >= 0) {
 							String codigo = tableTelevision.getValueAt(index, 0).toString();
-							selected = Altice.getInstance().buscarServicioByCod(codigo);
+							selected = Altice.getInstance().buscarServicioByCodigo(codigo);
 							btnAplicar.setEnabled(true);
 						}
 					}

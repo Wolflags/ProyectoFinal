@@ -2,53 +2,59 @@ package visual;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import logico.Altice;
-import logico.Cliente;
 import logico.Empleado;
 import logico.Persona;
+import logico.Cliente;
 
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JRadioButton;
+import javax.swing.UIManager;
+import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.JTable;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.Color;
-import java.awt.Toolkit;
 
 public class ListadoClientes extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTable table;
-	private static DefaultTableModel model;
-	private static Object[] row;
-	private Cliente selected = null;
-	private Cliente auxCliente = null;
-	private Empleado auxEmpleado = null;
-	private JButton btnVerCliente;
 	private JTextField txtNombre;
-	private ArrayList<Persona> clientes;
+	private JTable tablePorNombre;
+	private DefaultTableModel model;
+	private Object[] row;
+	private JPanel panelNombres;
+	private Persona selected;
+	private JButton btnSeleccionar;
+	private ArrayList<Cliente> clientes;
+	private Empleado auxEmpleado = null;
+	private JTable tableTodos;
 
 	/**
 	 * Launch the application.
 	 */
 	/*public static void main(String[] args) {
 		try {
-			ListadoClientes dialog = new ListadoClientes();
+			ListadoEmpleados dialog = new ListadoEmpleados();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -60,88 +66,108 @@ public class ListadoClientes extends JDialog {
 	 * Create the dialog.
 	 */
 	public ListadoClientes(Empleado empleado) {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ListadoClientes.class.getResource("/media/imgListadoClientes32px.png")));
 		auxEmpleado = empleado;
-		clientes = new ArrayList<Persona>();
+		clientes = new ArrayList<Cliente>();
+		initArrayList(clientes);
 		setResizable(false);
 		setTitle("Listado de clientes");
-		setModal(true);
-		setBounds(100, 100, 727, 500);
+		setBounds(100, 100, 900, 500);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		{
-			JPanel panel = new JPanel();
-			panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			panel.setBounds(12, 13, 688, 392);
-			contentPanel.add(panel);
-			panel.setLayout(null);
-			{
-				JScrollPane scrollPane = new JScrollPane();
-				scrollPane.setBounds(12, 42, 664, 337);
-				panel.add(scrollPane);
-				{
-					table = new JTable();
-					table.addMouseListener(new MouseAdapter() {
-						@Override
-						public void mouseClicked(MouseEvent e) {
-							int index = table.getSelectedRow();
-							if(index >= 0) {
-								String cedula = table.getValueAt(index, 0).toString();
-								selected = Altice.getInstance().buscarClienteByCedula(cedula);
-								btnVerCliente.setEnabled(true);
-							}
-						}
-					});
-					table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-					model = new DefaultTableModel();
-					String[] headers = {"Cédula", "Nombre", "Cantidad de planes"};
-					model.setColumnIdentifiers(headers);
-					table.setModel(model);
-					scrollPane.setViewportView(table);
+		
+		String[] headers = {"Cédula", "Nombres y Apellidos", "Planes contratados",};
+		model = new DefaultTableModel();
+		model.setColumnIdentifiers(headers);
+		
+		tableTodos = new JTable();
+		tableTodos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int index = tableTodos.getSelectedRow();
+				if (index >= 0) {
+					String cedula = tableTodos.getValueAt(index, 0).toString();
+					selected = Altice.getInstance().buscarClienteByCedula(cedula);
+					btnSeleccionar.setEnabled(true);
 				}
 			}
-			
-			JLabel lblNewLabel = new JLabel("Introduzca un nombre:");
-			lblNewLabel.setBounds(24, 13, 137, 16);
-			panel.add(lblNewLabel);
-			
-			txtNombre = new JTextField();
-			txtNombre.addKeyListener(new KeyAdapter() {
-				@Override
-				public void keyReleased(KeyEvent e) {
-					if(txtNombre.getText().equalsIgnoreCase("")) {
-						initArrayList(clientes);
-						loadClientes(clientes);
-					}else {
-						conditionalArrayList(clientes);
-						loadClientes(clientes);
-					}
+		});
+		tableTodos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tableTodos.setModel(model);
+		
+		panelNombres = new JPanel();
+		panelNombres.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Listado Por Nombre", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panelNombres.setBounds(10, 13, 872, 392);
+		contentPanel.add(panelNombres);
+		panelNombres.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Introduzca un nombre:");
+		lblNewLabel.setBounds(12, 30, 131, 16);
+		panelNombres.add(lblNewLabel);
+		
+		txtNombre = new JTextField();
+		txtNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				clientes.removeAll(clientes);
+				if(txtNombre.getText().equalsIgnoreCase("")) {
+					initArrayList(clientes);
+					loadClientes(clientes);
+				}else {
+					clientes.addAll(Altice.getInstance().buscarTodosClientesByNombre(txtNombre.getText()));
+					loadClientes(clientes);
 				}
-			});
-			txtNombre.setBounds(160, 10, 174, 22);
-			panel.add(txtNombre);
-			txtNombre.setColumns(10);
-		}
+			}
+		});
+		txtNombre.setBounds(155, 27, 155, 22);
+		panelNombres.add(txtNombre);
+		txtNombre.setColumns(10);
+		
+		JScrollPane scNombre = new JScrollPane();
+		scNombre.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scNombre.setBounds(12, 60, 850, 319);
+		panelNombres.add(scNombre);
+		
+		tablePorNombre = new JTable();
+		tablePorNombre.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int index = tablePorNombre.getSelectedRow();
+				if (index >= 0) {
+					String cedula = tablePorNombre.getValueAt(index, 0).toString();
+					selected = Altice.getInstance().buscarClienteByCedula(cedula);
+					btnSeleccionar.setEnabled(true);
+				}
+			}
+		});
+		tablePorNombre.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tablePorNombre.setModel(model);
+		scNombre.setViewportView(tablePorNombre);
+		
+		loadClientes(clientes);
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				btnVerCliente = new JButton("Ver cliente");
-				btnVerCliente.setBackground(Color.WHITE);
-				btnVerCliente.addActionListener(new ActionListener() {
+				btnSeleccionar = new JButton("Seleccionar");
+				btnSeleccionar.setBackground(Color.WHITE);
+				btnSeleccionar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						PerfilCliente perCliente = new PerfilCliente(selected, auxEmpleado);
+						PerfilCliente perCliente = new PerfilCliente((Cliente) selected, auxEmpleado);
 						perCliente.setVisible(true);
+						perCliente.setModal(true);
+						loadClientes(clientes);
+						btnSeleccionar.setEnabled(false);
 					}
 				});
-				btnVerCliente.setEnabled(false);
-				btnVerCliente.setActionCommand("OK");
-				buttonPane.add(btnVerCliente);
-				getRootPane().setDefaultButton(btnVerCliente);
+				btnSeleccionar.setEnabled(false);
+				btnSeleccionar.setActionCommand("OK");
+				buttonPane.add(btnSeleccionar);
+				getRootPane().setDefaultButton(btnSeleccionar);
 			}
 			{
 				JButton btnCancelar = new JButton("Cancelar");
@@ -155,34 +181,21 @@ public class ListadoClientes extends JDialog {
 				buttonPane.add(btnCancelar);
 			}
 		}
-		initArrayList(clientes);
-		loadClientes(clientes);
 	}
-	private void conditionalArrayList(ArrayList<Persona> clientes) {
-		String nombreCompleto = "";
+	private void initArrayList (ArrayList<Cliente> clientes) {
 		for (Persona cliente : Altice.getInstance().getPersonas()) {
-			if (cliente instanceof Cliente) {
-				nombreCompleto = cliente.getNombre()+" "+cliente.getApellido();
-				if(nombreCompleto.substring(0, txtNombre.getText().length()).equalsIgnoreCase(txtNombre.getText())) {
-					clientes.add(cliente);
-				}
-			}
-		}
-		
-	}
-	private void initArrayList (ArrayList<Persona> clientes) {
-		for (Persona cliente : Altice.getInstance().getPersonas())
 			if (cliente instanceof Cliente) 
-				clientes.add(cliente);
-		return;
+				clientes.add((Cliente)cliente);
+		}
 	}
-	public static void loadClientes(ArrayList<Persona> clientes) {
+	
+	private void loadClientes(ArrayList<Cliente> clientes) {
 		model.setRowCount(0);
 		row = new Object[model.getColumnCount()];
-		for (Persona cliente : clientes) {
+		for (Cliente cliente : clientes) {
 			row[0] = cliente.getCedula();
 			row[1] = ""+cliente.getNombre()+" "+cliente.getApellido();
-			row[2] = ((((Cliente) cliente).getMisPlanes().size()));
+			row[2] = Integer.toString(cliente.getMisPlanes().size());
 			model.addRow(row);
 		}
 	}

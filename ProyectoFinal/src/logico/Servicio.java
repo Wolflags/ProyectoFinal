@@ -4,9 +4,6 @@ import java.io.Serializable;
 
 public abstract class Servicio implements Serializable{
 	
-	/**
-	 * 
-	 */
 	protected String codigo;
 	protected String descripcion;
 	public int genIdServicio;

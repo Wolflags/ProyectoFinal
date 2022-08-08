@@ -93,7 +93,7 @@ public class ListadoServiciosModal extends JDialog {
 						if(index>=0) {
 						btnDetalles.setEnabled(true);
 						String codServ = table.getValueAt(index, 0).toString();
-						selected=Altice.getInstance().buscarServicioByCod(codServ);
+						selected=Altice.getInstance().buscarServicioByCodigo(codServ);
 						}
 					}
 				});
