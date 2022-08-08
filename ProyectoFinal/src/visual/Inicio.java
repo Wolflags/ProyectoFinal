@@ -48,7 +48,9 @@ public class Inicio extends JFrame {
 	private Empleado auxEmpleado = null;
 	private Dimension dim;
 	private Date hoy;
+	Date auxFecha2;
 	public Inicio(Empleado empleado) {
+		auxFecha2 = new Date();
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
             @Override
@@ -71,6 +73,7 @@ public class Inicio extends JFrame {
     					dispose();
     					Login login = new Login();
     					login.setVisible(true);
+    					 
     				}
 
             }
@@ -319,7 +322,10 @@ public class Inicio extends JFrame {
 								       
 								        fechaFac = LocalDate.parse(dia+"/"+mes+"/"+year, fmt);
 								        ahora = LocalDate.now();
-								       
+								        Date auxDate3 = new Date();
+								        auxDate3.setDate(ahora.getDayOfMonth());
+								        auxDate3.setMonth(ahora.getMonthValue());
+								        auxDate3.setYear(ahora.getYear()-1900);
 								        Period periodoFechaUltimaFacturaPagada = Period.between(fechaFac, ahora);
 										
 								        if(periodoFechaUltimaFacturaPagada.getMonths()>=4) {
@@ -328,16 +334,15 @@ public class Inicio extends JFrame {
 								        	if(periodoFechaUltimaFactura.getMonths()>=1) {
 								        		
 								        		
-								        		Date auxFecha2= new Date();
-								        		auxFecha2 = (Date) fechaUltimaFactura.clone();
-								        		int auxMes = auxFecha2.getMonth();
-								        		auxFecha2.setMonth((auxMes+1)%12);
-								        		Factura auxFactura = new Factura("F-"+Altice.getInstance().getGenIdFactura(), auxFecha2, ultimaFactura.getSubtotal(), ultimaFactura.getEmpleado(), ultimaFactura.getCliente(), plan);
+								        		
+								        		Factura auxFactura = new Factura("F-"+Altice.getInstance().getGenIdFactura(), new Date(), ultimaFactura.getSubtotal(), ultimaFactura.getEmpleado(), ultimaFactura.getCliente(), plan);
+								        		System.out.println(auxFactura.getFecha().getDay()+"/"+auxFactura.getFecha().getMonth()+"/"+auxFactura.getFecha().getYear());
 								        		
 								        		
 								        		auxFactura.setEstado(false);
 								        		((Cliente) cliente).getMisFacturas().add(auxFactura);
 								        		Altice.getInstance().insertarFactura(auxFactura);
+								        		JOptionPane.showMessageDialog(null, "Generacion exitosa.", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
 								        	}
 								        }
 								        
