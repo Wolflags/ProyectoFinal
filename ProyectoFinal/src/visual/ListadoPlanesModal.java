@@ -13,8 +13,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 import logico.Altice;
+import logico.Cliente;
 import logico.Internet;
 import logico.Minutos;
+import logico.Persona;
 import logico.Plan;
 import logico.Servicio;
 
@@ -28,11 +30,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.awt.Color;
+import java.awt.Toolkit;
 
 public class ListadoPlanesModal extends JDialog {
 
@@ -44,6 +49,8 @@ public class ListadoPlanesModal extends JDialog {
 	private static String ini="";
 	private static Plan selected = null;
 	private JFormattedTextField txtTelefono;
+	private ArrayList<Plan> planes;
+	private JButton btnSeleccionar;
 
 	/**
 	 * Launch the application.
@@ -62,40 +69,38 @@ public class ListadoPlanesModal extends JDialog {
 	 * Create the dialog.
 	 */
 	public ListadoPlanesModal() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ListadoPlanesModal.class.getResource("/media/imgPlan32px.png")));
+		planes = new ArrayList<Plan>();
+		initArrayList(planes);
 		setTitle("Seleccionar Plan");
 		setModal(true);
 		setResizable(false);
-		setBounds(100, 100, 825, 493);
+		setBounds(100, 100, 825, 470);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		
+
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setBounds(10, 11, 799, 409);
 		contentPanel.add(panel);
 		panel.setLayout(null);
-		
-		JLabel lblNewLabel = new JLabel("Seleccionar Plan");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 21));
-		lblNewLabel.setBounds(290, 11, 181, 23);
-		panel.add(lblNewLabel);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 111, 779, 287);
+		scrollPane.setBounds(10, 75, 779, 304);
 		panel.add(scrollPane);
-		
+
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				int index = table.getSelectedRow();
 				if(index>=0) {
-				//btnDetalles.setEnabled(true);
-				String codPlan = table.getValueAt(index, 0).toString();
-				selected=Altice.getInstance().buscarPlanByCod(codPlan);
+					btnSeleccionar.setEnabled(true);
+					String codPlan = table.getValueAt(index, 0).toString();
+					selected=Altice.getInstance().buscarPlanByCod(codPlan);
 				}
 			}
 		});
@@ -104,21 +109,36 @@ public class ListadoPlanesModal extends JDialog {
 		model.setColumnIdentifiers(headers);
 		table.setModel(model);
 		scrollPane.setViewportView(table);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("Buscar:");
-		lblNewLabel_1.setBounds(20, 86, 67, 14);
+		lblNewLabel_1.setBounds(251, 32, 67, 14);
 		panel.add(lblNewLabel_1);
-		
+
 		txtBuscar = new JTextField();
-		txtBuscar.setBounds(71, 83, 239, 20);
+		txtBuscar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				planes.removeAll(planes);
+				if(txtBuscar.getText().equalsIgnoreCase("")) {
+					initArrayList(planes);
+					loadPlanes();
+				}else {
+					planes.addAll(Altice.getInstance().buscarTodosPlanesByNombre(txtBuscar.getText()));
+					loadPlanes();
+				}
+			}
+		});
+		txtBuscar.setBounds(302, 29, 239, 20);
 		panel.add(txtBuscar);
 		txtBuscar.setColumns(10);
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton btnSeleccionar = new JButton("Seleccionar");
+				btnSeleccionar = new JButton("Seleccionar");
+				btnSeleccionar.setEnabled(false);
 				btnSeleccionar.setBackground(Color.WHITE);
 				btnSeleccionar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -133,8 +153,8 @@ public class ListadoPlanesModal extends JDialog {
 						int opc = JOptionPane.showConfirmDialog(null, txtTelefono,"Numero de telefono para el plan",JOptionPane.OK_CANCEL_OPTION);
 						while(((txtTelefono.getText().charAt(1)==' ')&&opc==0)&&opc==0) {
 							JOptionPane.showMessageDialog(null, "El número que intentas registrar no está disponible!",
-								      "Número Inválido!", JOptionPane.ERROR_MESSAGE);
-						opc = JOptionPane.showConfirmDialog(null, txtTelefono,"Numero de telefono para el plan",JOptionPane.OK_CANCEL_OPTION);
+									"Número Inválido!", JOptionPane.ERROR_MESSAGE);
+							opc = JOptionPane.showConfirmDialog(null, txtTelefono,"Numero de telefono para el plan",JOptionPane.OK_CANCEL_OPTION);
 						}
 						if(opc==0&&selected!=null) {
 							Plan auxPlan = new Plan(selected.getIdplan(), selected.getNombre(), selected.getMisServicios(), selected.getPrecio());
@@ -142,7 +162,6 @@ public class ListadoPlanesModal extends JDialog {
 							RealizarVenta.carrito.add(auxPlan);
 							RealizarVenta.cargarPlanesSel();
 						}
-						
 						dispose();
 					}
 				});
@@ -165,37 +184,38 @@ public class ListadoPlanesModal extends JDialog {
 		loadPlanes();
 	}
 
+	private void initArrayList(ArrayList<Plan> planes) {
+		for (Plan plan : Altice.getInstance().getPlanes()) {
+			planes.add(plan);
+		}
+	}
+
 	private void loadPlanes() {
 		if(ini=="") {
 			model.setRowCount(0);
 			row = new Object[model.getColumnCount()];
-			ArrayList<Plan> planes = new ArrayList<Plan>();
-			planes.addAll(Altice.getInstance().getPlanes());
-			for (Plan plan : planes) {
-				row[0]=plan.getIdplan();
-				row[1]=plan.getNombre();
-				int cantserv=0;
-				
-				if(plan.getMisServicios().get(0)!=null) {
+			for(Plan plan : planes) {
+				row[0] = plan.getIdplan();
+				row[1] = plan.getNombre();
+				int cantserv = 0;
+				if(plan.getMisServicios().get(0) != null) {
 					cantserv++;
 				}
-				if(plan.getMisServicios().get(1)!=null) {
+				if(plan.getMisServicios().get(1) != null) {
 					cantserv++;
 				}
-				if(plan.getMisServicios().get(2)!=null) {
+				if(plan.getMisServicios().get(2) != null) {
 					cantserv++;
 				}
-				
-				row[2]=cantserv;
-				row[3]=plan.getPrecio();
+				row[2] = cantserv;
+				row[3] = plan.getPrecio();
 				model.addRow(row);
 			}
-			}else {
-				model.setRowCount(0);
-				row = new Object[model.getColumnCount()];
-				ArrayList<Plan> planes = Altice.getInstance().getPlanes();
-				for (Plan plan : planes) {
-					if(plan.getIdplan().contains(ini)||plan.getNombre().contains(ini)) {
+		}else {
+			model.setRowCount(0);
+			row = new Object[model.getColumnCount()];
+			for (Plan plan : planes) {
+				if(plan.getIdplan().contains(ini)||plan.getNombre().contains(ini)) {
 					row[0]=plan.getIdplan();
 					row[1]=plan.getNombre();
 					int cantserv=0;
@@ -210,11 +230,9 @@ public class ListadoPlanesModal extends JDialog {
 					}
 					row[2]=cantserv;
 					row[3]=plan.getPrecio();
-					
 					model.addRow(row);
-					}
 				}
 			}
-		
+		}
 	}
 }

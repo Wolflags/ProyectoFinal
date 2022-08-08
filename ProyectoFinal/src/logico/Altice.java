@@ -217,6 +217,16 @@ public class Altice implements Serializable{
 		return clientes;
 	}
 
+	public ArrayList<Plan> buscarTodosPlanesByNombre(String nombre){
+		ArrayList<Plan> planesBuscados = new ArrayList<Plan>();
+		for (Plan plan : planes) {
+			if(plan.getNombre().substring(0, nombre.length()).equalsIgnoreCase(nombre)) {
+				planesBuscados.add(plan);
+			}
+		}
+		return planesBuscados;
+	}
+
 	public Plan buscarPlanByCod(String codPlan) {
 		Plan auxPlan = null;
 		int i = 0;
